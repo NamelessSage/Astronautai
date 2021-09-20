@@ -13,3 +13,18 @@ C:\Users\NamelessSage\Desktop\GitHub\UNI\OPP\Astronautai\obj\Debug\Astronautai.e
 C:\Users\NamelessSage\Desktop\GitHub\UNI\OPP\Astronautai\obj\Debug\Astronautai.pdb
 C:\Users\NamelessSage\Desktop\GitHub\UNI\OPP\Astronautai\obj\Debug\Astronautai.Form1.resources
 C:\Users\NamelessSage\Desktop\GitHub\UNI\OPP\Astronautai\obj\Debug\Astronautai.csprojAssemblyReference.cache
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\bin\Debug\Astronautai.exe.config
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\bin\Debug\Astronautai.exe
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\bin\Debug\Astronautai.pdb
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\bin\Debug\EntityFramework.dll
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\bin\Debug\EntityFramework.xml
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\obj\Debug\Astronautai.csprojAssemblyReference.cache
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\obj\Debug\Astronautai.Form1.resources
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\obj\Debug\Astronautai.Properties.Resources.resources
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\obj\Debug\Astronautai.csproj.GenerateResource.cache
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\obj\Debug\Astronautai.csproj.CoreCompileInputs.cache
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\obj\Debug\Astronautai.csproj.CopyComplete
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\obj\Debug\Astronautai.exe
+C:\Users\Mantas\Desktop\7 semestras\Objektinis programų projektavimas\Projektas\Astronautai\obj\Debug\Astronautai.pdb

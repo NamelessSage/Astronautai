@@ -60,6 +60,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="AstroDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AstroDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ClassDiagram.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -113,6 +118,17 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ClassDiagram.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="AstroDataSet1.xsc">
+      <DependentUpon>AstroDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="AstroDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AstroDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AstroDataSet1.xss">
+      <DependentUpon>AstroDataSet1.xsd</DependentUpon>
+    </None>
     <None Include="ClassDiagram.edmx.diagram">
       <DependentUpon>ClassDiagram.edmx</DependentUpon>
     </None>
