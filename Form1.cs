@@ -17,6 +17,13 @@ namespace Astronautai
         string cnString = "Server=tcp:astronauts.database.windows.net,1433;Initial Catalog=Astro;Persist Security Info=False;User ID=astronautas;Password=Batonas5;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         bool access = true;
         int playerId = 1;
+        string P1X;
+        string P1Y;
+        string P1Input;
+        string P1Xadded = "0";
+        string P1Yadded = "0";
+        string P1Inputadded = "No Input!";
+
 
         void OnChange(object sender, SqlNotificationEventArgs e)
         {
@@ -37,29 +44,44 @@ namespace Astronautai
 
             //db.Players.AddPlayersRow("0", "1", "Hello!");
             //PutData();
-
+            InitTimer();
             GetData();
+        }
+
+        private Timer timer1;
+        public void InitTimer()
+        {
+            timer1 = new Timer();
+            timer1.Tick += new EventHandler(timer1_Tick);
+            timer1.Interval = 100; // in miliseconds
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            PutData(P1Xadded, P1Yadded, P1Inputadded);
+            GetData();
+            player1.Location = new Point(int.Parse(P1X), int.Parse(P1Y));
         }
 
         private async void PutData(string X, string Y, string Input)
         {
             //define the insert sql command, here I insert data into the student table in azure db.
-            string cmdText = @"update players set ""input""=@input where id=1";
+            string cmdText = @"update players set ""input""=@input, x=@X, y=@Y where id=1";
 
             using (SqlConnection con = new SqlConnection(cnString))
             using (SqlCommand cmd = new SqlCommand(cmdText, con))
             {
                 con.Open();
-                cmd.Parameters.AddWithValue("@X", X);
-                cmd.Parameters.AddWithValue("@Y", Y);
+                cmd.Parameters.AddWithValue("@X", (int.Parse(X) + int.Parse(P1X)).ToString());
+                cmd.Parameters.AddWithValue("@Y", (int.Parse(Y) + int.Parse(P1Y)).ToString());
                 cmd.Parameters.AddWithValue("@input", Input);
 
                 cmd.ExecuteNonQuery();
 
                 con.Close();
             }
-
-            Console.WriteLine("completed***");
+            Console.WriteLine("Im Getting blasted!!!");
             //GetData();
         }
 
@@ -87,13 +109,13 @@ namespace Astronautai
                         }
 
                         access = true;
-                        string X = dataReader.GetString(1);
-                        string Y = dataReader.GetString(2);
-                        string Input = dataReader.GetString(3);
+                        P1X = dataReader.GetString(1);
+                        P1Y = dataReader.GetString(2);
+                        P1Input = dataReader.GetString(3);
 
-                        label1.Text = Input;
+                        label1.Text = P1Input;
 
-                        Console.WriteLine(X + " " + Y + " " + Input);
+                        
                     }
                 }
                 con.Close();
@@ -107,20 +129,36 @@ namespace Astronautai
             Console.WriteLine(e.KeyCode);
             if(e.KeyCode == Keys.W)
             {
-                PutData("1", "1", "W");
+                P1Xadded = "0";
+                P1Yadded = "-1";
+                P1Inputadded = "W";
+
             }
             if (e.KeyCode == Keys.S)
             {
-                PutData("1", "1", "S");
+                P1Xadded = "0";
+                P1Yadded = "1";
+                P1Inputadded = "S";
             }
             if (e.KeyCode == Keys.A)
             {
-                PutData("1", "1", "A");
+                P1Xadded = "-1";
+                P1Yadded = "0";
+                P1Inputadded = "A";
             }
             if (e.KeyCode == Keys.D)
             {
-                PutData("1", "1", "D");
+                P1Xadded = "1";
+                P1Yadded = "0";
+                P1Inputadded = "D";
             }
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            P1Xadded = "0";
+            P1Yadded = "0";
+            P1Inputadded = "No Input!";
         }
     }
 }

@@ -30,12 +30,15 @@ namespace Astronautai
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.astroDataSet = new Astronautai.AstroDataSet();
             this.astroDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.player1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.player1)).BeginInit();
             this.SuspendLayout();
             // 
             // astroDataSet
@@ -67,18 +70,30 @@ namespace Astronautai
             this.label1.TabIndex = 2;
             this.label1.Text = "label1";
             // 
+            // player1
+            // 
+            this.player1.Image = ((System.Drawing.Image)(resources.GetObject("player1.Image")));
+            this.player1.Location = new System.Drawing.Point(138, 355);
+            this.player1.Name = "player1";
+            this.player1.Size = new System.Drawing.Size(26, 29);
+            this.player1.TabIndex = 3;
+            this.player1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.player1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.player1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -89,6 +104,7 @@ namespace Astronautai
         private AstroDataSet astroDataSet;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox player1;
     }
 }
 
