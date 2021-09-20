@@ -16,7 +16,7 @@ namespace Astronautai
         //define the connection string of azure database.
         string cnString = "Server=tcp:astronauts.database.windows.net,1433;Initial Catalog=Astro;Persist Security Info=False;User ID=astronautas;Password=Batonas5;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         bool access = true;
-        int playerId = 1;
+        int playerId = 0;
         string P1X;
         string P1Y;
         string P1Input;
@@ -44,6 +44,19 @@ namespace Astronautai
 
             //db.Players.AddPlayersRow("0", "1", "Hello!");
             //PutData();
+            playerId = 1;
+            InitTimer();
+            GetData();
+        }
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+
+            //Console.WriteLine("hello!");
+            //AstroDataSet1 db = new AstroDataSet1();
+
+            //db.Players.AddPlayersRow("0", "1", "Hello!");
+            //PutData();
+            playerId = 2;
             InitTimer();
             GetData();
         }
@@ -61,18 +74,19 @@ namespace Astronautai
         {
             PutData(P1Xadded, P1Yadded, P1Inputadded);
             GetData();
-            player1.Location = new Point(int.Parse(P1X), int.Parse(P1Y));
+            
         }
 
         private async void PutData(string X, string Y, string Input)
         {
             //define the insert sql command, here I insert data into the student table in azure db.
-            string cmdText = @"update players set ""input""=@input, x=@X, y=@Y where id=1";
+            string cmdText = @"update players set ""input""=@input, x=@X, y=@Y where id=@id";
 
             using (SqlConnection con = new SqlConnection(cnString))
             using (SqlCommand cmd = new SqlCommand(cmdText, con))
             {
                 con.Open();
+                cmd.Parameters.AddWithValue("@id", playerId);
                 cmd.Parameters.AddWithValue("@X", (int.Parse(X) + int.Parse(P1X)).ToString());
                 cmd.Parameters.AddWithValue("@Y", (int.Parse(Y) + int.Parse(P1Y)).ToString());
                 cmd.Parameters.AddWithValue("@input", Input);
@@ -88,7 +102,7 @@ namespace Astronautai
         private void GetData()
         {
             //define the insert sql command, here I insert data into the student table in azure db.
-            string cmdText = @"select * from Players where id=" + playerId;
+            string cmdText = @"select * from Players";
 
             using (SqlConnection con = new SqlConnection(cnString))
             using (SqlCommand cmd = new SqlCommand(cmdText, con))
@@ -109,13 +123,30 @@ namespace Astronautai
                         }
 
                         access = true;
-                        P1X = dataReader.GetString(1);
-                        P1Y = dataReader.GetString(2);
-                        P1Input = dataReader.GetString(3);
+                        
 
                         label1.Text = P1Input;
 
-                        
+                        if (dataReader.GetInt32(0) == 1)
+                        {
+                            player1.Location = new Point(int.Parse(dataReader.GetString(1)), int.Parse(dataReader.GetString(2)));
+                            if(playerId == 1)
+                            {
+                                P1X = dataReader.GetString(1);
+                                P1Y = dataReader.GetString(2);
+                                P1Input = dataReader.GetString(3);
+                            }
+                        }
+                        else if (dataReader.GetInt32(0) == 2)
+                        {
+                            player2.Location = new Point(int.Parse(dataReader.GetString(1)), int.Parse(dataReader.GetString(2)));
+                            if (playerId == 2)
+                            {
+                                P1X = dataReader.GetString(1);
+                                P1Y = dataReader.GetString(2);
+                                P1Input = dataReader.GetString(3);
+                            }
+                        }
                     }
                 }
                 con.Close();
