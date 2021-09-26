@@ -14,9 +14,16 @@ namespace Astronautai
     
     public partial class Player
     {
+        public Player(int id, int x, int y)
+        {
+            Id = id;
+            X = x;
+            Y = y;
+        }
+
         public int Id { get; set; }
-        public string X { get; set; }
-        public string Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
         public string Input { get; set; }
     }
 }
