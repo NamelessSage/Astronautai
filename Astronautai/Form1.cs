@@ -78,12 +78,6 @@ namespace Astronautai
         }
 
 
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-            player = new Player(2, 100, 100);
-            server.Invoke("PlayerMovement", player.Id, player.X, player.Y).Wait();
-        }
-
         //private Timer timer1;
         //public void InitTimer()
         //{
