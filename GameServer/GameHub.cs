@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Astronautai;
+using Class_diagram;
 
 namespace GameServer
 {
@@ -13,6 +14,7 @@ namespace GameServer
     public class GameHub : Hub
     {
         GameData data = new GameData();
+
 
         public GameHub()
         {

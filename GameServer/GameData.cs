@@ -1,4 +1,5 @@
 ﻿using Astronautai;
+using Class_diagram;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace GameServer
     public class GameData
     {
         public static List<Player> players = new List<Player>();
+        public static Map map = Map.getInstance();
 
         public GameData()
         {
@@ -18,7 +20,11 @@ namespace GameServer
 
         public Player CreateNewPlayer()
         {
-            players.Add(new Player(players.Count, 100, 100));
+            Player p = new Player(players.Count, 3, 100);
+            p.X = 100;
+            p.Y = 100;
+            players.Add(p);
+
             return players[players.Count-1];
         }
 

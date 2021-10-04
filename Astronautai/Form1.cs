@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR.Client;
+﻿using Class_diagram;
+using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,20 +35,20 @@ namespace Astronautai
             KeyPreview = true;
             HubConnection hubConnection = new HubConnection("http://localhost:8080");
             server = hubConnection.CreateHubProxy("serveris");
-
-            server.On<int, int, int>("createPlayer", (pid, x, y) =>
+            server.On<int>("createPlayer", (pid) =>
             {
-                player = new Player(pid, x, y);
-                Console.WriteLine("pid");
-                Console.WriteLine(pid);
+                button1.Visible = false;
+                player = new Player(pid, 3, 100);
+                player.X = 100;
+                player.Y = 100;
                 if (pid == 0)
                 {
-                    player1.Location = new Point(x, y);
+                    player1.Location = new Point(player.X, player.Y);
                 }
                 else if (pid == 1)
                 {
 
-                    player2.Location = new Point(x, y);
+                    player2.Location = new Point(player.X, player.Y);
                 }
             });
 
@@ -66,13 +67,10 @@ namespace Astronautai
             hubConnection.Start().Wait();
         }
 
-
-
-
         private void button1_Click(object sender, EventArgs e)
         {
-
             server.Invoke("CreatePlayer").Wait();
+
             //player = new Player(1, 100, 100);
             //server.Invoke("PlayerMovement", player.Id, player.X, player.Y).Wait();
         }

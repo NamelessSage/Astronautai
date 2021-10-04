@@ -195,29 +195,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="ClassDiagram.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClassDiagram.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassDiagram.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClassDiagram.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassDiagram.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClassDiagram.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Classes\Ammo.cs" />
+    <Compile Include="Classes\Asteroid.cs" />
+    <Compile Include="Classes\Coordinates.cs" />
+    <Compile Include="Classes\Creator.cs" />
+    <Compile Include="Classes\Enemy.cs" />
+    <Compile Include="Classes\Health.cs" />
+    <Compile Include="Classes\Map.cs" />
+    <Compile Include="Classes\Obstacles.cs" />
+    <Compile Include="Classes\Pickups.cs" />
+    <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Projectile.cs" />
+    <Compile Include="Classes\Speed.cs" />
+    <Compile Include="Classes\Turent.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Player.cs">
-      <DependentUpon>ClassDiagram.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -244,13 +239,6 @@
     <None Include="AstroDataSet.xss">
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </None>
-    <EntityDeploy Include="ClassDiagram.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ClassDiagram.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="ClassDiagram.edmx.diagram">
-      <DependentUpon>ClassDiagram.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -266,16 +254,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClassDiagram.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ClassDiagram.edmx</DependentUpon>
-      <LastGenOutput>ClassDiagram.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="ClassDiagram.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ClassDiagram.edmx</DependentUpon>
-      <LastGenOutput>ClassDiagram.cs</LastGenOutput>
-    </Content>
     <Content Include="kazkas.edmx.sql" />
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
