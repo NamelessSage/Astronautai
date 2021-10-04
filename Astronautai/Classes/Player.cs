@@ -10,6 +10,10 @@ namespace Class_diagram
 		public int Health;
 		public int Size;
 
+        public Player()
+        {
+        }
+
         public Player(int id)
         {
             Id = id;

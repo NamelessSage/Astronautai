@@ -1,15 +1,9 @@
 ﻿using Class_diagram;
 using Microsoft.AspNet.SignalR.Client;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -24,6 +18,7 @@ namespace Astronautai
         Player player;
 
 
+
         void OnChange(object sender, SqlNotificationEventArgs e)
         {
 
@@ -35,44 +30,78 @@ namespace Astronautai
             KeyPreview = true;
             HubConnection hubConnection = new HubConnection("http://localhost:8080");
             server = hubConnection.CreateHubProxy("serveris");
-            server.On<int>("createPlayer", (pid) =>
+            server.On<int, Dictionary<string, PictureBox>>("createPlayer", (pid, playerBoxes) =>
             {
-                button1.Visible = false;
                 player = new Player(pid, 3, 100);
                 player.X = 100;
                 player.Y = 100;
-                if (pid == 0)
-                {
-                    player1.Location = new Point(player.X, player.Y);
-                }
-                else if (pid == 1)
-                {
+                addPlayer("Player" + player.Id, playerBoxes);
 
-                    player2.Location = new Point(player.X, player.Y);
-                }
+                server.Invoke("AddPlayerBox", playerBoxes).Wait();
+
+                Console.WriteLine(playerBoxes);
+
+                
+                //if (pid == 0)
+                //{
+                //    player1.Location = new Point(player.X, player.Y);
+                //}
+                //else if (pid == 1)
+                //{
+
+                //    player2.Location = new Point(player.X, player.Y);
+                //}
+                server.Invoke("PlayerMovement", player.Id, player.X, player.Y).Wait();
+
             });
-
-            server.On<int, int, int>("movePlayer", (pid, x, y) =>
+            Dictionary<string, PictureBox> temp = new Dictionary<string, PictureBox>();
+            string name="";
+            Player tempPl = new Player();
+            int tx = 0;
+            int ty = 0;
+            server.On<int, int, int, Dictionary<string, PictureBox>>("movePlayer", (pid, x, y, playerBoxes) =>
             {
-                if (pid == 0)
-                {
-                    player1.Location = new Point(x, y);
-                }
-                else if(pid == 1)
-                {
-                    player2.Location = new Point(x, y);
-                }
+                name = "Player" + pid;
+                temp = playerBoxes;
+                tx = x;
+                ty = y;
             });
+            try
+            {
+                temp[name].Location = new Point(tx, ty);
+            }
+            catch
+            {
+
+            }
 
             hubConnection.Start().Wait();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            server.Invoke("CreatePlayer").Wait();
+            server.Invoke("GetPlayersServer").Wait();
+            Dictionary<string, PictureBox> temp = new Dictionary<string, PictureBox>();
+            server.On<Dictionary<string, PictureBox>>("createPlayerBox", (playerBoxes) =>
+            {
+                temp = playerBoxes;
+            });
+            string name = "Player" + (temp.Count - 1);
+            addPlayer(name, temp);
 
-            //player = new Player(1, 100, 100);
-            //server.Invoke("PlayerMovement", player.Id, player.X, player.Y).Wait();
+            server.Invoke("CreatePlayer").Wait();
+        }
+
+        public void addPlayer(string name, Dictionary<string, PictureBox> playerBoxes)
+        {
+            playerBoxes.Add(name, new PictureBox
+            {
+                Name = name,
+                Size = new Size(25, 25),
+                Location = new Point(100, 100),
+                Image = Image.FromFile("player.png")
+            });
+            this.Controls.Add(playerBoxes[name]);
         }
 
 
@@ -195,6 +224,5 @@ namespace Astronautai
             }
 
         }
-
     }
 }

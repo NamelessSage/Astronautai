@@ -255,6 +255,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="kazkas.edmx.sql" />
+    <Content Include="Objects\player.png" />
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
