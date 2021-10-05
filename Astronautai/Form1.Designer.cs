@@ -32,7 +32,10 @@ namespace Astronautai
             this.components = new System.ComponentModel.Container();
             this.astroDataSet = new Astronautai.AstroDataSet();
             this.astroDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.JoinGameButton = new System.Windows.Forms.Button();
+            this.StartGameButton = new System.Windows.Forms.Button();
+            this.PlayerUsernameTextBox = new System.Windows.Forms.TextBox();
+            this.PlayerNameInputLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -47,35 +50,69 @@ namespace Astronautai
             this.astroDataSetBindingSource.DataSource = this.astroDataSet;
             this.astroDataSetBindingSource.Position = 0;
             // 
-            // button1
+            // JoinGameButton
             // 
-            this.button1.Location = new System.Drawing.Point(138, 35);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Play";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.JoinGameButton.Location = new System.Drawing.Point(12, 42);
+            this.JoinGameButton.Name = "JoinGameButton";
+            this.JoinGameButton.Size = new System.Drawing.Size(75, 23);
+            this.JoinGameButton.TabIndex = 1;
+            this.JoinGameButton.Text = "Join";
+            this.JoinGameButton.UseVisualStyleBackColor = true;
+            this.JoinGameButton.Click += new System.EventHandler(this.JoinGameButton_Click);
+            // 
+            // StartGameButton
+            // 
+            this.StartGameButton.Location = new System.Drawing.Point(93, 42);
+            this.StartGameButton.Name = "StartGameButton";
+            this.StartGameButton.Size = new System.Drawing.Size(75, 23);
+            this.StartGameButton.TabIndex = 2;
+            this.StartGameButton.Text = "Start";
+            this.StartGameButton.UseVisualStyleBackColor = true;
+            this.StartGameButton.Click += new System.EventHandler(this.StartGameButton_Click);
+            this.StartGameButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StartGameButton_KeyDown);
+            // 
+            // PlayerUsernameTextBox
+            // 
+            this.PlayerUsernameTextBox.Location = new System.Drawing.Point(12, 16);
+            this.PlayerUsernameTextBox.Name = "PlayerUsernameTextBox";
+            this.PlayerUsernameTextBox.Size = new System.Drawing.Size(156, 20);
+            this.PlayerUsernameTextBox.TabIndex = 3;
+            // 
+            // PlayerNameInputLabel
+            // 
+            this.PlayerNameInputLabel.AutoSize = true;
+            this.PlayerNameInputLabel.Location = new System.Drawing.Point(12, 0);
+            this.PlayerNameInputLabel.Name = "PlayerNameInputLabel";
+            this.PlayerNameInputLabel.Size = new System.Drawing.Size(88, 13);
+            this.PlayerNameInputLabel.TabIndex = 4;
+            this.PlayerNameInputLabel.Text = "Player username:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.PlayerNameInputLabel);
+            this.Controls.Add(this.PlayerUsernameTextBox);
+            this.Controls.Add(this.StartGameButton);
+            this.Controls.Add(this.JoinGameButton);
             this.Name = "Form1";
             this.Text = "Form1";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.BindingSource astroDataSetBindingSource;
         private AstroDataSet astroDataSet;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button JoinGameButton;
+        private System.Windows.Forms.Button StartGameButton;
+        private System.Windows.Forms.TextBox PlayerUsernameTextBox;
+        private System.Windows.Forms.Label PlayerNameInputLabel;
     }
 }
 

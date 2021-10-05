@@ -16,45 +16,33 @@ namespace GameServer
     {
         GameData data = new GameData();
 
-
         public GameHub()
         {
-
+            
         }
 
-
-        public Dictionary<string, PictureBox> getPlayers()
+        public void AddPlayerOnJoin(Player player)
         {
-            return data.playerBoxes;
+            data.AddPlayer(player);
         }
 
-        public void GetPlayersServer()
+        public void GetPlayers()
         {
-            Clients.Caller.createPlayerBox(getPlayers());
+            List<Player> players = data.GetPlayers();
+            Clients.All.getPlayers(players); //SEND TO EVERYONE ??
         }
 
-        public void CreatePlayer()
+        public void StartGame()
         {
-            Console.WriteLine(3);
-            Player p = data.CreateNewPlayer();
-            Console.WriteLine(4);
-            Console.WriteLine($"Creating player: {p.Id}");
-            Clients.Caller.createPlayer(p.Id, getPlayers());
+            Clients.All.startGame(true);
         }
 
-
-        public void PlayerMovement(int playerId, int x, int y)
+        public void PlayerMovement(Player player)
         {
-            Console.WriteLine($"Moving player: {playerId}, {x}, {y}");
-            Clients.All.movePlayer(playerId, x, y, getPlayers());
+            Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y}");
+            Clients.All.movePlayer(player.Username, player.X, player.Y);
         }
 
-        public void AddPlayerBox(Dictionary<string, PictureBox> playerBox)
-        {
-            foreach (var dict in playerBox)
-            {
-                data.playerBoxes.Add(dict.Key, dict.Value);
-            }
-        }
+        //PADARYTI ZAIDEJU SARASO ATNAUJINIMA
     }
 }

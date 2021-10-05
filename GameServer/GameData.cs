@@ -11,28 +11,20 @@ namespace GameServer
     {
         public static List<Player> players = new List<Player>();
         public static Map map = Map.getInstance();
-        public Dictionary<string, PictureBox> playerBoxes = new Dictionary<string, PictureBox>();
-
-
 
         public GameData()
         {
 
         }
 
-        public Player CreateNewPlayer()
+        public List<Player> GetPlayers()
         {
-            Console.WriteLine("1");
-            Player p = new Player(players.Count, 3, 100);
-            p.X = 100;
-            p.Y = 100;
-            players.Add(p);
-            Console.WriteLine(2);
-            return players[players.Count-1];
+            return players;
         }
 
-
-
-
+        public void AddPlayer(Player player)
+        {
+            players.Add(player);
+        }
     }
 }

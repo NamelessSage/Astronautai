@@ -4,27 +4,39 @@
 
 namespace Class_diagram
 {
-	public class Player : Coordinates
+	public class Player
 	{
-		public int Id;
-		public int Health;
-		public int Size;
+		public string Username { get; set; }
+		public int Health { get; set; }
+        public int Size { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Player()
         {
         }
 
-        public Player(int id)
+        public Player(string username)
         {
-            Id = id;
+            Username = username;
         }
 
-        public Player(int id, int health, int size)
+        public Player(string username, int health, int size)
         {
-            Id = id;
+            Username = username;
             Health = health;
             Size = size;
         }
+
+        public void SetCoordinates(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public override string ToString()
+        {
+            return Username;
+        }
     }
-	
 }
