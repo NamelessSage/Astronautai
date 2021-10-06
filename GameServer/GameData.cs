@@ -26,5 +26,12 @@ namespace GameServer
         {
             players.Add(player);
         }
+
+        public Map GetMap()
+        {
+            return map;
+        }
+
+
     }
 }

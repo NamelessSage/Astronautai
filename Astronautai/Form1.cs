@@ -19,7 +19,7 @@ namespace Astronautai
         Player player;
 
         const int PlayerStartHealth = 3;
-        const int PlayerStartSize = 16;
+        const int PlayerStartSize = 25;
 
         bool startGame = false;
         bool gameLoopStarted = false;
@@ -38,7 +38,11 @@ namespace Astronautai
 
             server.On<string, int, int>("movePlayer", (name, x, y) =>
             {
-                //useless??
+                var pictureBox = this.Controls.Find(name, true)[0] as PictureBox;
+                pictureBox.Location = new Point(x, y);
+
+                var label = this.Controls.Find("playerLabel" + name, true)[0] as Label;
+                label.Location = new Point(x, y+25);
             });
 
             server.On<List<Player>>("getPlayers", (players) =>
@@ -62,6 +66,9 @@ namespace Astronautai
             Console.WriteLine("JOIN GAME");
             player = new Player(PlayerUsernameTextBox.Text, PlayerStartHealth, PlayerStartSize);
             player.SetCoordinates(random.Next(100, 200), random.Next(100, 200));
+            PlayerNameInputLabel.Text += PlayerUsernameTextBox.Text;
+            JoinGameButton.Visible = false;
+            StartGameButton.Visible = true;
             server.Invoke("AddPlayerOnJoin", player);
         }
 
@@ -72,9 +79,18 @@ namespace Astronautai
                 Name = player.Username,
                 Size = new Size(PlayerStartSize, PlayerStartSize),
                 Location = new Point(player.X, player.Y),
-                Image = Image.FromFile("player.jpg"),
+                Image = Image.FromFile(@"..//..//Objects//player.png"),
+            };
+            var playerLabel = new Label
+            {
+                Name = "playerLabel" + player.Username,
+                Text = player.Username,
+                Location = new Point(player.X, player.Y+25),
+               
             };
             this.Controls.Add(playerPictureBox);
+            this.Controls.Add(playerLabel);
+            //playerLabel.BringToFront();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -110,41 +126,99 @@ namespace Astronautai
         {
             if (startGame)
             {
+                this.ActiveControl = playerFocus;
                 AddPlayersPictureBoxes(playerList);
                 startGame = false;
                 gameLoopStarted = true;
+                StartGameButton.Visible = false;
+                JoinGameButton.Visible = false;
+                PlayerUsernameTextBox.Visible = false;
             }
 
             if (gameLoopStarted)
             {
-                Console.WriteLine(this.Focused);
-                var pictureBox = this.Controls.Find(player.Username, true)[0] as PictureBox;
-                pictureBox.Location = new Point(player.X, player.Y);
             }
         }
 
-        private void StartGameButton_KeyDown(object sender, KeyEventArgs e)
+
+        private void playerFocus_KeyDown(object sender, KeyEventArgs e)
         {
-            Console.WriteLine(e.KeyCode);
+
             if (e.KeyCode == Keys.W)
             {
-                player.Y -= moveAmount;
-                server.Invoke("PlayerMovement", player).Wait();
+                if (MovableSpace(player.Y -= moveAmount, 'y'))
+                {
+                    player.Y -= moveAmount;
+                    server.Invoke("PlayerMovement", player);
+                }
+                else
+                {
+                    player.Y = 25;
+                    server.Invoke("PlayerMovement", player);
+                }
             }
             if (e.KeyCode == Keys.S)
             {
-                player.Y += moveAmount;
-                server.Invoke("PlayerMovement", player).Wait();
+                if (MovableSpace(player.Y += moveAmount, 'y'))
+                {
+                    player.Y+= moveAmount;
+                    server.Invoke("PlayerMovement", player);
+                }
+                else
+                {
+                    player.Y = 550;
+                    server.Invoke("PlayerMovement", player);
+                }
             }
             if (e.KeyCode == Keys.A)
             {
-                player.X -= moveAmount;
-                server.Invoke("PlayerMovement", player).Wait();
+                if (MovableSpace(player.X -= moveAmount, 'x'))
+                {
+                    player.X -= moveAmount;
+                    server.Invoke("PlayerMovement", player);
+                }
+                else
+                {
+                    player.X = 25;
+                    server.Invoke("PlayerMovement", player);
+                }
             }
             if (e.KeyCode == Keys.D)
             {
-                player.X += moveAmount;
-                server.Invoke("PlayerMovement", player);
+                if (MovableSpace(player.X+=moveAmount, 'x'))
+                {
+                    player.X += moveAmount;
+                    server.Invoke("PlayerMovement", player);
+                }
+                else
+                {
+                    player.X = 750;
+                    server.Invoke("PlayerMovement", player);
+                }
+
+            }
+        }
+
+        private bool MovableSpace(int coord, char type)
+        {
+            switch (type)
+            {
+                case 'x':
+                    if (player.X < 25 || player.X > 750)
+                    {
+                        return false;
+                    }
+                    return true;
+
+                case 'y':
+                    if (player.Y < 25 || player.Y > 550)
+                    {
+                        return false;
+                    }
+                    return true;
+
+                default:
+                    return false;
             }
         }
     }

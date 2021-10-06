@@ -41,7 +41,10 @@ namespace GameServer
         {
             Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y}");
             Clients.All.movePlayer(player.Username, player.X, player.Y);
+
         }
+
+
 
         //PADARYTI ZAIDEJU SARASO ATNAUJINIMA
     }

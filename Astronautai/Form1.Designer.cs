@@ -36,6 +36,7 @@ namespace Astronautai
             this.StartGameButton = new System.Windows.Forms.Button();
             this.PlayerUsernameTextBox = new System.Windows.Forms.TextBox();
             this.PlayerNameInputLabel = new System.Windows.Forms.Label();
+            this.playerFocus = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -62,18 +63,19 @@ namespace Astronautai
             // 
             // StartGameButton
             // 
-            this.StartGameButton.Location = new System.Drawing.Point(93, 42);
+            this.StartGameButton.Location = new System.Drawing.Point(12, 42);
             this.StartGameButton.Name = "StartGameButton";
             this.StartGameButton.Size = new System.Drawing.Size(75, 23);
             this.StartGameButton.TabIndex = 2;
             this.StartGameButton.Text = "Start";
             this.StartGameButton.UseVisualStyleBackColor = true;
+            this.StartGameButton.Visible = false;
             this.StartGameButton.Click += new System.EventHandler(this.StartGameButton_Click);
-            this.StartGameButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StartGameButton_KeyDown);
             // 
             // PlayerUsernameTextBox
             // 
             this.PlayerUsernameTextBox.Location = new System.Drawing.Point(12, 16);
+            this.PlayerUsernameTextBox.MaxLength = 3;
             this.PlayerUsernameTextBox.Name = "PlayerUsernameTextBox";
             this.PlayerUsernameTextBox.Size = new System.Drawing.Size(156, 20);
             this.PlayerUsernameTextBox.TabIndex = 3;
@@ -87,11 +89,22 @@ namespace Astronautai
             this.PlayerNameInputLabel.TabIndex = 4;
             this.PlayerNameInputLabel.Text = "Player username:";
             // 
+            // playerFocus
+            // 
+            this.playerFocus.Location = new System.Drawing.Point(-1000, -1000);
+            this.playerFocus.Name = "playerFocus";
+            this.playerFocus.ReadOnly = true;
+            this.playerFocus.Size = new System.Drawing.Size(0, 20);
+            this.playerFocus.TabIndex = 5;
+            this.playerFocus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.playerFocus_KeyDown);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(804, 601);
+            this.Controls.Add(this.playerFocus);
             this.Controls.Add(this.PlayerNameInputLabel);
             this.Controls.Add(this.PlayerUsernameTextBox);
             this.Controls.Add(this.StartGameButton);
@@ -113,6 +126,7 @@ namespace Astronautai
         private System.Windows.Forms.Button StartGameButton;
         private System.Windows.Forms.TextBox PlayerUsernameTextBox;
         private System.Windows.Forms.Label PlayerNameInputLabel;
+        private System.Windows.Forms.TextBox playerFocus;
     }
 }
 
