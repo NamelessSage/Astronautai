@@ -6,9 +6,9 @@ namespace Class_diagram
 {
 	public class Projectile : Coordinates
 	{
-		Player player;
-		
-		int Id;
+		public Player Player;
+		public int Id;
+		public char Direction;
 		
 	}
 	

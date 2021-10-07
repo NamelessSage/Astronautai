@@ -100,6 +100,7 @@ namespace Astronautai
             this.playerFocus.Size = new System.Drawing.Size(0, 20);
             this.playerFocus.TabIndex = 5;
             this.playerFocus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.playerFocus_KeyDown);
+            this.playerFocus.KeyUp += new System.Windows.Forms.KeyEventHandler(this.playerFocus_KeyUp);
             // 
             // panel1
             // 

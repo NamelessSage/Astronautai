@@ -9,8 +9,7 @@ namespace GameServer
 {
     public class GameData
     {
-        public static List<Player> players = new List<Player>();
-        public static Map map = Map.getInstance();
+        public static Map map;
 
         public GameData()
         {
@@ -19,19 +18,33 @@ namespace GameServer
 
         public List<Player> GetPlayers()
         {
-            return players;
+            Map map = Map.Instance;
+            return map.players;
         }
 
         public void AddPlayer(Player player)
         {
-            players.Add(player);
+            Map map = Map.Instance;
+            map.players.Add(player);
         }
 
         public Map GetMap()
         {
+            Map map = Map.Instance;
             return map;
         }
 
+        public void AddProjectile(Projectile projectile)
+        {
+            Map map = Map.Instance;
+            map.projectiles.Add(projectile);
+        }
+
+        public List<Projectile> GetProjectiles()
+        {
+            Map map = Map.Instance;
+            return map.projectiles;
+        }
 
     }
 }

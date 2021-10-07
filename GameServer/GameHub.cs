@@ -33,7 +33,6 @@ namespace GameServer
         }
         public void GetPlayersCaller()
         {
-            
             List<Player> players = data.GetPlayers();
             Console.WriteLine("Returnin players to caller - " + players.Count());
             Clients.Caller.getPlayersCaller(players); //SEND TO EVERYONE ??
@@ -48,7 +47,28 @@ namespace GameServer
         {
             Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y} {player.Rotation}");
             Clients.All.movePlayer(player.Username, player.X, player.Y, player.Rotation);
+        }
 
+        public void AddProjectile(Projectile projectile)
+        {
+            Console.WriteLine("Adding projectile with id = " + projectile.Id);
+            data.AddProjectile(projectile);
+        }
+
+        public void UpdateTicks()
+        {
+            Clients.All.updateTicks(data.GetProjectiles());
+        }
+
+        public void GetProjectilesCountCaller()
+        {
+            Clients.Caller.getProjectilesCountCaller(data.GetProjectiles().Count);
+        }
+
+        public void GetProjectiles()
+        {
+            List<Projectile> projectiles = data.GetProjectiles();
+            Clients.All.getProjectiles(projectiles);
         }
 
 
