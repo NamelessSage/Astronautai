@@ -15,10 +15,11 @@ namespace GameServer
     public class GameHub : Hub
     {
         GameData data = new GameData();
+        bool started = false;
 
         public GameHub()
         {
-            
+
         }
 
         public void AddPlayerOnJoin(Player player)
@@ -33,6 +34,7 @@ namespace GameServer
         }
         public void GetPlayersCaller()
         {
+
             List<Player> players = data.GetPlayers();
             Console.WriteLine("Returnin players to caller - " + players.Count());
             Clients.Caller.getPlayersCaller(players); //SEND TO EVERYONE ??
@@ -40,6 +42,8 @@ namespace GameServer
 
         public void StartGame()
         {
+            Console.WriteLine("Game started");
+            if(!started)
             Clients.All.startGame(true);
         }
 
@@ -57,6 +61,7 @@ namespace GameServer
 
         public void UpdateTicks()
         {
+            Console.WriteLine("update tick");
             Clients.All.updateTicks(data.GetProjectiles());
         }
 
@@ -70,9 +75,5 @@ namespace GameServer
             List<Projectile> projectiles = data.GetProjectiles();
             Clients.All.getProjectiles(projectiles);
         }
-
-
-
-        //PADARYTI ZAIDEJU SARASO ATNAUJINIMA
     }
 }

@@ -87,6 +87,12 @@ namespace Astronautai
                 }
             });
 
+
+            server.On<int>("getProjectilesCountCaller", (count) =>
+            {
+                AddProjectile(count);
+            });
+
             server.On<List<Projectile>>("getProjectiles", (projectiles) =>
             {
                 projectileList.Add(projectiles[projectiles.Count-1]);
@@ -101,23 +107,35 @@ namespace Astronautai
             {
                 foreach(Projectile projectile in projectiles)
                 {
-                    var pictureBox = this.Controls.Find("Projectile"+projectile.Id, true)[0] as PictureBox;
-                    switch (projectile.Direction)
+                    if (projectiles.Count != 0)
                     {
-                        case 'W':
-                            pictureBox.Location = new Point(projectile.X, projectile.Y-5);
-                            break;
-                        case 'A':
-                            pictureBox.Location = new Point(projectile.X-5, projectile.Y);
-                            break;
-                        case 'S':
-                            pictureBox.Location = new Point(projectile.X, projectile.Y + 5);
-                            break;
-                        case 'D':
-                            pictureBox.Location = new Point(projectile.X+5, projectile.Y );
-                            break;
-                        default:
-                            break;
+                        try
+                        {
+                            var pictureBox1 = this.Controls.Find("Projectile" + projectile.Id, true)[0] as PictureBox;
+                            AddProjectilePictureBox(projectile);
+                        }
+                        catch
+                        {
+                        }
+                        var pictureBox = this.Controls.Find("Projectile" + projectile.Id, true)[0] as PictureBox;
+                        switch (projectile.Direction)
+                        {
+                            case 'W':
+                                pictureBox.Location = new Point(projectile.X, projectile.Y - 5);
+                                break;
+                            case 'A':
+                                pictureBox.Location = new Point(projectile.X - 5, projectile.Y);
+                                break;
+                            case 'S':
+                                pictureBox.Location = new Point(projectile.X, projectile.Y + 5);
+                                break;
+                            case 'D':
+                                pictureBox.Location = new Point(projectile.X + 5, projectile.Y);
+                                break;
+                            default:
+                                break;
+                        }
+                        
                     }
                 }
             });
@@ -203,6 +221,7 @@ namespace Astronautai
 
         private void AddProjectilePictureBoxes(List<Projectile> projectiles)
         {
+            if(projectiles != null)
             foreach (var projectile in projectiles)
             {
                 AddProjectilePictureBox(projectile);
@@ -213,7 +232,7 @@ namespace Astronautai
         {
             timer = new Timer();
             timer.Tick += new EventHandler(timer1_Tick);
-            timer.Interval = 100; // in miliseconds
+            timer.Interval = 1000; // in miliseconds
             timer.Start();
         }
 
@@ -235,9 +254,11 @@ namespace Astronautai
 
             if (gameLoopStarted)
             {
-                //AddProjectilePictureBoxes(projectileList);
+                server.Invoke("UpdateTicks");
+
             }
         }
+
 
 
         private void playerFocus_KeyDown(object sender, KeyEventArgs e)
@@ -416,6 +437,7 @@ namespace Astronautai
                     break;
             }
             p.Id = count;
+            AddProjectilePictureBox(p);
             server.Invoke("AddProjectile", p);
         }
 
@@ -432,15 +454,14 @@ namespace Astronautai
             projectilePictureBox.BringToFront();
         }
 
+
+
+
         private void playerFocus_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Q)
             {
-                server.On<int>("getProjectilesCountCaller", (count) =>
-                {
-                    AddProjectile(count);
-                });
-                server.Invoke("GetProjectilesCountCaller").Wait();
+                server.Invoke("GetProjectilesCountCaller");
             }
         }
     }
