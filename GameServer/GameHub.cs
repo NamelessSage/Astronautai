@@ -31,6 +31,13 @@ namespace GameServer
             List<Player> players = data.GetPlayers();
             Clients.All.getPlayers(players); //SEND TO EVERYONE ??
         }
+        public void GetPlayersCaller()
+        {
+            
+            List<Player> players = data.GetPlayers();
+            Console.WriteLine("Returnin players to caller - " + players.Count());
+            Clients.Caller.getPlayersCaller(players); //SEND TO EVERYONE ??
+        }
 
         public void StartGame()
         {
@@ -39,8 +46,8 @@ namespace GameServer
 
         public void PlayerMovement(Player player)
         {
-            Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y}");
-            Clients.All.movePlayer(player.Username, player.X, player.Y);
+            Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y} {player.Rotation}");
+            Clients.All.movePlayer(player.Username, player.X, player.Y, player.Rotation);
 
         }
 

@@ -37,8 +37,11 @@ namespace Astronautai
             this.PlayerUsernameTextBox = new System.Windows.Forms.TextBox();
             this.PlayerNameInputLabel = new System.Windows.Forms.Label();
             this.playerFocus = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.healthLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // astroDataSet
@@ -53,7 +56,7 @@ namespace Astronautai
             // 
             // JoinGameButton
             // 
-            this.JoinGameButton.Location = new System.Drawing.Point(12, 42);
+            this.JoinGameButton.Location = new System.Drawing.Point(23, 69);
             this.JoinGameButton.Name = "JoinGameButton";
             this.JoinGameButton.Size = new System.Drawing.Size(75, 23);
             this.JoinGameButton.TabIndex = 1;
@@ -63,7 +66,7 @@ namespace Astronautai
             // 
             // StartGameButton
             // 
-            this.StartGameButton.Location = new System.Drawing.Point(12, 42);
+            this.StartGameButton.Location = new System.Drawing.Point(23, 69);
             this.StartGameButton.Name = "StartGameButton";
             this.StartGameButton.Size = new System.Drawing.Size(75, 23);
             this.StartGameButton.TabIndex = 2;
@@ -74,8 +77,8 @@ namespace Astronautai
             // 
             // PlayerUsernameTextBox
             // 
-            this.PlayerUsernameTextBox.Location = new System.Drawing.Point(12, 16);
-            this.PlayerUsernameTextBox.MaxLength = 3;
+            this.PlayerUsernameTextBox.Location = new System.Drawing.Point(23, 43);
+            this.PlayerUsernameTextBox.MaxLength = 10;
             this.PlayerUsernameTextBox.Name = "PlayerUsernameTextBox";
             this.PlayerUsernameTextBox.Size = new System.Drawing.Size(156, 20);
             this.PlayerUsernameTextBox.TabIndex = 3;
@@ -83,11 +86,11 @@ namespace Astronautai
             // PlayerNameInputLabel
             // 
             this.PlayerNameInputLabel.AutoSize = true;
-            this.PlayerNameInputLabel.Location = new System.Drawing.Point(12, 0);
+            this.PlayerNameInputLabel.Location = new System.Drawing.Point(20, 8);
             this.PlayerNameInputLabel.Name = "PlayerNameInputLabel";
-            this.PlayerNameInputLabel.Size = new System.Drawing.Size(88, 13);
+            this.PlayerNameInputLabel.Size = new System.Drawing.Size(91, 13);
             this.PlayerNameInputLabel.TabIndex = 4;
-            this.PlayerNameInputLabel.Text = "Player username:";
+            this.PlayerNameInputLabel.Text = "Player username: ";
             // 
             // playerFocus
             // 
@@ -98,22 +101,48 @@ namespace Astronautai
             this.playerFocus.TabIndex = 5;
             this.playerFocus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.playerFocus_KeyDown);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.healthLabel);
+            this.panel1.Controls.Add(this.StartGameButton);
+            this.panel1.Controls.Add(this.JoinGameButton);
+            this.panel1.Controls.Add(this.PlayerNameInputLabel);
+            this.panel1.Controls.Add(this.PlayerUsernameTextBox);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(20);
+            this.panel1.Size = new System.Drawing.Size(804, 603);
+            this.panel1.TabIndex = 6;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // healthLabel
+            // 
+            this.healthLabel.AutoSize = true;
+            this.healthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.healthLabel.Location = new System.Drawing.Point(345, 577);
+            this.healthLabel.Name = "healthLabel";
+            this.healthLabel.Size = new System.Drawing.Size(107, 25);
+            this.healthLabel.TabIndex = 5;
+            this.healthLabel.Text = "Health: 0/3";
+            this.healthLabel.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(804, 601);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.playerFocus);
-            this.Controls.Add(this.PlayerNameInputLabel);
-            this.Controls.Add(this.PlayerUsernameTextBox);
-            this.Controls.Add(this.StartGameButton);
-            this.Controls.Add(this.JoinGameButton);
             this.Name = "Form1";
             this.Text = "Form1";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,6 +156,8 @@ namespace Astronautai
         private System.Windows.Forms.TextBox PlayerUsernameTextBox;
         private System.Windows.Forms.Label PlayerNameInputLabel;
         private System.Windows.Forms.TextBox playerFocus;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label healthLabel;
     }
 }
 

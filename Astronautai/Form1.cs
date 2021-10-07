@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 
 namespace Astronautai
@@ -20,13 +21,14 @@ namespace Astronautai
 
         const int PlayerStartHealth = 3;
         const int PlayerStartSize = 25;
+        public string CurrentPlayerUsername;
 
         bool startGame = false;
         bool gameLoopStarted = false;
 
         List<Player> playerList;
 
-        int moveAmount = 10;
+        int moveAmount = 2;
 
         public Form1()
         {
@@ -35,14 +37,45 @@ namespace Astronautai
             HubConnection hubConnection = new HubConnection("http://localhost:8080");
             server = hubConnection.CreateHubProxy("serveris");
             playerList = new List<Player>();
-
-            server.On<string, int, int>("movePlayer", (name, x, y) =>
+            Bitmap btm;
+            
+            server.On<string, int, int, char>("movePlayer", (name, x, y, rotation) =>
             {
                 var pictureBox = this.Controls.Find(name, true)[0] as PictureBox;
                 pictureBox.Location = new Point(x, y);
-
-                var label = this.Controls.Find("playerLabel" + name, true)[0] as Label;
-                label.Location = new Point(x, y+25);
+                if (CurrentPlayerUsername == name)
+                {
+                    btm = (Bitmap)Bitmap.FromFile(@"..//..//Objects//currentPlayer.png");
+                    switch (rotation)
+                    {
+                        case 'S':
+                            btm.RotateFlip(RotateFlipType.Rotate180FlipX);
+                            break;
+                        case 'A':
+                            btm.RotateFlip(RotateFlipType.Rotate270FlipY);
+                            break;
+                        case 'D':
+                            btm.RotateFlip(RotateFlipType.Rotate90FlipY);
+                            break;
+                    }
+                }
+                else
+                {
+                    btm = (Bitmap)Bitmap.FromFile(@"..//..//Objects//player.png");
+                    switch (rotation)
+                    {
+                        case 'S':
+                            btm.RotateFlip(RotateFlipType.Rotate180FlipX);
+                            break;
+                        case 'A':
+                            btm.RotateFlip(RotateFlipType.Rotate270FlipY);
+                            break;
+                        case 'D':
+                            btm.RotateFlip(RotateFlipType.Rotate90FlipY);
+                            break;
+                    }
+                }
+                pictureBox.Image = btm;
             });
 
             server.On<List<Player>>("getPlayers", (players) =>
@@ -64,33 +97,56 @@ namespace Astronautai
         private void JoinGameButton_Click(object sender, EventArgs e)
         {
             Console.WriteLine("JOIN GAME");
-            player = new Player(PlayerUsernameTextBox.Text, PlayerStartHealth, PlayerStartSize);
-            player.SetCoordinates(random.Next(100, 200), random.Next(100, 200));
-            PlayerNameInputLabel.Text += PlayerUsernameTextBox.Text;
-            JoinGameButton.Visible = false;
-            StartGameButton.Visible = true;
-            server.Invoke("AddPlayerOnJoin", player);
+            bool existing = false;
+            
+            server.On<List<Player>>("getPlayersCaller", (players) =>
+            {
+                foreach(var player in players)
+                {
+                    if (player.Username == PlayerUsernameTextBox.Text)
+                        existing = true;
+                }
+            });
+            server.Invoke("GetPlayersCaller").Wait();
+            if (!existing)
+            {
+                player = new Player(PlayerUsernameTextBox.Text, PlayerStartHealth, PlayerStartSize);
+                player.SetCoordinates(random.Next(100, 200), random.Next(100, 200));
+                PlayerNameInputLabel.Text += PlayerUsernameTextBox.Text;
+                CurrentPlayerUsername = PlayerUsernameTextBox.Text;
+                JoinGameButton.Visible = false;
+                StartGameButton.Visible = true;
+                server.Invoke("AddPlayerOnJoin", player);
+            }
         }
 
         public void AddPlayerPictureBox(Player player)
         {
-            var playerPictureBox = new PictureBox
+            if (player.Username == CurrentPlayerUsername) 
             {
-                Name = player.Username,
-                Size = new Size(PlayerStartSize, PlayerStartSize),
-                Location = new Point(player.X, player.Y),
-                Image = Image.FromFile(@"..//..//Objects//player.png"),
-            };
-            var playerLabel = new Label
+                var playerPictureBox = new PictureBox
+                {
+                    Name = player.Username,
+                    Size = new Size(PlayerStartSize, PlayerStartSize),
+                    Location = new Point(player.X, player.Y),
+                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//currentPlayer.png"),
+                };
+                this.Controls.Add(playerPictureBox);
+                playerPictureBox.BringToFront();
+            }
+            else
             {
-                Name = "playerLabel" + player.Username,
-                Text = player.Username,
-                Location = new Point(player.X, player.Y+25),
-               
-            };
-            this.Controls.Add(playerPictureBox);
-            this.Controls.Add(playerLabel);
-            //playerLabel.BringToFront();
+                var playerPictureBox = new PictureBox
+                {
+                    Name = player.Username,
+                    Size = new Size(PlayerStartSize, PlayerStartSize),
+                    Location = new Point(player.X, player.Y),
+                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//player.png"),
+                };
+                this.Controls.Add(playerPictureBox);
+                playerPictureBox.BringToFront();
+            }
+
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -133,6 +189,8 @@ namespace Astronautai
                 StartGameButton.Visible = false;
                 JoinGameButton.Visible = false;
                 PlayerUsernameTextBox.Visible = false;
+                healthLabel.Visible = true;
+                healthLabel.Text = "Health: " + player.Health + "/3";
             }
 
             if (gameLoopStarted)
@@ -146,53 +204,82 @@ namespace Astronautai
 
             if (e.KeyCode == Keys.W)
             {
-                if (MovableSpace(player.Y -= moveAmount, 'y'))
+                player.Rotation = 'W';
+                if (!MovableSpace(player.Y -= moveAmount, 'y'))
                 {
-                    player.Y -= moveAmount;
+                    player.Y = 25;
+                    server.Invoke("PlayerMovement", player);
+                }
+                else if (PlayerCollision(player.X, player.Y -= moveAmount))
+                {
+                    player.Y += moveAmount;
+                    player.Y += moveAmount;
                     server.Invoke("PlayerMovement", player);
                 }
                 else
                 {
-                    player.Y = 25;
+                    player.Y -= moveAmount;
                     server.Invoke("PlayerMovement", player);
                 }
             }
             if (e.KeyCode == Keys.S)
             {
-                if (MovableSpace(player.Y += moveAmount, 'y'))
+                player.Rotation = 'S';
+                if (!MovableSpace(player.Y += moveAmount, 'y'))
                 {
-                    player.Y+= moveAmount;
+                    player.Y = 550;
+                    server.Invoke("PlayerMovement", player);
+                }
+                else if (PlayerCollision(player.X, player.Y += moveAmount))
+                {
+                    player.Y -= moveAmount;
+                    player.Y -= moveAmount;
                     server.Invoke("PlayerMovement", player);
                 }
                 else
                 {
-                    player.Y = 550;
+                    player.Y += moveAmount;
                     server.Invoke("PlayerMovement", player);
                 }
             }
             if (e.KeyCode == Keys.A)
             {
-                if (MovableSpace(player.X -= moveAmount, 'x'))
-                {
-                    player.X -= moveAmount;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else
+                player.Rotation = 'A';
+                if (!MovableSpace(player.X -= moveAmount, 'x'))
                 {
                     player.X = 25;
                     server.Invoke("PlayerMovement", player);
                 }
-            }
-            if (e.KeyCode == Keys.D)
-            {
-                if (MovableSpace(player.X+=moveAmount, 'x'))
+                else if (PlayerCollision(player.X -= moveAmount, player.Y))
                 {
+                    player.X += moveAmount;
                     player.X += moveAmount;
                     server.Invoke("PlayerMovement", player);
                 }
                 else
                 {
+                    player.X -= moveAmount;
+                    server.Invoke("PlayerMovement", player);
+                    
+                }
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                player.Rotation = 'D';
+                if (!MovableSpace(player.X+=moveAmount, 'x'))
+                {
                     player.X = 750;
+                    server.Invoke("PlayerMovement", player);
+                }
+                else if (PlayerCollision(player.X += moveAmount, player.Y))
+                {
+                    player.X -= moveAmount;
+                    player.X -= moveAmount;
+                    server.Invoke("PlayerMovement", player);
+                }
+                else
+                {
+                    player.X += moveAmount;
                     server.Invoke("PlayerMovement", player);
                 }
 
@@ -205,20 +292,59 @@ namespace Astronautai
             {
                 case 'x':
                     if (player.X < 25 || player.X > 750)
-                    {
                         return false;
-                    }
+                    else
                     return true;
 
                 case 'y':
                     if (player.Y < 25 || player.Y > 550)
-                    {
                         return false;
-                    }
                     return true;
 
                 default:
                     return false;
+            }
+        }
+
+        private bool PlayerCollision(int x, int y)
+        {
+            bool collides = false;
+            server.On<List<Player>>("getPlayersCaller", (players) =>
+            {
+                foreach (var pl in players)
+                {
+                    if (CurrentPlayerUsername != pl.Username)
+                    {
+                        if ((x>pl.X && x < pl.X + PlayerStartSize) && (y>pl.Y && y < pl.Y + PlayerStartSize)||
+                        (x + PlayerStartSize > pl.X && x + PlayerStartSize < pl.X + PlayerStartSize) && (y > pl.Y && y < pl.Y + PlayerStartSize)||
+                        (x > pl.X && x < pl.X + PlayerStartSize) && (y + PlayerStartSize > pl.Y && y + PlayerStartSize < pl.Y + PlayerStartSize)||
+                        (x + PlayerStartSize > pl.X && x + PlayerStartSize < pl.X + PlayerStartSize) && (y + PlayerStartSize > pl.Y && y + PlayerStartSize < pl.Y + PlayerStartSize))
+                        {
+                            collides = true;
+                            break;
+                        }
+                    }
+                }
+            });
+            server.Invoke("GetPlayersCaller").Wait();
+
+            //ADD Object Collsion!!!!!!!!!!!!!!!!
+
+            return collides;
+        }
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            if (panel1.BorderStyle == BorderStyle.FixedSingle)
+            {
+                int thickness = 20;//it's up to you
+                int halfThickness = thickness / 2;
+                using (Pen p = new Pen(Color.Black, thickness))
+                {
+                    e.Graphics.DrawRectangle(p, new Rectangle(halfThickness,
+                                                              halfThickness,
+                                                              panel1.ClientSize.Width - thickness,
+                                                              panel1.ClientSize.Height - thickness));
+                }
             }
         }
     }
