@@ -15,7 +15,7 @@ namespace Class_diagram
 		public List<Projectile> projectiles = new List<Projectile>();
 		public int Score = 0;
 		public int Diffiulty = 0;
-		public List<Pickups> pickups = new List<Pickups>();
+		public List<Pickup> pickups = new List<Pickup>();
 		public List<Player> players = new List<Player>();
 		private Map() { }
 		public static Map Instance

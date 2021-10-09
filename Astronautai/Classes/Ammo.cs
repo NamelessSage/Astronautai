@@ -4,7 +4,7 @@
 
 namespace Class_diagram
 {
-	public class Ammo : Pickups
+	public class Ammo : Pickup
 	{
 		string Type;
 		int Value;
