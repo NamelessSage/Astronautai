@@ -13,6 +13,7 @@ namespace Astronautai.Classes.Builder
         //void SetType(string type);
         void SetImg(string img);
         void SetSize(int size);
+        void Reset();
         
     }
 }
