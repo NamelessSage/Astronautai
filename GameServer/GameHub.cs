@@ -47,6 +47,7 @@ namespace GameServer
             Console.WriteLine("Game started");
             if (!started)
             {
+                started = true;
                 StartTimer();
                 Clients.All.startGame(true);
             }

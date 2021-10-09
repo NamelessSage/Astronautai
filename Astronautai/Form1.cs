@@ -114,23 +114,7 @@ namespace Astronautai
                             if (b.Length != 0)
                             {
                                 var pictureBox = b[0] as PictureBox;
-                                switch (projectile.Direction)
-                                {
-                                    case 'W':
-                                        pictureBox.Location = new Point(projectile.X, projectile.Y - 5);
-                                        break;
-                                    case 'A':
-                                        pictureBox.Location = new Point(projectile.X - 5, projectile.Y);
-                                        break;
-                                    case 'S':
-                                        pictureBox.Location = new Point(projectile.X, projectile.Y + 5);
-                                        break;
-                                    case 'D':
-                                        pictureBox.Location = new Point(projectile.X + 5, projectile.Y);
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                pictureBox.Location = new Point(projectile.X, projectile.Y);
                             }
                             else
                             {
@@ -221,15 +205,6 @@ namespace Astronautai
             }
         }
 
-        //private void AddProjectilePictureBoxes(List<Projectile> projectiles)
-        //{
-        //    if(projectiles != null)
-        //    foreach (var projectile in projectiles)
-        //    {
-        //        AddProjectilePictureBox(projectile);
-        //    }
-        //}
-
         public void InitTimer()
         {
             timer = new Timer();
@@ -256,7 +231,6 @@ namespace Astronautai
 
             if (gameLoopStarted)
             {
-                //server.Invoke("UpdateTicks");
             }
         }
 
@@ -455,9 +429,6 @@ namespace Astronautai
             this.Controls.Add(projectilePictureBox);
             projectilePictureBox.BringToFront();
         }
-
-
-
 
         private void playerFocus_KeyUp(object sender, KeyEventArgs e)
         {
