@@ -211,13 +211,17 @@
     <Compile Include="Classes\Ammo.cs" />
     <Compile Include="Classes\AverageAsteroid.cs" />
     <Compile Include="Classes\BigAsteroid.cs" />
+    <Compile Include="Classes\Builder\IBuilder.cs" />
+    <Compile Include="Classes\Builder\PickupBuilder.cs" />
     <Compile Include="Classes\Coordinates.cs" />
     <Compile Include="Classes\Creator.cs" />
     <Compile Include="Classes\Enemy.cs" />
     <Compile Include="Classes\EnemyCreator.cs" />
+    <Compile Include="Classes\Factory\TempFactory.cs" />
     <Compile Include="Classes\Health.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Obstacles.cs" />
+    <Compile Include="Classes\Pickup.cs" />
     <Compile Include="Classes\Pickups.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Projectile.cs" />

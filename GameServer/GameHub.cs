@@ -93,9 +93,9 @@ namespace GameServer
         public void AddAsteroid(string size)
         {
             data.AddAsteroid(size);
-
+        }
         public void AddPickup()
-        { 
+        {
             Pickup pic = (Pickup)tempFactory.GetPickups("Ammo", 100, 100, 1);
             Clients.All.showPickup(pic);
         }
@@ -107,6 +107,4 @@ namespace GameServer
             _timer.Elapsed += new ElapsedEventHandler(UpdateTicks);
             _timer.Start();
         }
-
-    }
-}
+    } }

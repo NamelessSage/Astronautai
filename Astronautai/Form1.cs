@@ -40,7 +40,7 @@ namespace Astronautai
             server = hubConnection.CreateHubProxy("serveris");
             playerList = new List<Player>();
             Bitmap btm;
-            
+
             server.On<string, int, int, char>("movePlayer", (name, x, y, rotation) =>
             {
                 var pictureBox = this.Controls.Find(name, true)[0] as PictureBox;
@@ -109,7 +109,7 @@ namespace Astronautai
 
             server.On<List<Projectile>>("getProjectiles", (projectiles) =>
             {
-                projectileList.Add(projectiles[projectiles.Count-1]);
+                projectileList.Add(projectiles[projectiles.Count - 1]);
             });
 
             server.On<bool>("startGame", (start) =>
@@ -171,10 +171,10 @@ namespace Astronautai
         {
             Console.WriteLine("JOIN GAME");
             bool existing = false;
-            
+
             server.On<List<Player>>("getPlayersCaller", (players) =>
             {
-                foreach(var player in players)
+                foreach (var player in players)
                 {
                     if (player.Username == PlayerUsernameTextBox.Text)
                         existing = true;
@@ -195,7 +195,7 @@ namespace Astronautai
 
         public void AddPlayerPictureBox(Player player)
         {
-            if (player.Username == CurrentPlayerUsername) 
+            if (player.Username == CurrentPlayerUsername)
             {
                 var playerPictureBox = new PictureBox
                 {
@@ -269,7 +269,7 @@ namespace Astronautai
                 server.Invoke("AddAsteroid", "Big");
                 server.Invoke("AddAsteroid", "Average");
 
-                
+
             }
 
             if (gameLoopStarted)
@@ -343,7 +343,7 @@ namespace Astronautai
                 //{
                 //    player.X -= moveAmount;
                 //    server.Invoke("PlayerMovement", player);
-                    
+
                 //}
             }
             if (e.KeyCode == Keys.D)
@@ -367,7 +367,7 @@ namespace Astronautai
                 //    server.Invoke("PlayerMovement", player);
                 //}
             }
-            if(e.KeyCode == Keys.M)
+            if (e.KeyCode == Keys.M)
             {
                 //Pickup pic = (Pickup)tempFactory.GetPickups("Ammo", 100, 100, 1);
                 //addpickup(pic);
@@ -445,18 +445,18 @@ namespace Astronautai
             {
                 case 'W':
                     p.X = player.X;
-                    p.Y = player.Y-10;
+                    p.Y = player.Y - 10;
                     break;
                 case 'A':
-                    p.X = player.X-10;
+                    p.X = player.X - 10;
                     p.Y = player.Y;
                     break;
                 case 'S':
                     p.X = player.X;
-                    p.Y = player.Y+10;
+                    p.Y = player.Y + 10;
                     break;
                 case 'D':
-                    p.X = player.X+10;
+                    p.X = player.X + 10;
                     p.Y = player.Y;
                     break;
                 default:
@@ -528,8 +528,8 @@ namespace Astronautai
                 this.Controls.Add(asteroidPictureBox);
                 asteroidPictureBox.BringToFront();
             }
-            
-        private void addpickup (Pickup pic)
+        }
+        private void addpickup(Pickup pic)
         {
             Console.WriteLine("ok");
             var pickupPictureBox = new PictureBox
