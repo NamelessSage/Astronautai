@@ -8,6 +8,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 using Astronautai;
 using Class_diagram;
 using System.Windows.Forms;
+using System.Timers;
 
 namespace GameServer
 {
@@ -16,7 +17,8 @@ namespace GameServer
     {
         GameData data = new GameData();
         bool started = false;
-
+        private System.Timers.Timer _timer;
+        private int _timerInterval = 500;
         public GameHub()
         {
 
@@ -43,8 +45,11 @@ namespace GameServer
         public void StartGame()
         {
             Console.WriteLine("Game started");
-            if(!started)
-            Clients.All.startGame(true);
+            if (!started)
+            {
+                StartTimer();
+                Clients.All.startGame(true);
+            }
         }
 
         public void PlayerMovement(Player player)
@@ -59,15 +64,16 @@ namespace GameServer
             data.AddProjectile(projectile);
         }
 
-        public void UpdateTicks()
+        public void UpdateTicks(object source, ElapsedEventArgs e)
         {
             Console.WriteLine("update tick");
+            data.UpdateProjectileCoords();
             Clients.All.updateTicks(data.GetProjectiles());
         }
 
         public void GetProjectilesCountCaller()
         {
-            Clients.Caller.getProjectilesCountCaller(data.GetProjectiles().Count);
+            Clients.All.getProjectilesCountCaller(data.GetProjectiles());
         }
 
         public void GetProjectiles()
@@ -75,5 +81,15 @@ namespace GameServer
             List<Projectile> projectiles = data.GetProjectiles();
             Clients.All.getProjectiles(projectiles);
         }
+
+
+        public void StartTimer()
+        {
+            Console.WriteLine("started timer");
+            _timer = new System.Timers.Timer(_timerInterval);
+            _timer.Elapsed += new ElapsedEventHandler(UpdateTicks);
+            _timer.Start();
+        }
+
     }
 }

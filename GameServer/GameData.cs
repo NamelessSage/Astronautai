@@ -46,5 +46,30 @@ namespace GameServer
             return map.projectiles;
         }
 
+        public void UpdateProjectileCoords()
+        {
+            Map map = Map.Instance;
+            foreach (Projectile p in map.projectiles)
+            {
+                switch (p.Direction)
+                {
+                    case 'W':
+                        p.Y = p.Y - 10;
+                        break;
+                    case 'A':
+                        p.X = p.X - 10;
+                        break;
+                    case 'S':
+                        p.Y = p.Y + 10;
+                        break;
+                    case 'D':
+                        p.X = p.X + 10;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
     }
 }
