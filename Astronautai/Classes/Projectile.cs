@@ -9,7 +9,9 @@ namespace Class_diagram
 		public Player Player;
 		public int Id;
 		public char Direction;
-		
-	}
+        public Projectile() : base()
+        {
+        }
+    }
 	
 }

@@ -9,7 +9,10 @@ namespace Class_diagram
 		int Id;
 		
 		int Size;
-		
-	}
+
+        public Obstacles(int x, int y) : base(x, y)
+        {
+        }
+    }
 	
 }

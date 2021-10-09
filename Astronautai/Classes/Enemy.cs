@@ -11,7 +11,10 @@ namespace Class_diagram
 		int Health;
 		
 		int Points;
-		
-	}
+
+        public Enemy() : base()
+        {
+        }
+    }
 	
 }

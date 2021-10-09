@@ -42,8 +42,11 @@ namespace Astronautai
             {
                 var pictureBox = this.Controls.Find(name, true)[0] as PictureBox;
                 pictureBox.Location = new Point(x, y);
+
                 if (CurrentPlayerUsername == name)
                 {
+                    player.X = x;
+                    player.Y = y;
                     btm = (Bitmap)Bitmap.FromFile(@"..//..//Objects//currentPlayer.png");
                     switch (rotation)
                     {
@@ -242,133 +245,135 @@ namespace Astronautai
             if (e.KeyCode == Keys.W)
             {
                 player.Rotation = 'W';
-                if (!MovableSpace(player.Y -= moveAmount, 'y'))
-                {
-                    player.Y = 25;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else if (PlayerCollision(player.X, player.Y -= moveAmount))
-                {
-                    player.Y += moveAmount;
-                    player.Y += moveAmount;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else
-                {
-                    player.Y -= moveAmount;
-                    server.Invoke("PlayerMovement", player);
-                }
+                server.Invoke("PlayerMovement", player);
+                //if (!MovableSpace(player.Y -= moveAmount, 'y'))
+                //{
+                //    player.Y = 25;
+                //    server.Invoke("PlayerMovement", player);
+                //}
+                //else if (PlayerCollision(player.X, player.Y -= moveAmount))
+                //{
+                //    player.Y += moveAmount;
+                //    player.Y += moveAmount;
+                //    server.Invoke("PlayerMovement", player);
+                //}
+                //else
+                //{
+                //    player.Y -= moveAmount;
+                //    server.Invoke("PlayerMovement", player);
+                //}
             }
             if (e.KeyCode == Keys.S)
             {
                 player.Rotation = 'S';
-                if (!MovableSpace(player.Y += moveAmount, 'y'))
-                {
-                    player.Y = 550;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else if (PlayerCollision(player.X, player.Y += moveAmount))
-                {
-                    player.Y -= moveAmount;
-                    player.Y -= moveAmount;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else
-                {
-                    player.Y += moveAmount;
-                    server.Invoke("PlayerMovement", player);
-                }
+                server.Invoke("PlayerMovement", player);
+                //if (!MovableSpace(player.Y += moveAmount, 'y'))
+                //{
+                //    player.Y = 550;
+                //    server.Invoke("PlayerMovement", player);
+                //}
+                //else if (PlayerCollision(player.X, player.Y += moveAmount))
+                //{
+                //    player.Y -= moveAmount;
+                //    player.Y -= moveAmount;
+                //    server.Invoke("PlayerMovement", player);
+                //}
+                //else
+                //{
+                //    player.Y += moveAmount;
+                //    server.Invoke("PlayerMovement", player);
+                //}
             }
             if (e.KeyCode == Keys.A)
             {
                 player.Rotation = 'A';
-                if (!MovableSpace(player.X -= moveAmount, 'x'))
-                {
-                    player.X = 25;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else if (PlayerCollision(player.X -= moveAmount, player.Y))
-                {
-                    player.X += moveAmount;
-                    player.X += moveAmount;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else
-                {
-                    player.X -= moveAmount;
-                    server.Invoke("PlayerMovement", player);
+                server.Invoke("PlayerMovement", player);
+                //if (!MovableSpace(player.X -= moveAmount, 'x'))
+                //{
+                //    player.X = 25;
+                //    server.Invoke("PlayerMovement", player);
+                //}
+                //else if (PlayerCollision(player.X -= moveAmount, player.Y))
+                //{
+                //    player.X += moveAmount;
+                //    player.X += moveAmount;
+                //    server.Invoke("PlayerMovement", player);
+                //}
+                //else
+                //{
+                //    player.X -= moveAmount;
+                //    server.Invoke("PlayerMovement", player);
                     
-                }
+                //}
             }
             if (e.KeyCode == Keys.D)
             {
                 player.Rotation = 'D';
-                if (!MovableSpace(player.X+=moveAmount, 'x'))
-                {
-                    player.X = 750;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else if (PlayerCollision(player.X += moveAmount, player.Y))
-                {
-                    player.X -= moveAmount;
-                    player.X -= moveAmount;
-                    server.Invoke("PlayerMovement", player);
-                }
-                else
-                {
-                    player.X += moveAmount;
-                    server.Invoke("PlayerMovement", player);
-                }
-
+                server.Invoke("PlayerMovement", player);
+                //if (!MovableSpace(player.X+=moveAmount, 'x'))
+                //{
+                //    player.X = 750;
+                //    server.Invoke("PlayerMovement", player);
+                //}
+                //else if (PlayerCollision(player.X += moveAmount, player.Y))
+                //{
+                //    player.X -= moveAmount;
+                //    player.X -= moveAmount;
+                //    server.Invoke("PlayerMovement", player);
+                //}
+                //else
+                //{
+                //    player.X += moveAmount;
+                //    server.Invoke("PlayerMovement", player);
+                //}
             }
         }
 
-        private bool MovableSpace(int coord, char type)
-        {
-            switch (type)
-            {
-                case 'x':
-                    if (player.X < 25 || player.X > 750)
-                        return false;
-                    else
-                    return true;
+        //private bool MovableSpace(int coord, char type)
+        //{
+        //    switch (type)
+        //    {
+        //        case 'x':
+        //            if (player.X < 25 || player.X > 750)
+        //                return false;
+        //            else
+        //            return true;
 
-                case 'y':
-                    if (player.Y < 25 || player.Y > 550)
-                        return false;
-                    return true;
+        //        case 'y':
+        //            if (player.Y < 25 || player.Y > 550)
+        //                return false;
+        //            return true;
+        //        default:
+        //            return false;
+        //    }
+        //}
 
-                default:
-                    return false;
-            }
-        }
+        //private bool PlayerCollision(int x, int y)
+        //{
+        //    bool collides = false;
+        //    server.On<List<Player>>("getPlayersCaller", (players) =>
+        //    {
+        //        foreach (var pl in players)
+        //        {
+        //            if (CurrentPlayerUsername != pl.Username)
+        //            {
+        //                if ((x>pl.X && x < pl.X + PlayerStartSize) && (y>pl.Y && y < pl.Y + PlayerStartSize)||
+        //                (x + PlayerStartSize > pl.X && x + PlayerStartSize < pl.X + PlayerStartSize) && (y > pl.Y && y < pl.Y + PlayerStartSize)||
+        //                (x > pl.X && x < pl.X + PlayerStartSize) && (y + PlayerStartSize > pl.Y && y + PlayerStartSize < pl.Y + PlayerStartSize)||
+        //                (x + PlayerStartSize > pl.X && x + PlayerStartSize < pl.X + PlayerStartSize) && (y + PlayerStartSize > pl.Y && y + PlayerStartSize < pl.Y + PlayerStartSize))
+        //                {
+        //                    collides = true;
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //    });
+        //    server.Invoke("GetPlayersCaller").Wait();
 
-        private bool PlayerCollision(int x, int y)
-        {
-            bool collides = false;
-            server.On<List<Player>>("getPlayersCaller", (players) =>
-            {
-                foreach (var pl in players)
-                {
-                    if (CurrentPlayerUsername != pl.Username)
-                    {
-                        if ((x>pl.X && x < pl.X + PlayerStartSize) && (y>pl.Y && y < pl.Y + PlayerStartSize)||
-                        (x + PlayerStartSize > pl.X && x + PlayerStartSize < pl.X + PlayerStartSize) && (y > pl.Y && y < pl.Y + PlayerStartSize)||
-                        (x > pl.X && x < pl.X + PlayerStartSize) && (y + PlayerStartSize > pl.Y && y + PlayerStartSize < pl.Y + PlayerStartSize)||
-                        (x + PlayerStartSize > pl.X && x + PlayerStartSize < pl.X + PlayerStartSize) && (y + PlayerStartSize > pl.Y && y + PlayerStartSize < pl.Y + PlayerStartSize))
-                        {
-                            collides = true;
-                            break;
-                        }
-                    }
-                }
-            });
-            server.Invoke("GetPlayersCaller").Wait();
+        //    //ADD Object Collsion!!!!!!!!!!!!!!!!
 
-            //ADD Object Collsion!!!!!!!!!!!!!!!!
-
-            return collides;
-        }
+        //    return collides;
+        //}
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             if (panel1.BorderStyle == BorderStyle.FixedSingle)

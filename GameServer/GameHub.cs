@@ -55,6 +55,8 @@ namespace GameServer
 
         public void PlayerMovement(Player player)
         {
+            player = data.PlayerCanMove(player);
+            data.UpdatePlayer(player);
             Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y} {player.Rotation}");
             Clients.All.movePlayer(player.Username, player.X, player.Y, player.Rotation);
         }
@@ -67,7 +69,6 @@ namespace GameServer
 
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
-            Console.WriteLine("update tick");
             data.UpdateProjectileCoords();
             Clients.All.updateTicks(data.GetProjectiles());
         }
