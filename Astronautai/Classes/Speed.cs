@@ -4,7 +4,7 @@
 
 namespace Class_diagram
 {
-	public class Speed : Pickups
+	public class Speed : Pickup
 	{
 		int Value;
 		

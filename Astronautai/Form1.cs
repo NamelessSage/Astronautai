@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
-
+using Astronautai.Classes.Factory;
 
 namespace Astronautai
 {
@@ -22,7 +22,7 @@ namespace Astronautai
         public string CurrentPlayerUsername;
         bool startGame = false;
         bool gameLoopStarted = false;
-
+        TempFactory tempFactory = new TempFactory();
 
         List<Player> playerList;
         List<Projectile> projectileList;
@@ -87,6 +87,15 @@ namespace Astronautai
                     playerList.Add(players[i]);
                 }
             });
+
+            server.On<Pickup>("showPickup", (pic) =>
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    addpickup(pic);
+                }));
+            });
+
 
 
             server.On<List<Projectile>>("getProjectilesCountCaller", (projectiles) =>
@@ -352,6 +361,12 @@ namespace Astronautai
                 }
 
             }
+            if(e.KeyCode == Keys.M)
+            {
+                //Pickup pic = (Pickup)tempFactory.GetPickups("Ammo", 100, 100, 1);
+                //addpickup(pic);
+                server.Invoke("AddPickup");
+            }
         }
 
         private bool MovableSpace(int coord, char type)
@@ -509,6 +524,18 @@ namespace Astronautai
                 asteroidPictureBox.BringToFront();
             }
             
+        private void addpickup (Pickup pic)
+        {
+            Console.WriteLine("ok");
+            var pickupPictureBox = new PictureBox
+            {
+                Name = "Ammo",
+                Size = new Size(pic.Size, pic.Size),
+                Location = new Point(pic.X, pic.Y),
+                Image = (Bitmap)Bitmap.FromFile(pic.ImageDirectoryPath)
+            };
+            this.Controls.Add(pickupPictureBox);
+            pickupPictureBox.BringToFront();
         }
     }
 }
