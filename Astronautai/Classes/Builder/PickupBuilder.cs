@@ -24,7 +24,7 @@ namespace Astronautai.Classes
             }
             finally
             {
-                reset();
+                Reset();
             }
         }
    
@@ -52,7 +52,7 @@ namespace Astronautai.Classes
             pic.Size = size;
         }
 
-        public void reset()
+        public void Reset()
         {
             pic = new Pickup();
         }
