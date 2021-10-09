@@ -18,7 +18,8 @@ namespace GameServer
         GameData data = new GameData();
         bool started = false;
         private System.Timers.Timer _timer;
-        private int _timerInterval = 500;
+        private int _timerInterval = 10;
+
         public GameHub()
         {
 
@@ -67,9 +68,10 @@ namespace GameServer
 
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
-            Console.WriteLine("update tick");
             data.UpdateProjectileCoords();
+            data.UpdateAsteroidCoords();
             Clients.All.updateTicks(data.GetProjectiles());
+            Clients.All.updateTicksAsteroids(data.GetEnemies());
         }
 
         public void GetProjectilesCountCaller()
@@ -83,6 +85,10 @@ namespace GameServer
             Clients.All.getProjectiles(projectiles);
         }
 
+        public void AddAsteroid(string size)
+        {
+            data.AddAsteroid(size);
+        }
 
         public void StartTimer()
         {

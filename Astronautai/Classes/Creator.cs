@@ -2,11 +2,11 @@
  * @(#) Creator.cs
  */
 
-namespace Design_patterns
+namespace Class_diagram
 {
 	public abstract class Creator
 	{
-		public Class_diagram.Asteroid factoryMethod(  )
+		public Class_diagram.Enemy factoryMethod(  )
 		{
 			return null;
 		}
