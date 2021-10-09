@@ -12,6 +12,7 @@ namespace GameServer
     {
         public static Map map;
         public int playerMoveSpeed = 10;
+        public EnemyCreator creator = new EnemyCreator();
 
         public GameData()
         {
@@ -204,6 +205,43 @@ namespace GameServer
         }
 
 
+
+        public void AddAsteroid(string size)
+        {
+            Map map = Map.Instance;
+            map.enemies.Add(creator.factoryMethod(size));
+        }
+
+        public List<Enemy> GetEnemies()
+        {
+            Map map = Map.Instance;
+            return map.enemies;
+        }
+
+        public void UpdateAsteroidCoords()
+        {
+            Map map = Map.Instance;
+            foreach (Enemy p in map.enemies)
+            {
+                switch (p.Rotation)
+                {
+                    case 'W':
+                        p.Y = p.Y - 1;
+                        break;
+                    case 'A':
+                        p.X = p.X - 1;
+                        break;
+                    case 'S':
+                        p.Y = p.Y + 1;
+                        break;
+                    case 'D':
+                        p.X = p.X + 1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
     }
 }

@@ -26,6 +26,9 @@ namespace Astronautai
 
         List<Player> playerList;
         List<Projectile> projectileList;
+        List<Enemy> creatorList = new List<Enemy>();
+
+        EnemyCreator creator = new EnemyCreator();
 
         int moveAmount = 2;
 
@@ -135,7 +138,29 @@ namespace Astronautai
                         }
                     }
                 }));
-                
+            });
+
+            server.On<List<Enemy>>("updateTicksAsteroids", (asteroids) =>
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    foreach (Enemy en in asteroids)
+                    {
+                        if (asteroids.Count != 0)
+                        {
+                            var b = this.Controls.Find("Asteroid" + en.Id, true);
+                            if (b.Length != 0)
+                            {
+                                var pictureBox = b[0] as PictureBox;
+                                pictureBox.Location = new Point(en.X, en.Y);
+                            }
+                            else
+                            {
+                                CreateAsteroidPictureBox(en);
+                            }
+                        }
+                    }
+                }));
             });
 
 
@@ -239,6 +264,12 @@ namespace Astronautai
                 PlayerUsernameTextBox.Visible = false;
                 healthLabel.Visible = true;
                 healthLabel.Text = "Health: " + player.Health + "/3";
+
+                server.Invoke("AddAsteroid", "Small");
+                server.Invoke("AddAsteroid", "Big");
+                server.Invoke("AddAsteroid", "Average");
+
+                
             }
 
             if (gameLoopStarted)
@@ -459,6 +490,45 @@ namespace Astronautai
             }
         }
 
+        private void CreateAsteroidPictureBox(Enemy p)
+        {
+            if (p.Size == 20)
+            {
+                var asteroidPictureBox = new PictureBox
+                {
+                    Name = "Asteroid" + p.Id,
+                    Size = new Size(p.Size, p.Size),
+                    Location = new Point(p.X, p.Y),
+                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg"),
+                };
+                this.Controls.Add(asteroidPictureBox);
+                asteroidPictureBox.BringToFront();
+            }
+            else if (p.Size == 35)
+            {
+                var asteroidPictureBox = new PictureBox
+                {
+                    Name = "Asteroid" + p.Id,
+                    Size = new Size(p.Size, p.Size),
+                    Location = new Point(p.X, p.Y),
+                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//averageAsteroid.jpg"),
+                };
+                this.Controls.Add(asteroidPictureBox);
+                asteroidPictureBox.BringToFront();
+            }
+            else if (p.Size == 50)
+            {
+                var asteroidPictureBox = new PictureBox
+                {
+                    Name = "Asteroid" + p.Id,
+                    Size = new Size(p.Size, p.Size),
+                    Location = new Point(p.X, p.Y),
+                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//bigAsteroid.jpg"),
+                };
+                this.Controls.Add(asteroidPictureBox);
+                asteroidPictureBox.BringToFront();
+            }
+            
         private void addpickup (Pickup pic)
         {
             Console.WriteLine("ok");
