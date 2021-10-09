@@ -4,7 +4,7 @@
 
 namespace Class_diagram
 {
-	public class Health : Pickups
+	public class Health : Pickup
 	{
 		int Value;
 		

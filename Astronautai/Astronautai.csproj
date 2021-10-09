@@ -272,6 +272,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="kazkas.edmx.sql" />
+    <Content Include="Objects\ammo.jpg" />
     <Content Include="Objects\currentPlayer.png" />
     <Content Include="Objects\healthPickup.png" />
     <Content Include="Objects\player.png" />

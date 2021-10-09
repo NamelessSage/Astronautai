@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Astronautai;
+using Astronautai.Classes.Factory;
 using Class_diagram;
 using System.Windows.Forms;
 using System.Timers;
+
 
 namespace GameServer
 {
@@ -19,6 +21,8 @@ namespace GameServer
         bool started = false;
         private System.Timers.Timer _timer;
         private int _timerInterval = 500;
+        
+        TempFactory tempFactory = new TempFactory();
         public GameHub()
         {
 
@@ -82,7 +86,11 @@ namespace GameServer
             List<Projectile> projectiles = data.GetProjectiles();
             Clients.All.getProjectiles(projectiles);
         }
-
+        public void AddPickup()
+        { 
+            Pickup pic = (Pickup)tempFactory.GetPickups("Ammo", 100, 100, 1);
+            Clients.All.showPickup(pic);
+        }
 
         public void StartTimer()
         {

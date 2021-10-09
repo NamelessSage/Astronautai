@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Astronautai.Classes.Factory
 {
-    class TempFactory
+    public class TempFactory
     {
         public TempFactory()
         {
@@ -20,7 +20,7 @@ namespace Astronautai.Classes.Factory
             {
                 case "Ammo":
                     builder.SetCordin(x, y);
-                    builder.SetImg(@"..//..//Objects//healthPickup.png");
+                    builder.SetImg(@"..//..//Objects//ammo.jpg");
                     builder.SetSize(20);
                     builder.SetValue(value);
 
