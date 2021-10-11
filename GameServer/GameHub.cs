@@ -74,9 +74,10 @@ namespace GameServer
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
             data.UpdateProjectileCoords();
-            data.UpdateAsteroidCoords();
+            int delete_id = data.UpdateAsteroidCoords();
             Clients.All.updateTicks(data.GetProjectiles());
-            Clients.All.updateTicksAsteroids(data.GetEnemies());
+            Clients.All.updateTicksAsteroids(data.GetEnemies(), delete_id);
+            Clients.All.updatePlayerData(data.GetPlayers());
         }
 
         public void GetProjectilesCountCaller()

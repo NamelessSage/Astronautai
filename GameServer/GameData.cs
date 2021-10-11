@@ -41,9 +41,6 @@ namespace GameServer
                     map.players[i] = player;
                 }
             }
-            {
-
-            }
         }
 
         public Map GetMap()
@@ -100,6 +97,21 @@ namespace GameServer
                     {
                         return false;
                     }
+                }
+            }
+            return true;
+        }
+
+        public bool CheckCollisionEnemy(Enemy p)
+        {
+            Map map = Map.Instance;
+            foreach (Player en in map.players)
+            {
+                if (!Collides(new Coordinates(p.X, p.Y), p.Size, new Coordinates(en.X, en.Y), en.Size))
+                {
+                    en.Health -= p.Damage;
+                    UpdatePlayer(en);
+                    return false;
                 }
             }
             return true;
@@ -218,45 +230,55 @@ namespace GameServer
             return map.enemies;
         }
 
-        public void UpdateAsteroidCoords()
+        public int UpdateAsteroidCoords()
         {
             Map map = Map.Instance;
             foreach (Enemy p in map.enemies)
             {
-                switch (p.Rotation)
+                if (CheckCollisionEnemy(p))
                 {
-                    case 'W':
-                        p.Y = p.Y - 1;
-                        break;
-                    case 'A':
-                        p.X = p.X - 1;
-                        break;
-                    case 'S':
-                        p.Y = p.Y + 1;
-                        break;
-                    case 'D':
-                        p.X = p.X + 1;
-                        break;
-                    case 'Q':
-                        p.Y = p.Y - 1;
-                        p.X = p.X - 1;
-                        break;
-                    case 'E':
-                        p.X = p.X + 1;
-                        p.Y = p.Y - 1;
-                        break;
-                    case 'Z':
-                        p.Y = p.Y + 1;
-                        p.X = p.X - 1;
-                        break;
-                    case 'C':
-                        p.X = p.X + 1;
-                        p.Y = p.Y + 1;
-                        break;
-                    default:
-                        break;
+                    switch (p.Rotation)
+                    {
+                        case 'W':
+                            p.Y = p.Y - 1;
+                            break;
+                        case 'A':
+                            p.X = p.X - 1;
+                            break;
+                        case 'S':
+                            p.Y = p.Y + 1;
+                            break;
+                        case 'D':
+                            p.X = p.X + 1;
+                            break;
+                        case 'Q':
+                            p.Y = p.Y - 1;
+                            p.X = p.X - 1;
+                            break;
+                        case 'E':
+                            p.X = p.X + 1;
+                            p.Y = p.Y - 1;
+                            break;
+                        case 'Z':
+                            p.Y = p.Y + 1;
+                            p.X = p.X - 1;
+                            break;
+                        case 'C':
+                            p.X = p.X + 1;
+                            p.Y = p.Y + 1;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    int id = p.Id;
+                    map.enemies.Remove(p);
+                    return id;
                 }
             }
+            return -1;
         }
 
     }

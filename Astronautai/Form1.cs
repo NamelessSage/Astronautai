@@ -26,9 +26,6 @@ namespace Astronautai
 
         List<Player> playerList;
         List<Projectile> projectileList;
-        List<Enemy> creatorList = new List<Enemy>();
-
-        EnemyCreator creator = new EnemyCreator();
 
         int moveAmount = 2;
 
@@ -91,6 +88,17 @@ namespace Astronautai
                 }
             });
 
+            server.On<List<Player>>("updatePlayerData", (players) =>
+            {
+                for (int i = 0; i < players.Count; i++)
+                {
+                    if (CurrentPlayerUsername == players[i].Username)
+                    {
+                        player = players[i];
+                    }
+                }
+            });
+
             server.On<Pickup>("showPickup", (pic) =>
             {
                 this.BeginInvoke(new Action(() =>
@@ -140,7 +148,7 @@ namespace Astronautai
                 }));
             });
 
-            server.On<List<Enemy>>("updateTicksAsteroids", (asteroids) =>
+            server.On<List<Enemy>, int>("updateTicksAsteroids", (asteroids, delte_id) =>
             {
                 this.BeginInvoke(new Action(() =>
                 {
@@ -159,6 +167,16 @@ namespace Astronautai
                                 CreateAsteroidPictureBox(en);
                             }
                         }
+                    }
+                    if(delte_id >= 0)
+                    {
+                        var b = this.Controls.Find("Asteroid" + delte_id, true);
+                        if (b.Length != 0)
+                        {
+                            var pictureBox = b[0] as PictureBox;
+                            this.Controls.Remove(pictureBox);
+                        }
+                        
                     }
                 }));
             });
@@ -274,6 +292,7 @@ namespace Astronautai
 
             if (gameLoopStarted)
             {
+                healthLabel.Text = "Health: " + player.Health + "/3";
             }
         }
 
@@ -285,86 +304,21 @@ namespace Astronautai
             {
                 player.Rotation = 'W';
                 server.Invoke("PlayerMovement", player);
-                //if (!MovableSpace(player.Y -= moveAmount, 'y'))
-                //{
-                //    player.Y = 25;
-                //    server.Invoke("PlayerMovement", player);
-                //}
-                //else if (PlayerCollision(player.X, player.Y -= moveAmount))
-                //{
-                //    player.Y += moveAmount;
-                //    player.Y += moveAmount;
-                //    server.Invoke("PlayerMovement", player);
-                //}
-                //else
-                //{
-                //    player.Y -= moveAmount;
-                //    server.Invoke("PlayerMovement", player);
-                //}
             }
             if (e.KeyCode == Keys.S)
             {
                 player.Rotation = 'S';
                 server.Invoke("PlayerMovement", player);
-                //if (!MovableSpace(player.Y += moveAmount, 'y'))
-                //{
-                //    player.Y = 550;
-                //    server.Invoke("PlayerMovement", player);
-                //}
-                //else if (PlayerCollision(player.X, player.Y += moveAmount))
-                //{
-                //    player.Y -= moveAmount;
-                //    player.Y -= moveAmount;
-                //    server.Invoke("PlayerMovement", player);
-                //}
-                //else
-                //{
-                //    player.Y += moveAmount;
-                //    server.Invoke("PlayerMovement", player);
-                //}
             }
             if (e.KeyCode == Keys.A)
             {
                 player.Rotation = 'A';
                 server.Invoke("PlayerMovement", player);
-                //if (!MovableSpace(player.X -= moveAmount, 'x'))
-                //{
-                //    player.X = 25;
-                //    server.Invoke("PlayerMovement", player);
-                //}
-                //else if (PlayerCollision(player.X -= moveAmount, player.Y))
-                //{
-                //    player.X += moveAmount;
-                //    player.X += moveAmount;
-                //    server.Invoke("PlayerMovement", player);
-                //}
-                //else
-                //{
-                //    player.X -= moveAmount;
-                //    server.Invoke("PlayerMovement", player);
-
-                //}
             }
             if (e.KeyCode == Keys.D)
             {
                 player.Rotation = 'D';
                 server.Invoke("PlayerMovement", player);
-                //if (!MovableSpace(player.X+=moveAmount, 'x'))
-                //{
-                //    player.X = 750;
-                //    server.Invoke("PlayerMovement", player);
-                //}
-                //else if (PlayerCollision(player.X += moveAmount, player.Y))
-                //{
-                //    player.X -= moveAmount;
-                //    player.X -= moveAmount;
-                //    server.Invoke("PlayerMovement", player);
-                //}
-                //else
-                //{
-                //    player.X += moveAmount;
-                //    server.Invoke("PlayerMovement", player);
-                //}
             }
             if (e.KeyCode == Keys.M)
             {
@@ -374,51 +328,7 @@ namespace Astronautai
             }
         }
 
-        //private bool MovableSpace(int coord, char type)
-        //{
-        //    switch (type)
-        //    {
-        //        case 'x':
-        //            if (player.X < 25 || player.X > 750)
-        //                return false;
-        //            else
-        //            return true;
 
-        //        case 'y':
-        //            if (player.Y < 25 || player.Y > 550)
-        //                return false;
-        //            return true;
-        //        default:
-        //            return false;
-        //    }
-        //}
-
-        //private bool PlayerCollision(int x, int y)
-        //{
-        //    bool collides = false;
-        //    server.On<List<Player>>("getPlayersCaller", (players) =>
-        //    {
-        //        foreach (var pl in players)
-        //        {
-        //            if (CurrentPlayerUsername != pl.Username)
-        //            {
-        //                if ((x>pl.X && x < pl.X + PlayerStartSize) && (y>pl.Y && y < pl.Y + PlayerStartSize)||
-        //                (x + PlayerStartSize > pl.X && x + PlayerStartSize < pl.X + PlayerStartSize) && (y > pl.Y && y < pl.Y + PlayerStartSize)||
-        //                (x > pl.X && x < pl.X + PlayerStartSize) && (y + PlayerStartSize > pl.Y && y + PlayerStartSize < pl.Y + PlayerStartSize)||
-        //                (x + PlayerStartSize > pl.X && x + PlayerStartSize < pl.X + PlayerStartSize) && (y + PlayerStartSize > pl.Y && y + PlayerStartSize < pl.Y + PlayerStartSize))
-        //                {
-        //                    collides = true;
-        //                    break;
-        //                }
-        //            }
-        //        }
-        //    });
-        //    server.Invoke("GetPlayersCaller").Wait();
-
-        //    //ADD Object Collsion!!!!!!!!!!!!!!!!
-
-        //    return collides;
-        //}
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             if (panel1.BorderStyle == BorderStyle.FixedSingle)
@@ -443,20 +353,20 @@ namespace Astronautai
             switch (player.Rotation)
             {
                 case 'W':
-                    p.X = player.X;
-                    p.Y = player.Y - 10;
+                    p.X = player.X + (PlayerStartSize / 2);
+                    p.Y = player.Y;
                     break;
                 case 'A':
-                    p.X = player.X - 10;
-                    p.Y = player.Y;
+                    p.X = player.X;
+                    p.Y = player.Y + (PlayerStartSize/2);
                     break;
                 case 'S':
-                    p.X = player.X;
-                    p.Y = player.Y + 10;
+                    p.X = player.X + (PlayerStartSize / 2);
+                    p.Y = player.Y + PlayerStartSize;
                     break;
                 case 'D':
-                    p.X = player.X + 10;
-                    p.Y = player.Y;
+                    p.X = player.X + PlayerStartSize;
+                    p.Y = player.Y + (PlayerStartSize / 2);
                     break;
                 default:
                     break;
