@@ -10,7 +10,7 @@ namespace Class_diagram
 		static System.Random random = new System.Random();
 		public Class_diagram.Enemy factoryMethod(string asteroid)
 		{
-			var chars = new char[] {'W','A','S','D'};
+			var chars = new char[] {'W','A','S','D','Q','E','Z','C'};
 
 			switch (asteroid)
             {

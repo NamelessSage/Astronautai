@@ -281,7 +281,6 @@ namespace Astronautai
 
         private void playerFocus_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.W)
             {
                 player.Rotation = 'W';

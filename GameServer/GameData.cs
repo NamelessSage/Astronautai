@@ -237,6 +237,22 @@ namespace GameServer
                     case 'D':
                         p.X = p.X + 1;
                         break;
+                    case 'Q':
+                        p.Y = p.Y - 1;
+                        p.X = p.X - 1;
+                        break;
+                    case 'E':
+                        p.X = p.X + 1;
+                        p.Y = p.Y - 1;
+                        break;
+                    case 'Z':
+                        p.Y = p.Y + 1;
+                        p.X = p.X - 1;
+                        break;
+                    case 'C':
+                        p.X = p.X + 1;
+                        p.Y = p.Y + 1;
+                        break;
                     default:
                         break;
                 }
