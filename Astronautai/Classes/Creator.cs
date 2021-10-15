@@ -10,7 +10,5 @@ namespace Class_diagram
 		{
 			return null;
 		}
-		
 	}
-	
 }

@@ -1,43 +1,52 @@
-﻿using Class_diagram;
+﻿using Astronautai.Classes.Factory;
+using Class_diagram;
 using Microsoft.AspNet.SignalR.Client;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
-using Astronautai.Classes.Factory;
 
 namespace Astronautai
 {
     public partial class Form1 : Form
     {
-        Random random = new Random();
-        Timer timer;
         private readonly IHubProxy server;
-        Player player;
+
         const int PlayerStartHealth = 3;
+        const int PlayerStartAmmo = 10;
         const int PlayerStartSize = 25;
+
+        const int projectileSize = 5;
+
+        Random random;
+        Timer timer;
+        
+        Player player;
         public string CurrentPlayerUsername;
+
         bool startGame = false;
         bool gameLoopStarted = false;
-        TempFactory tempFactory = new TempFactory();
+
+        PickupFactory pickupFactory = new PickupFactory();
 
         List<Player> playerList;
         List<Projectile> projectileList;
-
-        int moveAmount = 2;
 
         public Form1()
         {
             InitializeComponent();
             InitTimer();
+            random = new Random();
+
             HubConnection hubConnection = new HubConnection("http://localhost:8080");
             server = hubConnection.CreateHubProxy("serveris");
-            playerList = new List<Player>();
-            Bitmap btm;
 
+            playerList = new List<Player>();
+            projectileList = new List<Projectile>();
+
+            Bitmap playerBitmap;
+
+            //Move player
             server.On<string, int, int, char>("movePlayer", (name, x, y, rotation) =>
             {
                 var pictureBox = this.Controls.Find(name, true)[0] as PictureBox;
@@ -47,39 +56,40 @@ namespace Astronautai
                 {
                     player.X = x;
                     player.Y = y;
-                    btm = (Bitmap)Bitmap.FromFile(@"..//..//Objects//currentPlayer.png");
+                    playerBitmap = (Bitmap)Bitmap.FromFile(@"..//..//Objects//currentPlayer.png");
                     switch (rotation)
                     {
                         case 'S':
-                            btm.RotateFlip(RotateFlipType.Rotate180FlipX);
+                            playerBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
                             break;
                         case 'A':
-                            btm.RotateFlip(RotateFlipType.Rotate270FlipY);
+                            playerBitmap.RotateFlip(RotateFlipType.Rotate270FlipY);
                             break;
                         case 'D':
-                            btm.RotateFlip(RotateFlipType.Rotate90FlipY);
+                            playerBitmap.RotateFlip(RotateFlipType.Rotate90FlipY);
                             break;
                     }
                 }
                 else
                 {
-                    btm = (Bitmap)Bitmap.FromFile(@"..//..//Objects//player.png");
+                    playerBitmap = (Bitmap)Bitmap.FromFile(@"..//..//Objects//player.png");
                     switch (rotation)
                     {
                         case 'S':
-                            btm.RotateFlip(RotateFlipType.Rotate180FlipX);
+                            playerBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
                             break;
                         case 'A':
-                            btm.RotateFlip(RotateFlipType.Rotate270FlipY);
+                            playerBitmap.RotateFlip(RotateFlipType.Rotate270FlipY);
                             break;
                         case 'D':
-                            btm.RotateFlip(RotateFlipType.Rotate90FlipY);
+                            playerBitmap.RotateFlip(RotateFlipType.Rotate90FlipY);
                             break;
                     }
                 }
-                pictureBox.Image = btm;
+                pictureBox.Image = playerBitmap;
             });
 
+            //Get all player list on local client
             server.On<List<Player>>("getPlayers", (players) =>
             {
                 for (int i = 0; i < players.Count; i++)
@@ -88,6 +98,7 @@ namespace Astronautai
                 }
             });
 
+            //Refresh player data with server tick
             server.On<List<Player>>("updatePlayerData", (players) =>
             {
                 for (int i = 0; i < players.Count; i++)
@@ -99,14 +110,14 @@ namespace Astronautai
                 }
             });
 
-            server.On<Pickup>("showPickup", (pic) =>
+            //Add pickup on button 'M' press with pickupBuilder
+            server.On<Pickup>("addPickup", (pickup) =>
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    addpickup(pic);
+                    AddPickup(pickup);
                 }));
             });
-
 
 
             server.On<List<Projectile>>("getProjectilesCountCaller", (projectiles) =>
@@ -133,10 +144,10 @@ namespace Astronautai
                     {
                         if (projectiles.Count != 0)
                         {
-                            var b = this.Controls.Find("Projectile" + projectile.Id, true);
-                            if (b.Length != 0)
+                            var projectileControl = this.Controls.Find("Projectile" + projectile.Id, true);
+                            if (projectileControl.Length != 0)
                             {
-                                var pictureBox = b[0] as PictureBox;
+                                var pictureBox = projectileControl[0] as PictureBox;
                                 pictureBox.Location = new Point(projectile.X, projectile.Y);
                             }
                             else
@@ -148,39 +159,37 @@ namespace Astronautai
                 }));
             });
 
-            server.On<List<Enemy>, int>("updateTicksAsteroids", (asteroids, delte_id) =>
+            server.On<List<Enemy>, int>("updateTicksAsteroids", (asteroids, deleteId) =>
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    foreach (Enemy en in asteroids)
+                    foreach (Enemy enemy in asteroids)
                     {
                         if (asteroids.Count != 0)
                         {
-                            var b = this.Controls.Find("Asteroid" + en.Id, true);
-                            if (b.Length != 0)
+                            var asteroidControls = this.Controls.Find("Asteroid" + enemy.Id, true);
+                            if (asteroidControls.Length != 0)
                             {
-                                var pictureBox = b[0] as PictureBox;
-                                pictureBox.Location = new Point(en.X, en.Y);
+                                var pictureBox = asteroidControls[0] as PictureBox;
+                                pictureBox.Location = new Point(enemy.X, enemy.Y);
                             }
                             else
                             {
-                                CreateAsteroidPictureBox(en);
+                                CreateAsteroidPictureBox(enemy);
                             }
                         }
                     }
-                    if(delte_id >= 0)
+                    if (deleteId >= 0)
                     {
-                        var b = this.Controls.Find("Asteroid" + delte_id, true);
-                        if (b.Length != 0)
+                        var asteroidControls = this.Controls.Find("Asteroid" + deleteId, true);
+                        if (asteroidControls.Length != 0)
                         {
-                            var pictureBox = b[0] as PictureBox;
+                            var pictureBox = asteroidControls[0] as PictureBox;
                             this.Controls.Remove(pictureBox);
                         }
-                        
                     }
                 }));
             });
-
 
             hubConnection.Start().Wait();
         }
@@ -199,10 +208,12 @@ namespace Astronautai
                 }
             });
             server.Invoke("GetPlayersCaller").Wait();
+
             if (!existing)
             {
-                player = new Player(PlayerUsernameTextBox.Text, PlayerStartHealth, PlayerStartSize);
+                player = new Player(PlayerUsernameTextBox.Text, PlayerStartHealth, PlayerStartAmmo, PlayerStartSize);
                 player.SetCoordinates(random.Next(100, 200), random.Next(100, 200));
+
                 PlayerNameInputLabel.Text += PlayerUsernameTextBox.Text;
                 CurrentPlayerUsername = PlayerUsernameTextBox.Text;
                 JoinGameButton.Visible = false;
@@ -248,7 +259,6 @@ namespace Astronautai
         private void StartGameButton_Click(object sender, EventArgs e)
         {
             server.Invoke("GetPlayers").Wait();
-            //MAKE START BUTTON/USERNAMETEXTBOX/JOINBUTTON INVISIBLE FOR EVERYONE 
             server.Invoke("StartGame");
         }
 
@@ -264,7 +274,7 @@ namespace Astronautai
         {
             timer = new Timer();
             timer.Tick += new EventHandler(timer1_Tick);
-            timer.Interval = 1000; // in miliseconds
+            timer.Interval = 1000;
             timer.Start();
         }
 
@@ -277,48 +287,49 @@ namespace Astronautai
                 AddPlayersPictureBoxes(playerList);
                 startGame = false;
                 gameLoopStarted = true;
+
                 StartGameButton.Visible = false;
                 JoinGameButton.Visible = false;
                 PlayerUsernameTextBox.Visible = false;
+
                 healthLabel.Visible = true;
-                healthLabel.Text = "Health: " + player.Health + "/3";
+                healthLabel.Text = "Health: " + player.Health + "/" + PlayerStartHealth;
+                ammoLabel.Visible = true;
+                ammoLabel.Text = "Ammo: " + player.Ammo + "/" + PlayerStartAmmo;
 
                 server.Invoke("AddAsteroid", "Small");
                 server.Invoke("AddAsteroid", "Big");
                 server.Invoke("AddAsteroid", "Average");
-
-
             }
 
             if (gameLoopStarted)
             {
-                healthLabel.Text = "Health: " + player.Health + "/3";
+                healthLabel.Text = "Health: " + player.Health + "/" + PlayerStartHealth;
+                ammoLabel.Text = "Ammo: " + player.Ammo + "/" + PlayerStartAmmo;
             }
         }
-
-
 
         private void playerFocus_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.W)
             {
                 player.Rotation = 'W';
-                server.Invoke("PlayerMovement", player);
+                server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.S)
             {
                 player.Rotation = 'S';
-                server.Invoke("PlayerMovement", player);
+                server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.A)
             {
                 player.Rotation = 'A';
-                server.Invoke("PlayerMovement", player);
+                server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.D)
             {
                 player.Rotation = 'D';
-                server.Invoke("PlayerMovement", player);
+                server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.M)
             {
@@ -328,12 +339,11 @@ namespace Astronautai
             }
         }
 
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             if (panel1.BorderStyle == BorderStyle.FixedSingle)
             {
-                int thickness = 20;//it's up to you
+                int thickness = 20;
                 int halfThickness = thickness / 2;
                 using (Pen p = new Pen(Color.Black, thickness))
                 {
@@ -358,7 +368,7 @@ namespace Astronautai
                     break;
                 case 'A':
                     p.X = player.X;
-                    p.Y = player.Y + (PlayerStartSize/2);
+                    p.Y = player.Y + (PlayerStartSize / 2);
                     break;
                 case 'S':
                     p.X = player.X + (PlayerStartSize / 2);
@@ -381,7 +391,7 @@ namespace Astronautai
             var projectilePictureBox = new PictureBox
             {
                 Name = "Projectile" + p.Id,
-                Size = new Size(5, 5),
+                Size = new Size(projectileSize, projectileSize),
                 Location = new Point(p.X, p.Y),
                 Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.png"),
             };
@@ -438,15 +448,15 @@ namespace Astronautai
                 asteroidPictureBox.BringToFront();
             }
         }
-        private void addpickup(Pickup pic)
+        private void AddPickup(Pickup pickup)
         {
-            Console.WriteLine("ok");
+            Console.WriteLine("Pickup added!");
             var pickupPictureBox = new PictureBox
             {
                 Name = "Ammo",
-                Size = new Size(pic.Size, pic.Size),
-                Location = new Point(pic.X, pic.Y),
-                Image = (Bitmap)Bitmap.FromFile(pic.ImageDirectoryPath)
+                Size = new Size(pickup.Size, pickup.Size),
+                Location = new Point(pickup.X, pickup.Y),
+                Image = (Bitmap)Bitmap.FromFile(pickup.ImageDirectoryPath)
             };
             this.Controls.Add(pickupPictureBox);
             pickupPictureBox.BringToFront();

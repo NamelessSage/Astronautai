@@ -6,13 +6,14 @@ namespace Class_diagram
 {
 	public class Pickup : Coordinates
 	{
-		public int Value;
-		public string ImageDirectoryPath;
-		//public string Type;
-		public int Size;
+		public int Id { get; set; }
+		public int Value { get; set; }
+		public string ImagePath { get; set; }
+		public int Size { get; set; }
 
-        public Pickup(){}
+		public Pickup()
+		{
+
+		}
     }
-	
-	
 }

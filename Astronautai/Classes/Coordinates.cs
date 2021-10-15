@@ -6,11 +6,12 @@ namespace Class_diagram
 {
 	public class Coordinates
 	{
-		public int X;
-		public int Y;
+		public int X { get; set; }
+		public int Y { get; set; }
 
         public Coordinates()
         {
+
         }
 
         public Coordinates(int x, int y)
@@ -19,5 +20,4 @@ namespace Class_diagram
             Y = y;
         }
     }
-	
 }

@@ -22,7 +22,5 @@ namespace Class_diagram
 		{
 
 		}
-
 	}
-	
 }

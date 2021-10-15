@@ -22,7 +22,7 @@ namespace GameServer
         private System.Timers.Timer _timer;
         private int _timerInterval = 10;
 
-        TempFactory tempFactory = new TempFactory();
+        PickupFactory pickupFactory = new PickupFactory();
         public GameHub()
         {
 
@@ -36,13 +36,15 @@ namespace GameServer
         public void GetPlayers()
         {
             List<Player> players = data.GetPlayers();
-            Clients.All.getPlayers(players); //SEND TO EVERYONE ??
+
+            Clients.All.getPlayers(players);
         }
         public void GetPlayersCaller()
         {
 
             List<Player> players = data.GetPlayers();
             Console.WriteLine("Returnin players to caller - " + players.Count());
+
             Clients.Caller.getPlayersCaller(players); //SEND TO EVERYONE ??
         }
 
@@ -53,15 +55,17 @@ namespace GameServer
             {
                 started = true;
                 StartTimer();
+
                 Clients.All.startGame(true);
             }
         }
 
-        public void PlayerMovement(Player player)
+        public void MovePlayer(Player player)
         {
             player = data.PlayerCanMove(player);
             data.UpdatePlayer(player);
             Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y} {player.Rotation}");
+
             Clients.All.movePlayer(player.Username, player.X, player.Y, player.Rotation);
         }
 
@@ -74,9 +78,10 @@ namespace GameServer
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
             data.UpdateProjectileCoords();
-            int delete_id = data.UpdateAsteroidCoords();
+            int deleteId = data.UpdateAsteroidCoords();
+
             Clients.All.updateTicks(data.GetProjectiles());
-            Clients.All.updateTicksAsteroids(data.GetEnemies(), delete_id);
+            Clients.All.updateTicksAsteroids(data.GetEnemies(), deleteId);
             Clients.All.updatePlayerData(data.GetPlayers());
         }
 
@@ -88,6 +93,7 @@ namespace GameServer
         public void GetProjectiles()
         {
             List<Projectile> projectiles = data.GetProjectiles();
+
             Clients.All.getProjectiles(projectiles);
         }
 
@@ -95,10 +101,12 @@ namespace GameServer
         {
             data.AddAsteroid(size);
         }
+
         public void AddPickup()
         {
-            Pickup pic = (Pickup)tempFactory.GetPickups("Ammo", 100, 100, 1);
-            Clients.All.showPickup(pic);
+            Pickup pickup = (Pickup)pickupFactory.BuildPickup("Ammo", 1);
+
+            Clients.All.addPickup(pickup);
         }
 
         public void StartTimer()
@@ -108,4 +116,5 @@ namespace GameServer
             _timer.Elapsed += new ElapsedEventHandler(UpdateTicks);
             _timer.Start();
         }
-    } }
+    } 
+}

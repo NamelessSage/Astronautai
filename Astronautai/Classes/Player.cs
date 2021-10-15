@@ -8,6 +8,7 @@ namespace Class_diagram
 	{
 		public string Username { get; set; }
 		public int Health { get; set; }
+        public int Ammo { get; set; }
         public int Size { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
@@ -15,6 +16,7 @@ namespace Class_diagram
 
         public Player()
         {
+
         }
 
         public Player(string username)
@@ -22,10 +24,11 @@ namespace Class_diagram
             Username = username;
         }
 
-        public Player(string username, int health, int size)
+        public Player(string username, int health, int ammo, int size)
         {
             Username = username;
             Health = health;
+            Ammo = ammo;
             Size = size;
         }
 

@@ -39,6 +39,7 @@ namespace Astronautai
             this.playerFocus = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.healthLabel = new System.Windows.Forms.Label();
+            this.ammoLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -106,6 +107,7 @@ namespace Astronautai
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.ammoLabel);
             this.panel1.Controls.Add(this.healthLabel);
             this.panel1.Controls.Add(this.StartGameButton);
             this.panel1.Controls.Add(this.JoinGameButton);
@@ -122,12 +124,23 @@ namespace Astronautai
             // 
             this.healthLabel.AutoSize = true;
             this.healthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.healthLabel.Location = new System.Drawing.Point(345, 577);
+            this.healthLabel.Location = new System.Drawing.Point(559, 577);
             this.healthLabel.Name = "healthLabel";
             this.healthLabel.Size = new System.Drawing.Size(107, 25);
             this.healthLabel.TabIndex = 5;
             this.healthLabel.Text = "Health: 0/3";
             this.healthLabel.Visible = false;
+            // 
+            // ammoLabel
+            // 
+            this.ammoLabel.AutoSize = true;
+            this.ammoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.ammoLabel.Location = new System.Drawing.Point(672, 577);
+            this.ammoLabel.Name = "ammoLabel";
+            this.ammoLabel.Size = new System.Drawing.Size(119, 25);
+            this.ammoLabel.TabIndex = 6;
+            this.ammoLabel.Text = "Ammo: 0/10";
+            this.ammoLabel.Visible = false;
             // 
             // Form1
             // 
@@ -159,6 +172,7 @@ namespace Astronautai
         private System.Windows.Forms.TextBox playerFocus;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label healthLabel;
+        private System.Windows.Forms.Label ammoLabel;
     }
 }
 

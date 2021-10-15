@@ -11,18 +11,21 @@ namespace Class_diagram
 		private static readonly Map instance = new Map();
 
 		public List<Enemy> enemies = new List<Enemy>();
-		public List<Obstacles> obstacles = new List<Obstacles>();
+		public List<Obstacle> obstacles = new List<Obstacle>();
 		public List<Projectile> projectiles = new List<Projectile>();
 		public int Score = 0;
-		public int Diffiulty = 0;
+		public int Difficulty = 0;
 		public List<Pickup> pickups = new List<Pickup>();
 		public List<Player> players = new List<Player>();
-		private Map() { }
+
+		private Map() 
+		{ 
+
+		}
+
 		public static Map Instance
 		{
 			get { return instance; }
 		}
-
-
 	}
 }

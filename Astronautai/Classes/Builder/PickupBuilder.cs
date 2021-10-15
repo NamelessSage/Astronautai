@@ -10,17 +10,18 @@ namespace Astronautai.Classes
 {
     class PickupBuilder : IBuilder 
     { 
-        private Pickup pic;
+        private Pickup pickup;
+
         public PickupBuilder()
         {
-            pic = new Pickup();
+            pickup = new Pickup();
         }
 
         public Pickup GetBuildable()
         {
             try
             {
-                return pic;
+                return pickup;
             }
             finally
             {
@@ -30,31 +31,27 @@ namespace Astronautai.Classes
    
         public void SetValue(int value)
         {
-            pic.Value = value;
+            pickup.Value = value;
         }
 
-        public void SetImg(string img)
+        public void SetImage(string imagePath)
         {
-            pic.ImageDirectoryPath = img;
+            pickup.ImageDirectoryPath = imagePath;
         }
-        //public void SetType(string type)
-        //{
-        //    pic.Type = type;
-        //}
 
-        public void SetCordin(int x, int y)
+        public void SetCoordinates(int x, int y)
         {
-            pic.X = x;
-            pic.Y = y;
+            pickup.X = x;
+            pickup.Y = y;
         }
         public void SetSize(int size) 
         {
-            pic.Size = size;
+            pickup.Size = size;
         }
 
         public void Reset()
         {
-            pic = new Pickup();
+            pickup = new Pickup();
         }
     }
 }

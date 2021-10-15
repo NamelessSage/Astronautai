@@ -8,7 +8,8 @@ namespace Class_diagram
 	{
 		static System.Random Creations = new System.Random();
 		static System.Random random = new System.Random();
-		public Class_diagram.Enemy factoryMethod(string asteroid)
+
+		public Class_diagram.Enemy CreateAsteroid(string asteroid)
 		{
 			var chars = new char[] {'W','A','S','D','Q','E','Z','C'};
 

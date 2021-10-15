@@ -102,19 +102,24 @@ namespace GameServer
             return true;
         }
 
-        public bool CheckCollisionEnemy(Enemy p)
+        public bool CheckCollisionEnemy(Enemy enemy)
         {
             Map map = Map.Instance;
             foreach (Player en in map.players)
             {
-                if (!Collides(new Coordinates(p.X, p.Y), p.Size, new Coordinates(en.X, en.Y), en.Size))
+                if (!Collides(new Coordinates(enemy.X, enemy.Y), enemy.Size, new Coordinates(en.X, en.Y), en.Size))
                 {
-                    en.Health -= p.Damage;
+                    en.Health -= enemy.Damage;
                     UpdatePlayer(en);
                     return false;
                 }
             }
             return true;
+        }
+
+        public bool CheckCollisionPickup(Pickup pickup)
+        {
+
         }
 
         public bool CheckMapEdge(Coordinates coords)
@@ -216,12 +221,10 @@ namespace GameServer
             return p;
         }
 
-
-
         public void AddAsteroid(string size)
         {
             Map map = Map.Instance;
-            map.enemies.Add(creator.factoryMethod(size));
+            map.enemies.Add(creator.CreateAsteroid(size));
         }
 
         public List<Enemy> GetEnemies()
