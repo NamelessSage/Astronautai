@@ -216,7 +216,6 @@
     <Compile Include="Classes\Coordinates.cs" />
     <Compile Include="Classes\Creator.cs" />
     <Compile Include="Classes\Enemy.cs" />
-    <Compile Include="Classes\EnemyCreator.cs" />
     <Compile Include="Classes\Factory\PickupFactory.cs" />
     <Compile Include="Classes\Health.cs" />
     <Compile Include="Classes\Map.cs" />
@@ -226,7 +225,11 @@
     <Compile Include="Classes\Projectile.cs" />
     <Compile Include="Classes\SmallAsteroid.cs" />
     <Compile Include="Classes\Speed.cs" />
+<<<<<<< HEAD
     <Compile Include="Classes\Strategy\IAsteroidMoveStrategy.cs" />
+=======
+    <Compile Include="Classes\Strategy\IStrastegy.cs" />
+>>>>>>> fc8222c1191af2a6536cad35132d6689feee8f93
     <Compile Include="Classes\Turret.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

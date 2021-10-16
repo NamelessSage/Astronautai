@@ -13,8 +13,12 @@ namespace GameServer
     {
         public static Map map;
         public int playerMoveSpeed = 10;
+<<<<<<< HEAD
         public EnemyCreator creator = new EnemyCreator();
         public PickupFactory pickupFactory = new PickupFactory();
+=======
+        public EnemySpawner spawner = new EnemySpawner();
+>>>>>>> fc8222c1191af2a6536cad35132d6689feee8f93
 
         public GameData()
         {
@@ -135,7 +139,6 @@ namespace GameServer
             return true;
         }
 
-
         private bool Collides(Coordinates o1, int size1, Coordinates o2, int size2)
         {
             if ((o1.X > o2.X && o1.X < o2.X + size2) && (o1.Y > o2.Y && o1.Y < o2.Y + size2) ||
@@ -207,10 +210,10 @@ namespace GameServer
             return p;
         }
 
-        public void AddAsteroid(string size)
+        public void AddAsteroid()
         {
             Map map = Map.Instance;
-            map.enemies.Add(creator.CreateAsteroid(size));
+            map.enemies.Add(spawner.CreateAsteroid(map));
         }
 
         public List<Enemy> GetEnemies()
@@ -250,6 +253,7 @@ namespace GameServer
             return -1;
         }
 
+<<<<<<< HEAD
         public int GetAveragePlayerHealth()
         {
             Map map = Map.Instance;
@@ -261,5 +265,9 @@ namespace GameServer
 
             return count / map.players.Count;
         }
+=======
+
+
+>>>>>>> fc8222c1191af2a6536cad35132d6689feee8f93
     }
 }
