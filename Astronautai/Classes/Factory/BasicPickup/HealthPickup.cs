@@ -4,9 +4,8 @@
 
 namespace Class_diagram
 {
-	public class Health : Pickup
+	public class HealthPickup : Pickup
 	{
-		int Value;
 		
 	}
 	

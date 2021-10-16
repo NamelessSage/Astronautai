@@ -38,8 +38,8 @@ namespace Astronautai
             this.PlayerNameInputLabel = new System.Windows.Forms.Label();
             this.playerFocus = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.healthLabel = new System.Windows.Forms.Label();
             this.ammoLabel = new System.Windows.Forms.Label();
+            this.healthLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -120,17 +120,6 @@ namespace Astronautai
             this.panel1.TabIndex = 6;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // healthLabel
-            // 
-            this.healthLabel.AutoSize = true;
-            this.healthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.healthLabel.Location = new System.Drawing.Point(559, 577);
-            this.healthLabel.Name = "healthLabel";
-            this.healthLabel.Size = new System.Drawing.Size(107, 25);
-            this.healthLabel.TabIndex = 5;
-            this.healthLabel.Text = "Health: 0/3";
-            this.healthLabel.Visible = false;
-            // 
             // ammoLabel
             // 
             this.ammoLabel.AutoSize = true;
@@ -142,6 +131,17 @@ namespace Astronautai
             this.ammoLabel.Text = "Ammo: 0/10";
             this.ammoLabel.Visible = false;
             // 
+            // healthLabel
+            // 
+            this.healthLabel.AutoSize = true;
+            this.healthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.healthLabel.Location = new System.Drawing.Point(559, 577);
+            this.healthLabel.Name = "healthLabel";
+            this.healthLabel.Size = new System.Drawing.Size(107, 25);
+            this.healthLabel.TabIndex = 5;
+            this.healthLabel.Text = "Health: 0/3";
+            this.healthLabel.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,8 +150,10 @@ namespace Astronautai
             this.ClientSize = new System.Drawing.Size(804, 601);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.playerFocus);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Astronautai";
+            this.TopMost = true;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).EndInit();

@@ -39,6 +39,7 @@ namespace GameServer
 
             Clients.All.getPlayers(players);
         }
+
         public void GetPlayersCaller()
         {
 
@@ -92,16 +93,11 @@ namespace GameServer
             }
         }
 
-        public void GetProjectilesCountCaller()
-        {
-            Clients.All.getProjectilesCountCaller(data.GetProjectiles());
-        }
-
         public void GetProjectiles()
         {
-            List<Projectile> projectiles = data.GetProjectiles();
-
-            Clients.All.getProjectiles(projectiles);
+            Map map = data.GetMap();
+            Clients.Caller.getProjectiles(map.projectileCounter);
+            map.projectileCounter++;
         }
 
         public void AddAsteroid()
