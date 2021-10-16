@@ -13,12 +13,8 @@ namespace GameServer
     {
         public static Map map;
         public int playerMoveSpeed = 10;
-<<<<<<< HEAD
-        public EnemyCreator creator = new EnemyCreator();
         public PickupFactory pickupFactory = new PickupFactory();
-=======
         public EnemySpawner spawner = new EnemySpawner();
->>>>>>> fc8222c1191af2a6536cad35132d6689feee8f93
 
         public GameData()
         {
@@ -253,7 +249,6 @@ namespace GameServer
             return -1;
         }
 
-<<<<<<< HEAD
         public int GetAveragePlayerHealth()
         {
             Map map = Map.Instance;
@@ -265,9 +260,5 @@ namespace GameServer
 
             return count / map.players.Count;
         }
-=======
-
-
->>>>>>> fc8222c1191af2a6536cad35132d6689feee8f93
     }
 }
