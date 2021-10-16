@@ -4,10 +4,8 @@
 
 namespace Class_diagram
 {
-	public class Ammo : Pickup
+	public class AmmoPickup : Pickup
 	{
-		string Type;
-		int Value;
 		
 	}
 	
