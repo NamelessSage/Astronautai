@@ -208,7 +208,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Ammo.cs" />
+    <Compile Include="Classes\Factory\AbstractPickupFactory.cs" />
+    <Compile Include="Classes\Factory\BasicPickup\AmmoPickup.cs" />
     <Compile Include="Classes\AverageAsteroid.cs" />
     <Compile Include="Classes\BigAsteroid.cs" />
     <Compile Include="Classes\Builder\IBuilder.cs" />
@@ -216,15 +217,23 @@
     <Compile Include="Classes\Coordinates.cs" />
     <Compile Include="Classes\Creator.cs" />
     <Compile Include="Classes\Enemy.cs" />
+    <Compile Include="Classes\Factory\MaxPickup\MaxAmmoPickup.cs" />
+    <Compile Include="Classes\Factory\MaxPickup\MaxHealthPickup.cs" />
+    <Compile Include="Classes\Factory\MaxPickupFactory.cs" />
+    <Compile Include="Classes\Factory\MaxPickup\MaxSpeedPickup.cs" />
+    <Compile Include="Classes\Factory\Onepickup\OneAmmoPickup.cs" />
+    <Compile Include="Classes\Factory\Onepickup\OneHealthPickup.cs" />
+    <Compile Include="Classes\Factory\OnePickupFactory.cs" />
+    <Compile Include="Classes\Factory\Onepickup\OneSpeedPickup.cs" />
     <Compile Include="Classes\Factory\PickupFactory.cs" />
-    <Compile Include="Classes\Health.cs" />
+    <Compile Include="Classes\Factory\BasicPickup\HealthPickup.cs" />
+    <Compile Include="Classes\Factory\BasicPickup\SpeedPickup.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Obstacle.cs" />
     <Compile Include="Classes\Pickup.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Projectile.cs" />
     <Compile Include="Classes\SmallAsteroid.cs" />
-    <Compile Include="Classes\Speed.cs" />
     <Compile Include="Classes\Strategy\IAsteroidMoveStrategy.cs" />
     <Compile Include="Classes\Turret.cs" />
     <Compile Include="Form1.cs">
