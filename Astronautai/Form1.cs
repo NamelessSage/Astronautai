@@ -30,7 +30,7 @@ namespace Astronautai
         PickupFactory pickupFactory = new PickupFactory();
 
         List<Player> playerList;
-        List<Projectile> projectileList;
+        int projectileCounter;
 
         public Form1()
         {
@@ -42,7 +42,6 @@ namespace Astronautai
             server = hubConnection.CreateHubProxy("serveris");
 
             playerList = new List<Player>();
-            projectileList = new List<Projectile>();
 
             Bitmap playerBitmap;
 
@@ -120,16 +119,12 @@ namespace Astronautai
             });
 
 
-            server.On<List<Projectile>>("getProjectilesCountCaller", (projectiles) =>
+            server.On<int>("getProjectiles", (counter) =>
             {
-                projectileList = projectiles;
+                projectileCounter = counter;
                 //AddProjectile(count);
             });
 
-            server.On<List<Projectile>>("getProjectiles", (projectiles) =>
-            {
-                projectileList.Add(projectiles[projectiles.Count - 1]);
-            });
 
             server.On<bool>("startGame", (start) =>
             {
@@ -212,8 +207,7 @@ namespace Astronautai
             if (!existing)
             {
                 player = new Player(PlayerUsernameTextBox.Text, PlayerStartHealth, PlayerStartAmmo, PlayerStartSize);
-                player.SetCoordinates(random.Next(100, 200), random.Next(100, 200));
-
+                player.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
                 PlayerNameInputLabel.Text += PlayerUsernameTextBox.Text;
                 CurrentPlayerUsername = PlayerUsernameTextBox.Text;
                 JoinGameButton.Visible = false;
@@ -404,8 +398,8 @@ namespace Astronautai
         {
             if (e.KeyCode == Keys.Q)
             {
-                server.Invoke("GetProjectilesCountCaller").Wait();
-                AddProjectile(projectileList.Count);
+                server.Invoke("GetProjectiles").Wait();
+                AddProjectile(projectileCounter);
             }
         }
 
