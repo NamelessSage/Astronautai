@@ -28,7 +28,12 @@ namespace Astronautai.Classes
                 Reset();
             }
         }
-   
+
+        public void SetId(int id)
+        {
+            pickup.Id = id;
+        }
+
         public void SetValue(int value)
         {
             pickup.Value = value;
@@ -36,7 +41,7 @@ namespace Astronautai.Classes
 
         public void SetImage(string imagePath)
         {
-            pickup.ImageDirectoryPath = imagePath;
+            pickup.ImagePath = imagePath;
         }
 
         public void SetCoordinates(int x, int y)

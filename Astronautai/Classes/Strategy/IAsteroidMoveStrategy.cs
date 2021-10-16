@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Astronautai.Classes.Strategy
 {
-    interface IStrastegy
+    interface IAsteroidMoveStrategy
     {
-
+        void MoveSlow();
+        void MoveAverage();
+        void MoveFast();
     }
 }

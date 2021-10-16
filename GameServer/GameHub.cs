@@ -22,7 +22,8 @@ namespace GameServer
         private System.Timers.Timer _timer;
         private int _timerInterval = 10;
 
-        PickupFactory pickupFactory = new PickupFactory();
+        
+
         public GameHub()
         {
 
@@ -104,7 +105,8 @@ namespace GameServer
 
         public void AddPickup()
         {
-            Pickup pickup = (Pickup)pickupFactory.BuildPickup("Ammo", 1);
+            Pickup pickup = (Pickup)data.pickupFactory.BuildPickup("Ammo", 1);
+            Console.WriteLine(pickup.Id);
 
             Clients.All.addPickup(pickup);
         }

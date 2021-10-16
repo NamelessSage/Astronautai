@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using Astronautai;
 using System.Linq;
+using Astronautai.Classes.Factory;
 
 namespace GameServer
 {
@@ -13,6 +14,7 @@ namespace GameServer
         public static Map map;
         public int playerMoveSpeed = 10;
         public EnemyCreator creator = new EnemyCreator();
+        public PickupFactory pickupFactory = new PickupFactory();
 
         public GameData()
         {
@@ -119,27 +121,11 @@ namespace GameServer
 
         public bool CheckCollisionPickup(Pickup pickup)
         {
-
+            return false;
         }
 
         public bool CheckMapEdge(Coordinates coords)
         {
-            //switch (type)
-            //{
-            //    case 'x':
-            //        if (player.X < 25 || player.X > 750)
-            //            return false;
-            //        else
-            //            return true;
-
-            //    case 'y':
-            //        if (player.Y < 25 || player.Y > 550)
-            //            return false;
-            //        return true;
-            //    default:
-            //        return false;
-            //}
-            // returns true if can move
             if (coords.X < 25 || coords.X > 750)
                 return false;
 
@@ -236,53 +222,44 @@ namespace GameServer
         public int UpdateAsteroidCoords()
         {
             Map map = Map.Instance;
-            foreach (Enemy p in map.enemies)
+            foreach (Enemy enemy in map.enemies)
             {
-                if (CheckCollisionEnemy(p))
+                if (CheckCollisionEnemy(enemy))
                 {
-                    switch (p.Rotation)
+                    int averagePlayerHealth = GetAveragePlayerHealth();
+                    if (averagePlayerHealth == 3)
                     {
-                        case 'W':
-                            p.Y = p.Y - 1;
-                            break;
-                        case 'A':
-                            p.X = p.X - 1;
-                            break;
-                        case 'S':
-                            p.Y = p.Y + 1;
-                            break;
-                        case 'D':
-                            p.X = p.X + 1;
-                            break;
-                        case 'Q':
-                            p.Y = p.Y - 1;
-                            p.X = p.X - 1;
-                            break;
-                        case 'E':
-                            p.X = p.X + 1;
-                            p.Y = p.Y - 1;
-                            break;
-                        case 'Z':
-                            p.Y = p.Y + 1;
-                            p.X = p.X - 1;
-                            break;
-                        case 'C':
-                            p.X = p.X + 1;
-                            p.Y = p.Y + 1;
-                            break;
-                        default:
-                            break;
+                        enemy.MoveSlow();
+                    }
+                    else if(averagePlayerHealth < 3 && averagePlayerHealth > 1)
+                    {
+                        enemy.MoveAverage();
+                    }
+                    else
+                    {
+                        enemy.MoveFast();
                     }
                 }
                 else
                 {
-                    int id = p.Id;
-                    map.enemies.Remove(p);
+                    int id = enemy.Id;
+                    map.enemies.Remove(enemy);
                     return id;
                 }
             }
             return -1;
         }
 
+        public int GetAveragePlayerHealth()
+        {
+            Map map = Map.Instance;
+            int count = 0;
+            foreach (Player player in map.players)
+            {
+                count += player.Health; 
+            }
+
+            return count / map.players.Count;
+        }
     }
 }
