@@ -8,5 +8,8 @@ namespace Astronautai.Classes.Factory
 {
     class OnePickupFactory : AbstractPickupFactory
     {
+        public override void CreateAmmoPickup() { }
+        public override void CreateHealthPickup() { }
+        public override void CreateSpeedPickup() { }
     }
 }
