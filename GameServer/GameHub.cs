@@ -20,7 +20,8 @@ namespace GameServer
         GameData data = new GameData();
         bool started = false;
         private System.Timers.Timer _timer;
-        private int _timerInterval = 10;
+        private int _timerInterval = 50;
+        int counter = 0;
 
         PickupFactory pickupFactory = new PickupFactory();
         public GameHub()
@@ -79,10 +80,15 @@ namespace GameServer
         {
             data.UpdateProjectileCoords();
             int deleteId = data.UpdateAsteroidCoords();
-
             Clients.All.updateTicks(data.GetProjectiles());
             Clients.All.updateTicksAsteroids(data.GetEnemies(), deleteId);
             Clients.All.updatePlayerData(data.GetPlayers());
+            counter++;
+            if(counter > 10)
+            {
+                data.AddAsteroid();
+                counter = 0;
+            }
         }
 
         public void GetProjectilesCountCaller()
@@ -97,9 +103,9 @@ namespace GameServer
             Clients.All.getProjectiles(projectiles);
         }
 
-        public void AddAsteroid(string size)
+        public void AddAsteroid()
         {
-            data.AddAsteroid(size);
+            data.AddAsteroid();
         }
 
         public void AddPickup()

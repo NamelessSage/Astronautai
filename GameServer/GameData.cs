@@ -12,7 +12,7 @@ namespace GameServer
     {
         public static Map map;
         public int playerMoveSpeed = 10;
-        public EnemyCreator creator = new EnemyCreator();
+        public EnemySpawner spawner = new EnemySpawner();
 
         public GameData()
         {
@@ -119,27 +119,11 @@ namespace GameServer
 
         public bool CheckCollisionPickup(Pickup pickup)
         {
-
+            return false;
         }
 
         public bool CheckMapEdge(Coordinates coords)
         {
-            //switch (type)
-            //{
-            //    case 'x':
-            //        if (player.X < 25 || player.X > 750)
-            //            return false;
-            //        else
-            //            return true;
-
-            //    case 'y':
-            //        if (player.Y < 25 || player.Y > 550)
-            //            return false;
-            //        return true;
-            //    default:
-            //        return false;
-            //}
-            // returns true if can move
             if (coords.X < 25 || coords.X > 750)
                 return false;
 
@@ -148,7 +132,6 @@ namespace GameServer
 
             return true;
         }
-
 
         private bool Collides(Coordinates o1, int size1, Coordinates o2, int size2)
         {
@@ -221,10 +204,10 @@ namespace GameServer
             return p;
         }
 
-        public void AddAsteroid(string size)
+        public void AddAsteroid()
         {
             Map map = Map.Instance;
-            map.enemies.Add(creator.CreateAsteroid(size));
+            map.enemies.Add(spawner.CreateAsteroid(map));
         }
 
         public List<Enemy> GetEnemies()
@@ -283,6 +266,8 @@ namespace GameServer
             }
             return -1;
         }
+
+
 
     }
 }

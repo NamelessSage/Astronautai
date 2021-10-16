@@ -456,7 +456,7 @@ namespace Astronautai
                 Name = "Ammo",
                 Size = new Size(pickup.Size, pickup.Size),
                 Location = new Point(pickup.X, pickup.Y),
-                Image = (Bitmap)Bitmap.FromFile(pickup.ImageDirectoryPath)
+                Image = (Bitmap)Bitmap.FromFile(pickup.ImagePath)
             };
             this.Controls.Add(pickupPictureBox);
             pickupPictureBox.BringToFront();

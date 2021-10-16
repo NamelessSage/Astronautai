@@ -17,7 +17,8 @@ namespace Class_diagram
 		public int Difficulty = 0;
 		public List<Pickup> pickups = new List<Pickup>();
 		public List<Player> players = new List<Player>();
-
+		public int projectileCounter = 0;
+		public int enemyCounter = 0;
 		private Map() 
 		{ 
 
@@ -27,5 +28,6 @@ namespace Class_diagram
 		{
 			get { return instance; }
 		}
+
 	}
 }

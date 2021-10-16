@@ -36,7 +36,7 @@ namespace Astronautai.Classes
 
         public void SetImage(string imagePath)
         {
-            pickup.ImageDirectoryPath = imagePath;
+            pickup.ImagePath = imagePath;
         }
 
         public void SetCoordinates(int x, int y)
