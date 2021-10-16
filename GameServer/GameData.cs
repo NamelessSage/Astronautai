@@ -57,6 +57,12 @@ namespace GameServer
             map.projectiles.Add(projectile);
         }
 
+        public void AddPickup(Pickup pickup)
+        {
+            Map map = Map.Instance;
+            map.pickups.Add(pickup);
+        }
+
         public List<Projectile> GetProjectiles()
         {
             Map map = Map.Instance;
@@ -107,12 +113,12 @@ namespace GameServer
         public bool CheckCollisionEnemy(Enemy enemy)
         {
             Map map = Map.Instance;
-            foreach (Player en in map.players)
+            foreach (Player player in map.players)
             {
-                if (!Collides(new Coordinates(enemy.X, enemy.Y), enemy.Size, new Coordinates(en.X, en.Y), en.Size))
+                if (!Collides(new Coordinates(enemy.X, enemy.Y), enemy.Size, new Coordinates(player.X, player.Y), player.Size))
                 {
-                    en.Health -= enemy.Damage;
-                    UpdatePlayer(en);
+                    player.Health -= enemy.Damage;
+                    UpdatePlayer(player);
                     return false;
                 }
             }
@@ -121,7 +127,21 @@ namespace GameServer
 
         public bool CheckCollisionPickup(Pickup pickup)
         {
-            return false;
+            Map map = Map.Instance;
+            foreach (Player player in map.players)
+            {
+                if (!Collides(new Coordinates(pickup.X, pickup.Y), pickup.Size, new Coordinates(player.X, player.Y), player.Size))
+                {
+                    if(player.Health < 3) //MAX HEALTH 3
+                    {
+                        player.Health += pickup.Value;
+                    }
+                    UpdateAsteroidCoords();
+                    UpdatePlayer(player);
+                    return false;
+                }
+            }
+            return true;
         }
 
         public bool CheckMapEdge(Coordinates coords)
@@ -218,6 +238,12 @@ namespace GameServer
             return map.enemies;
         }
 
+        public List<Pickup> GetPickups()
+        {
+            Map map = Map.Instance;
+            return map.pickups;
+        }
+
         public int UpdateAsteroidCoords()
         {
             Map map = Map.Instance;
@@ -243,6 +269,25 @@ namespace GameServer
                 {
                     int id = enemy.Id;
                     map.enemies.Remove(enemy);
+                    return id;
+                }
+            }
+            return -1;
+        }
+
+        public int UpdatePickups()
+        {
+            Map map = Map.Instance;
+            foreach (Pickup pickup in map.pickups)
+            {
+                if (CheckCollisionPickup(pickup))
+                {
+                    
+                }
+                else
+                {
+                    int id = pickup.Id;
+                    map.pickups.Remove(pickup);
                     return id;
                 }
             }

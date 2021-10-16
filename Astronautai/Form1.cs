@@ -20,7 +20,7 @@ namespace Astronautai
 
         Random random;
         Timer timer;
-        
+
         Player player;
         public string CurrentPlayerUsername;
 
@@ -191,7 +191,53 @@ namespace Astronautai
                 }));
             });
 
+            server.On<List<Pickup>, int>("updateTicksPickups", (pickups, deleteId) =>
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    foreach (Pickup pickup in pickups)
+                    {
+                        if (pickups.Count != 0)
+                        {
+                            var pickupControls = this.Controls.Find("Pickup" + pickup.Id, true);
+                            if (pickupControls.Length != 0)
+                            {
+                                var pictureBox = pickupControls[0] as PictureBox;
+                                pictureBox.Location = new Point(pickup.X, pickup.Y);
+                            }
+                            else
+                            {
+                                CreatePickupPictureBox(pickup);
+                            }
+                        }
+                    }
+                    if (deleteId >= 0)
+                    {
+                        var pickupControls = this.Controls.Find("Pickup" + deleteId, true);
+                        if (pickupControls.Length != 0)
+                        {
+                            var pictureBox = pickupControls[0] as PictureBox;
+                            this.Controls.Remove(pictureBox);
+                        }
+                    }
+                }));
+            });
+
             hubConnection.Start().Wait();
+        }
+
+
+        public void CreatePickupPictureBox(Pickup pickup)
+        {
+            var pickupPictureBox = new PictureBox
+            {
+                Name = "Pickup" + pickup.Id,
+                Size = new Size(pickup.Size, pickup.Size),
+                Location = new Point(pickup.X, pickup.Y),
+                Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//ammo.jpg"),
+            };
+            this.Controls.Add(pickupPictureBox);
+            pickupPictureBox.BringToFront();
         }
 
         private void JoinGameButton_Click(object sender, EventArgs e)
@@ -453,7 +499,7 @@ namespace Astronautai
             Console.WriteLine("Pickup added!");
             var pickupPictureBox = new PictureBox
             {
-                Name = "Ammo",
+                Name = "Pickup" + pickup.Id,
                 Size = new Size(pickup.Size, pickup.Size),
                 Location = new Point(pickup.X, pickup.Y),
                 Image = (Bitmap)Bitmap.FromFile(pickup.ImagePath)
