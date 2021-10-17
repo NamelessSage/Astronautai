@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Class_diagram;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,42 @@ using System.Threading.Tasks;
 
 namespace Astronautai.Classes.Factory
 {
-    class OnePickupFactory : AbstractPickupFactory
+    public class OnePickupFactory : AbstractPickupFactory
     {
-        public override void CreateAmmoPickup() { }
-        public override void CreateHealthPickup() { }
-        public override void CreateSpeedPickup() { }
+        const int maxCoordinate = 500;
+        const int pickupSize = 20;
+        Random random;
+        public override Pickup CreateAmmoPickup(int pickupCount)
+        {
+            random = new Random();
+            PickupBuilder builder = new PickupBuilder();
+            builder.SetId(pickupCount);
+            builder.SetCoordinates(random.Next(0, maxCoordinate), random.Next(0, maxCoordinate));
+            builder.SetImage(@"..//..//Objects//ammo.jpg");
+            builder.SetSize(pickupSize);
+            builder.SetValue(1);
+            return builder.GetBuildable();
+        }
+        public override Pickup CreateHealthPickup(int pickupCount)
+        {
+            random = new Random();
+            PickupBuilder builder = new PickupBuilder();
+            builder.SetId(pickupCount);
+            builder.SetCoordinates(random.Next(0, maxCoordinate), random.Next(0, maxCoordinate));
+            builder.SetImage(@"..//..//Objects//healthPickup.png");
+            builder.SetSize(pickupSize);
+            builder.SetValue(1);
+            return builder.GetBuildable();
+        }
+        public override Pickup CreateSpeedPickup(int pickupCount) {
+            random = new Random();
+            PickupBuilder builder = new PickupBuilder();
+            builder.SetId(pickupCount);
+            builder.SetCoordinates(random.Next(0, maxCoordinate), random.Next(0, maxCoordinate));
+            builder.SetImage(@"..//..//Objects//ammo.jpg");
+            builder.SetSize(pickupSize);
+            builder.SetValue(1);
+            return builder.GetBuildable();
+        }
     }
 }

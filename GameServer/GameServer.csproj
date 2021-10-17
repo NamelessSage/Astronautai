@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ObjectDestructor.cs" />
     <Compile Include="EnemyCreator.cs" />
     <Compile Include="EnemySpawner.cs" />
     <Compile Include="GameData.cs" />

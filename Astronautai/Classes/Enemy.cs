@@ -71,5 +71,10 @@ namespace Class_diagram
             Speed = 3;
             Move();
         }
+
+        public Coordinates GetCoordinates()
+        {
+            return new Coordinates(X, Y);
+        }
     }
 }

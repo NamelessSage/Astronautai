@@ -6,6 +6,7 @@ using System.Drawing;
 using Astronautai;
 using System.Linq;
 using Astronautai.Classes.Factory;
+using GameServer.Classes;
 
 namespace GameServer
 {
@@ -14,8 +15,9 @@ namespace GameServer
         public static Map map;
         public int playerMoveSpeed = 10;
         public PickupFactory pickupFactory = new PickupFactory();
+        public OnePickupFactory onepickupFactory = new OnePickupFactory();
+        public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
         public EnemySpawner spawner = new EnemySpawner();
-
         public GameData()
         {
 
@@ -247,8 +249,17 @@ namespace GameServer
         public int UpdateAsteroidCoords()
         {
             Map map = Map.Instance;
+            GameHub hub = new GameHub().GetHub();
+
+
+            ObjectDestructor destructor = new ObjectDestructor();
             foreach (Enemy enemy in map.enemies)
             {
+                if (destructor.RemoveEnemy(enemy))
+                {
+                    break;
+                }
+
                 if (CheckCollisionEnemy(enemy))
                 {
                     int averagePlayerHealth = GetAveragePlayerHealth();

@@ -150,7 +150,6 @@ namespace Astronautai
             this.ClientSize = new System.Drawing.Size(804, 601);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.playerFocus);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "Astronautai";
             this.TopMost = true;
