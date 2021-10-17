@@ -35,5 +35,18 @@ namespace GameServer.Classes
             else
                 return false;
         }
+
+        public bool RemoveProjectile(Projectile projectile)
+        {
+            if (IsInRemoveArea(projectile.GetCoordinates()))
+            {
+                var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
+                context.Clients.All.destroyProjectile(projectile);
+                map.projectiles.Remove(projectile);
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }

@@ -18,9 +18,14 @@ namespace GameServer
 
         public OnePickupFactory onepickupFactory = new OnePickupFactory();
         public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
+<<<<<<< HEAD
         public EnemySpawner enemySpawner = new EnemySpawner();
         public PickupSpawner pickupSpawner = new PickupSpawner();
 
+=======
+        public EnemySpawner spawner = new EnemySpawner();
+        ObjectDestructor destructor = new ObjectDestructor();
+>>>>>>> c4a7fde54bc0a041711e9509380a17a043e654f4
         public GameData()
         {
 
@@ -76,9 +81,14 @@ namespace GameServer
 
         public void UpdateProjectileCoords()
         {
+
             Map map = Map.Instance;
             foreach (Projectile p in map.projectiles)
             {
+                if(destructor.RemoveProjectile(p))
+                {
+                    break;
+                }
                 switch (p.Direction)
                 {
                     case 'W':
@@ -272,7 +282,6 @@ namespace GameServer
             GameHub hub = new GameHub().GetHub();
 
 
-            ObjectDestructor destructor = new ObjectDestructor();
             foreach (Enemy enemy in map.enemies)
             {
                 if (destructor.RemoveEnemy(enemy))

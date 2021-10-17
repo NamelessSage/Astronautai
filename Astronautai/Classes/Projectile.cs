@@ -14,5 +14,9 @@ namespace Class_diagram
         {
 
         }
+        public Coordinates GetCoordinates()
+        {
+            return new Coordinates(X, Y);
+        }
     }
 }
