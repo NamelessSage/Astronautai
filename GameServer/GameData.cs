@@ -15,6 +15,8 @@ namespace GameServer
         public static Map map;
         public int playerMoveSpeed = 10;
         public PickupFactory pickupFactory = new PickupFactory();
+        public OnePickupFactory onepickupFactory = new OnePickupFactory();
+        public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
         public EnemySpawner spawner = new EnemySpawner();
         public GameData()
         {
