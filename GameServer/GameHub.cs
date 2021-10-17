@@ -85,9 +85,11 @@ namespace GameServer
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
             data.UpdateProjectileCoords();
-            int deleteId = data.UpdateAsteroidCoords();
+            int deleteEnemyId = data.UpdateAsteroidCoords();
+            int deletePickupId = data.UpdatePickups();
             Clients.All.updateTicks(data.GetProjectiles());
-            Clients.All.updateTicksAsteroids(data.GetEnemies(), deleteId);
+            Clients.All.updateTicksAsteroids(data.GetEnemies(), deleteEnemyId);
+            Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
             Clients.All.updatePlayerData(data.GetPlayers());
             counter++;
             if(counter > 10)
@@ -107,6 +109,7 @@ namespace GameServer
         public void AddPickup()
         {
             Pickup pickup = (Pickup)data.pickupFactory.BuildPickup("Ammo", 1);
+            data.AddPickup(pickup);
             //Pickup pickup = (Pickup)data.onepickupFactory.CreateAmmoPickup(pickupid);
             // Pickup pickup = (Pickup)data.maxpickupFactory.CreateAmmoPickup(pickupid);
             Console.WriteLine(pickup.Id);
