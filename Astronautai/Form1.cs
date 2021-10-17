@@ -1,4 +1,5 @@
-﻿using Astronautai.Classes.Factory;
+﻿using Astronautai.Classes;
+using Astronautai.Classes.Factory;
 using Class_diagram;
 using Microsoft.AspNet.SignalR.Client;
 using System;
@@ -32,13 +33,16 @@ namespace Astronautai
         List<Player> playerList;
         int projectileCounter;
 
+
         public Form1()
         {
+            ServerInput inp = new ServerInput(this);
             InitializeComponent();
             InitTimer();
             random = new Random();
 
             HubConnection hubConnection = new HubConnection("http://localhost:8080");
+            
             server = hubConnection.CreateHubProxy("serveris");
 
             playerList = new List<Player>();
@@ -162,7 +166,7 @@ namespace Astronautai
                     {
                         if (asteroids.Count != 0)
                         {
-                            var asteroidControls = this.Controls.Find("Asteroid" + enemy.Id, true);
+                            var asteroidControls = this.Controls.Find("Enemy" + enemy.Id, true);
                             if (asteroidControls.Length != 0)
                             {
                                 var pictureBox = asteroidControls[0] as PictureBox;
@@ -176,7 +180,7 @@ namespace Astronautai
                     }
                     if (deleteId >= 0)
                     {
-                        var asteroidControls = this.Controls.Find("Asteroid" + deleteId, true);
+                        var asteroidControls = this.Controls.Find("Enemy" + deleteId, true);
                         if (asteroidControls.Length != 0)
                         {
                             var pictureBox = asteroidControls[0] as PictureBox;
@@ -188,6 +192,7 @@ namespace Astronautai
 
             hubConnection.Start().Wait();
         }
+
 
         private void JoinGameButton_Click(object sender, EventArgs e)
         {
@@ -409,7 +414,7 @@ namespace Astronautai
             {
                 var asteroidPictureBox = new PictureBox
                 {
-                    Name = "Asteroid" + p.Id,
+                    Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
                     Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg"),
@@ -421,7 +426,7 @@ namespace Astronautai
             {
                 var asteroidPictureBox = new PictureBox
                 {
-                    Name = "Asteroid" + p.Id,
+                    Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
                     Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//averageAsteroid.jpg"),
@@ -433,7 +438,7 @@ namespace Astronautai
             {
                 var asteroidPictureBox = new PictureBox
                 {
-                    Name = "Asteroid" + p.Id,
+                    Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
                     Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//bigAsteroid.jpg"),

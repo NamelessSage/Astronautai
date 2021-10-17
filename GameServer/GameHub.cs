@@ -23,11 +23,14 @@ namespace GameServer
         private int _timerInterval = 50;
         int counter = 0;
 
-        
-
         public GameHub()
         {
 
+        }
+
+        public GameHub GetHub()
+        {
+            return this;
         }
 
         public void AddPlayerOnJoin(Player player)
@@ -68,7 +71,6 @@ namespace GameServer
             player = data.PlayerCanMove(player);
             data.UpdatePlayer(player);
             Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y} {player.Rotation}");
-
             Clients.All.movePlayer(player.Username, player.X, player.Y, player.Rotation);
         }
 
@@ -100,11 +102,6 @@ namespace GameServer
             map.projectileCounter++;
         }
 
-        public void AddAsteroid()
-        {
-            data.AddAsteroid();
-        }
-
         public void AddPickup()
         {
             Pickup pickup = (Pickup)data.pickupFactory.BuildPickup("Ammo", 1);
@@ -119,6 +116,14 @@ namespace GameServer
             _timer = new System.Timers.Timer(_timerInterval);
             _timer.Elapsed += new ElapsedEventHandler(UpdateTicks);
             _timer.Start();
+        }
+
+
+        public void DestroyProjectile(Projectile projectile)
+        {
+            Map map = Map.Instance;
+            Clients.All.removeProjectile(projectile.Id);
+            map.projectiles.Remove(projectile);
         }
     } 
 }
