@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace Astronautai.Classes.Factory
 {
     class MaxSpeedPickup : SpeedPickup
-
     {
     }
 }

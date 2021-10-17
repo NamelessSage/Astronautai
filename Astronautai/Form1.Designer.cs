@@ -40,6 +40,7 @@ namespace Astronautai
             this.panel1 = new System.Windows.Forms.Panel();
             this.ammoLabel = new System.Windows.Forms.Label();
             this.healthLabel = new System.Windows.Forms.Label();
+            this.speedLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -107,6 +108,7 @@ namespace Astronautai
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.speedLabel);
             this.panel1.Controls.Add(this.ammoLabel);
             this.panel1.Controls.Add(this.healthLabel);
             this.panel1.Controls.Add(this.StartGameButton);
@@ -124,7 +126,7 @@ namespace Astronautai
             // 
             this.ammoLabel.AutoSize = true;
             this.ammoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.ammoLabel.Location = new System.Drawing.Point(672, 577);
+            this.ammoLabel.Location = new System.Drawing.Point(420, 577);
             this.ammoLabel.Name = "ammoLabel";
             this.ammoLabel.Size = new System.Drawing.Size(119, 25);
             this.ammoLabel.TabIndex = 6;
@@ -135,12 +137,23 @@ namespace Astronautai
             // 
             this.healthLabel.AutoSize = true;
             this.healthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.healthLabel.Location = new System.Drawing.Point(559, 577);
+            this.healthLabel.Location = new System.Drawing.Point(249, 577);
             this.healthLabel.Name = "healthLabel";
             this.healthLabel.Size = new System.Drawing.Size(107, 25);
             this.healthLabel.TabIndex = 5;
             this.healthLabel.Text = "Health: 0/3";
             this.healthLabel.Visible = false;
+            // 
+            // speedLabel
+            // 
+            this.speedLabel.AutoSize = true;
+            this.speedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.speedLabel.Location = new System.Drawing.Point(577, 577);
+            this.speedLabel.Name = "speedLabel";
+            this.speedLabel.Size = new System.Drawing.Size(131, 25);
+            this.speedLabel.TabIndex = 7;
+            this.speedLabel.Text = "Speed: 16/48";
+            this.speedLabel.Visible = false;
             // 
             // Form1
             // 
@@ -174,6 +187,7 @@ namespace Astronautai
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label healthLabel;
         private System.Windows.Forms.Label ammoLabel;
+        private System.Windows.Forms.Label speedLabel;
     }
 }
 

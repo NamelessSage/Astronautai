@@ -15,9 +15,12 @@ namespace GameServer
         public static Map map;
         public int playerMoveSpeed = 10;
         public PickupFactory pickupFactory = new PickupFactory();
+
         public OnePickupFactory onepickupFactory = new OnePickupFactory();
         public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
-        public EnemySpawner spawner = new EnemySpawner();
+        public EnemySpawner enemySpawner = new EnemySpawner();
+        public PickupSpawner pickupSpawner = new PickupSpawner();
+
         public GameData()
         {
 
@@ -127,19 +130,36 @@ namespace GameServer
             return true;
         }
 
-        public bool CheckCollisionPickup(Pickup pickup)
+        public bool CheckNotCollisionPickup(Pickup pickup)
         {
             Map map = Map.Instance;
             foreach (Player player in map.players)
             {
                 if (!Collides(new Coordinates(pickup.X, pickup.Y), pickup.Size, new Coordinates(player.X, player.Y), player.Size))
                 {
-                    if(player.Health < 3) //MAX HEALTH 3
+                    if(pickup as AmmoPickup != null)
                     {
-                        player.Health += pickup.Value;
+                        AmmoPickup p = (AmmoPickup)pickup;
+                        p.Action(player, pickup);
                     }
+
+                    if (pickup as HealthPickup != null)
+                    {
+                        HealthPickup p = (HealthPickup)pickup;
+                        p.Action(player, pickup);
+                    }
+
+                    if (pickup as SpeedPickup != null)
+                    {
+                        SpeedPickup p = (SpeedPickup)pickup;
+                        p.Action(player, pickup);
+                    }
+
+                    Console.WriteLine("ACTION");
+                    Player playerUpdated = pickup.Action(player, pickup);
+
                     UpdateAsteroidCoords();
-                    UpdatePlayer(player);
+                    UpdatePlayer(playerUpdated);
                     return false;
                 }
             }
@@ -170,68 +190,68 @@ namespace GameServer
             return true;
         }
 
-        public Player PlayerCanMove(Player p)
+        public Player PlayerCanMove(Player player)
         {
-            if (p.Rotation == 'W')
+            if (player.Rotation == 'W')
             {
                 Player temp = new Player();
-                temp.SetCoordinates(p.X, p.Y);
-                temp.Size = p.Size;
-                Coordinates coordinates = new Coordinates(temp.X, temp.Y - playerMoveSpeed);
-                temp.Y = temp.Y - playerMoveSpeed;
+                temp.SetCoordinates(player.X, player.Y);
+                temp.Size = player.Size;
+                Coordinates coordinates = new Coordinates(temp.X, temp.Y - player.Speed);
+                temp.Y = temp.Y - player.Speed;
 
                 if (CheckMapEdge(coordinates) && CheckCollisionPlayers(temp))
                 {
-                    p.Y = temp.Y;
-                    return p;
+                    player.Y = temp.Y;
+                    return player;
                 }
             }
-            else if (p.Rotation == 'A')
+            else if (player.Rotation == 'A')
             {
                 Player temp = new Player();
-                temp.SetCoordinates(p.X, p.Y);
-                temp.Size = p.Size;
-                Coordinates coordinates = new Coordinates(temp.X- playerMoveSpeed, temp.Y);
-                temp.X = temp.X - playerMoveSpeed;
+                temp.SetCoordinates(player.X, player.Y);
+                temp.Size = player.Size;
+                Coordinates coordinates = new Coordinates(temp.X - player.Speed, temp.Y);
+                temp.X = temp.X - player.Speed;
                 if (CheckMapEdge(coordinates) && CheckCollisionPlayers(temp))
                 {
-                    p.X = temp.X;
-                    return p;
+                    player.X = temp.X;
+                    return player;
                 }
             }
-            else if (p.Rotation == 'S')
+            else if (player.Rotation == 'S')
             {
                 Player temp = new Player();
-                temp.SetCoordinates(p.X, p.Y);
-                temp.Size = p.Size;
-                Coordinates coordinates = new Coordinates(temp.X, temp.Y + playerMoveSpeed);
-                temp.Y = temp.Y + playerMoveSpeed;
+                temp.SetCoordinates(player.X, player.Y);
+                temp.Size = player.Size;
+                Coordinates coordinates = new Coordinates(temp.X, temp.Y + player.Speed);
+                temp.Y = temp.Y + player.Speed;
                 if (CheckMapEdge(coordinates) && CheckCollisionPlayers(temp))
                 {
-                    p.Y = temp.Y;
-                    return p;
+                    player.Y = temp.Y;
+                    return player;
                 }
             }
-            else if (p.Rotation == 'D')
+            else if (player.Rotation == 'D')
             {
                 Player temp = new Player();
-                temp.SetCoordinates(p.X, p.Y);
-                temp.Size = p.Size;
-                Coordinates coordinates = new Coordinates(temp.X+ playerMoveSpeed, temp.Y);
-                temp.X = temp.X + playerMoveSpeed;
+                temp.SetCoordinates(player.X, player.Y);
+                temp.Size = player.Size;
+                Coordinates coordinates = new Coordinates(temp.X + player.Speed, temp.Y);
+                temp.X = temp.X + player.Speed;
                 if (CheckMapEdge(coordinates) && CheckCollisionPlayers(temp))
                 {
-                    p.X = temp.X;
-                    return p;
+                    player.X = temp.X;
+                    return player;
                 }
             }
-            return p;
+            return player;
         }
 
         public void AddAsteroid()
         {
             Map map = Map.Instance;
-            map.enemies.Add(spawner.CreateAsteroid(map));
+            map.enemies.Add(enemySpawner.CreateAsteroid(map));
         }
 
         public List<Enemy> GetEnemies()
@@ -291,7 +311,7 @@ namespace GameServer
             Map map = Map.Instance;
             foreach (Pickup pickup in map.pickups)
             {
-                if (CheckCollisionPickup(pickup))
+                if (CheckNotCollisionPickup(pickup))
                 {
                     
                 }

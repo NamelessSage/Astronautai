@@ -21,10 +21,9 @@ namespace GameServer
         bool started = false;
         private System.Timers.Timer _timer;
         private int _timerInterval = 50;
-        int counter = 0;
-        int pickupid = 0;
-        
 
+        int counter = 0;
+        
         public GameHub()
         {
 
@@ -76,20 +75,25 @@ namespace GameServer
             Clients.All.movePlayer(player.Username, player.X, player.Y, player.Rotation);
         }
 
-        public void AddProjectile(Projectile projectile)
+        public void AddProjectile(Projectile projectile, Player player)
         {
             Console.WriteLine("Adding projectile with id = " + projectile.Id);
+            data.UpdatePlayer(player);
             data.AddProjectile(projectile);
         }
 
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
             data.UpdateProjectileCoords();
+
             int deleteEnemyId = data.UpdateAsteroidCoords();
-            int deletePickupId = data.UpdatePickups();
             Clients.All.updateTicks(data.GetProjectiles());
+
             Clients.All.updateTicksAsteroids(data.GetEnemies(), deleteEnemyId);
+
+            int deletePickupId = data.UpdatePickups();
             Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
+
             Clients.All.updatePlayerData(data.GetPlayers());
             counter++;
             if(counter > 10)
@@ -108,12 +112,13 @@ namespace GameServer
 
         public void AddPickup()
         {
-            Pickup pickup = (Pickup)data.pickupFactory.BuildPickup("Ammo", 1);
+            //Pickup pickup = (Pickup)data.pickupFactory.BuildPickup("Ammo", 1);
+
+            //Pickup pickup = (Pickup)data.onepickupFactory.CreateHealthPickup();
+            Console.WriteLine("ADD PICKUP 0");
+            Pickup pickup = data.pickupSpawner.SpawnRandom();
+            Console.WriteLine("ADD PICKUp 1");
             data.AddPickup(pickup);
-            //Pickup pickup = (Pickup)data.onepickupFactory.CreateAmmoPickup(pickupid);
-            // Pickup pickup = (Pickup)data.maxpickupFactory.CreateAmmoPickup(pickupid);
-            Console.WriteLine(pickup.Id);
-            pickupid++;
 
             Clients.All.addPickup(pickup);
         }

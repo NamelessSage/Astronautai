@@ -8,6 +8,7 @@ namespace Class_diagram
 	{
 		public int Id { get; set; }
 		public int Value { get; set; }
+		public string Type { get; set; }
 		public string ImagePath { get; set; }
 		public int Size { get; set; }
 
@@ -15,5 +16,7 @@ namespace Class_diagram
 		{
 
 		}
+
+		public virtual Player Action(Player player, Pickup pickup) { return new Player(); }
     }
 }

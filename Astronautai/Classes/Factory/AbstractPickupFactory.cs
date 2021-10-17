@@ -9,13 +9,10 @@ namespace Astronautai.Classes.Factory
 {
     public abstract class AbstractPickupFactory
     {
-        public virtual Pickup CreateAmmoPickup(int pickupCount) 
-        {
-            
-            return new Pickup();
-        }
-        public virtual Pickup CreateHealthPickup(int pickupCount) { return new Pickup(); }
-        public virtual Pickup CreateSpeedPickup(int pickupCount) { return new Pickup(); }
+        public static int count = 0;
 
+        public virtual Pickup CreateAmmoPickup()  { return new Pickup(); }
+        public virtual Pickup CreateHealthPickup() { return new Pickup(); }
+        public virtual Pickup CreateSpeedPickup() { return new Pickup(); }
     }
 }

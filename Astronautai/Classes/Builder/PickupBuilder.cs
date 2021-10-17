@@ -25,6 +25,7 @@ namespace Astronautai.Classes
             }
             finally
             {
+                Console.WriteLine("FINALLY");
                 Reset();
             }
         }

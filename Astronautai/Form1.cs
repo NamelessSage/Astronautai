@@ -233,7 +233,7 @@ namespace Astronautai
                 Name = "Pickup" + pickup.Id,
                 Size = new Size(pickup.Size, pickup.Size),
                 Location = new Point(pickup.X, pickup.Y),
-                Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//ammo.jpg"),
+                Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//ammoPickup.jpg"),
             };
             this.Controls.Add(pickupPictureBox);
             pickupPictureBox.BringToFront();
@@ -256,7 +256,7 @@ namespace Astronautai
 
             if (!existing)
             {
-                player = new Player(PlayerUsernameTextBox.Text, PlayerStartHealth, PlayerStartAmmo, PlayerStartSize);
+                player = new Player(PlayerUsernameTextBox.Text, PlayerStartHealth, PlayerStartAmmo, PlayerStartSize, 16);
                 player.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
                 PlayerNameInputLabel.Text += PlayerUsernameTextBox.Text;
                 CurrentPlayerUsername = PlayerUsernameTextBox.Text;
@@ -401,33 +401,35 @@ namespace Astronautai
 
         private void AddProjectile(int count)
         {
-            Projectile p = new Projectile();
-            p.Player = player;
-            p.Direction = player.Rotation;
+            Projectile projectile = new Projectile();
+            projectile.Player = player;
+            projectile.Direction = player.Rotation;
             switch (player.Rotation)
             {
                 case 'W':
-                    p.X = player.X + (PlayerStartSize / 2);
-                    p.Y = player.Y;
+                    projectile.X = player.X + (PlayerStartSize / 2);
+                    projectile.Y = player.Y;
                     break;
                 case 'A':
-                    p.X = player.X;
-                    p.Y = player.Y + (PlayerStartSize / 2);
+                    projectile.X = player.X;
+                    projectile.Y = player.Y + (PlayerStartSize / 2);
                     break;
                 case 'S':
-                    p.X = player.X + (PlayerStartSize / 2);
-                    p.Y = player.Y + PlayerStartSize;
+                    projectile.X = player.X + (PlayerStartSize / 2);
+                    projectile.Y = player.Y + PlayerStartSize;
                     break;
                 case 'D':
-                    p.X = player.X + PlayerStartSize;
-                    p.Y = player.Y + (PlayerStartSize / 2);
+                    projectile.X = player.X + PlayerStartSize;
+                    projectile.Y = player.Y + (PlayerStartSize / 2);
                     break;
                 default:
                     break;
             }
-            p.Id = count;
-            CreateProjectilePictureBox(p);
-            server.Invoke("AddProjectile", p);
+            ammoLabel.Text = "Ammo: " + player.Ammo + "/" + PlayerStartAmmo;
+
+            projectile.Id = count;
+            CreateProjectilePictureBox(projectile);
+            server.Invoke("AddProjectile", projectile, player);
         }
 
         private void CreateProjectilePictureBox(Projectile p)
@@ -448,6 +450,7 @@ namespace Astronautai
         {
             if (e.KeyCode == Keys.Q)
             {
+                player.Ammo -= 1;
                 server.Invoke("GetProjectiles").Wait();
                 AddProjectile(projectileCounter);
             }
