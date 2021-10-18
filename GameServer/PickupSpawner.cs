@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Astronautai.Classes.Observer;
 
 namespace GameServer
 {
-    public class PickupSpawner
+    public class PickupSpawner : IObserver
     {
         Random random;
 
@@ -70,6 +71,15 @@ namespace GameServer
             else
             {
                 return maxPickupFactory.CreateSpeedPickup();
+            }
+        }
+
+        public void Update()
+        {
+            Map map = Map.Instance;
+            if (map.pickups.Count < 10)
+            {
+                map.pickups.Add(SpawnRandom());
             }
         }
     }

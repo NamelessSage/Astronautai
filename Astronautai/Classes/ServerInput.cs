@@ -36,7 +36,6 @@ namespace Astronautai.Classes
                 }));
             });
 
-
             hubConnection.Start().Wait();
         }
 

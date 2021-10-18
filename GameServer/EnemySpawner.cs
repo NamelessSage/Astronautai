@@ -4,17 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Astronautai.Classes.Observer;
 
 namespace GameServer
 {
-    public class EnemySpawner
+    public class EnemySpawner : IObserver
     {
-        int movableMinX = 0;
-        int movableMinY = 0;
-        int movableMaxX = 800;
-        int movableMaxY = 600;
         Random rnd;
-        int counter = 1;
 
         public EnemySpawner()
         {
@@ -65,6 +61,16 @@ namespace GameServer
                 map.enemyCounter = id + 1;
 
                 return creator.CreateAsteroid("Small", GetSpawnCoords(), id);
+            }
+        }
+
+        public void Update()
+        {
+            Map map = Map.Instance;
+            
+            if (map.enemies.Count < 30)
+            {
+                map.enemies.Add(CreateAsteroid(map));
             }
         }
     }

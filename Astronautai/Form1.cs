@@ -158,7 +158,7 @@ namespace Astronautai
                 }));
             });
 
-            server.On<List<Enemy>, int>("updateTicksAsteroids", (asteroids, deleteId) =>
+            server.On<List<Enemy>>("updateTicksAsteroids", (asteroids) =>
             {
                 this.BeginInvoke(new Action(() =>
                 {
@@ -178,15 +178,7 @@ namespace Astronautai
                             }
                         }
                     }
-                    if (deleteId >= 0)
-                    {
-                        var asteroidControls = this.Controls.Find("Enemy" + deleteId, true);
-                        if (asteroidControls.Length != 0)
-                        {
-                            var pictureBox = asteroidControls[0] as PictureBox;
-                            this.Controls.Remove(pictureBox);
-                        }
-                    }
+                    
                 }));
             });
 
@@ -374,12 +366,6 @@ namespace Astronautai
             {
                 player.Rotation = 'D';
                 server.Invoke("MovePlayer", player);
-            }
-            if (e.KeyCode == Keys.M)
-            {
-                //Pickup pic = (Pickup)tempFactory.GetPickups("Ammo", 100, 100, 1);
-                //addpickup(pic);
-                server.Invoke("AddPickup");
             }
         }
 

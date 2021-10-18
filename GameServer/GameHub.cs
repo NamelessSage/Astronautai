@@ -10,7 +10,7 @@ using Astronautai.Classes.Factory;
 using Class_diagram;
 using System.Windows.Forms;
 using System.Timers;
-
+using static Astronautai.Classes.Observer;
 
 namespace GameServer
 {
@@ -21,8 +21,8 @@ namespace GameServer
         bool started = false;
         private System.Timers.Timer _timer;
         private int _timerInterval = 50;
+        Subject subject = new Subject();
 
-        int counter = 0;
         
         public GameHub()
         {
@@ -60,6 +60,11 @@ namespace GameServer
             Console.WriteLine("Game started");
             if (!started)
             {
+                EnemySpawner enemySpawner = new EnemySpawner();
+                PickupSpawner pickupSpawner = new PickupSpawner();
+                subject.Attach(enemySpawner);
+                subject.Attach(pickupSpawner);
+
                 started = true;
                 StartTimer();
 
@@ -84,23 +89,18 @@ namespace GameServer
 
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
+            subject.Notify();
+
             data.UpdateProjectileCoords();
 
-            int deleteEnemyId = data.UpdateAsteroidCoords();
+            data.UpdateAsteroidCoords();
             Clients.All.updateTicks(data.GetProjectiles());
-
-            Clients.All.updateTicksAsteroids(data.GetEnemies(), deleteEnemyId);
+            Clients.All.updateTicksAsteroids(data.GetEnemies());
 
             int deletePickupId = data.UpdatePickups();
             Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
 
             Clients.All.updatePlayerData(data.GetPlayers());
-            counter++;
-            if(counter > 10)
-            {
-                data.AddAsteroid();
-                counter = 0;
-            }
         }
 
         public void GetProjectiles()
@@ -110,33 +110,12 @@ namespace GameServer
             map.projectileCounter++;
         }
 
-        public void AddPickup()
-        {
-            //Pickup pickup = (Pickup)data.pickupFactory.BuildPickup("Ammo", 1);
-
-            //Pickup pickup = (Pickup)data.onepickupFactory.CreateHealthPickup();
-            Console.WriteLine("ADD PICKUP 0");
-            Pickup pickup = data.pickupSpawner.SpawnRandom();
-            Console.WriteLine("ADD PICKUp 1");
-            data.AddPickup(pickup);
-
-            Clients.All.addPickup(pickup);
-        }
-
         public void StartTimer()
         {
             Console.WriteLine("started timer");
             _timer = new System.Timers.Timer(_timerInterval);
             _timer.Elapsed += new ElapsedEventHandler(UpdateTicks);
             _timer.Start();
-        }
-
-
-        public void DestroyProjectile(Projectile projectile)
-        {
-            Map map = Map.Instance;
-            Clients.All.removeProjectile(projectile.Id);
-            map.projectiles.Remove(projectile);
         }
     } 
 }

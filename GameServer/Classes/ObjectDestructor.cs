@@ -36,6 +36,13 @@ namespace GameServer.Classes
                 return false;
         }
 
+        public void RemoveEnemyNoCheck(Enemy enemy)
+        {
+            var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
+            context.Clients.All.destroyEnemy(enemy);
+            map.enemies.Remove(enemy);
+        }
+
         public bool RemoveProjectile(Projectile projectile)
         {
             if (IsInRemoveArea(projectile.GetCoordinates()))

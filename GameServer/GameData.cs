@@ -255,7 +255,7 @@ namespace GameServer
             return map.pickups;
         }
 
-        public int UpdateAsteroidCoords()
+        public void UpdateAsteroidCoords()
         {
             Map map = Map.Instance;
             GameHub hub = new GameHub().GetHub();
@@ -286,12 +286,10 @@ namespace GameServer
                 }
                 else
                 {
-                    int id = enemy.Id;
-                    map.enemies.Remove(enemy);
-                    return id;
+                    destructor.RemoveEnemyNoCheck(enemy);
+                    break;
                 }
             }
-            return -1;
         }
 
         public int UpdatePickups()
