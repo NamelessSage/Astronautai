@@ -25,7 +25,7 @@ namespace Astronautai.Classes.Factory
             PickupBuilder builder = new PickupBuilder();
             builder.SetType("AmmoPickup");
             builder.SetId(count);
-            builder.SetCoordinates(random.Next(0, maxCoordinate), random.Next(0, maxCoordinate));
+            builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
             builder.SetImage(@"..//..//Objects//ammoPickup.jpg");
             builder.SetSize(pickupSize);
             builder.SetValue(1);
@@ -38,7 +38,7 @@ namespace Astronautai.Classes.Factory
             PickupBuilder builder = new PickupBuilder();
             builder.SetType("HealthPickup");
             builder.SetId(count);
-            builder.SetCoordinates(random.Next(0, maxCoordinate), random.Next(0, maxCoordinate));
+            builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
             builder.SetImage(@"..//..//Objects//healthPickup.png");
             builder.SetSize(pickupSize);
             builder.SetValue(1);
@@ -50,7 +50,7 @@ namespace Astronautai.Classes.Factory
             PickupBuilder builder = new PickupBuilder();
             builder.SetType("SpeedPickup");
             builder.SetId(count);
-            builder.SetCoordinates(random.Next(0, maxCoordinate), random.Next(0, maxCoordinate));
+            builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
             builder.SetImage(@"..//..//Objects//speedPickup.jpg");
             builder.SetSize(pickupSize);
             builder.SetValue(1);
