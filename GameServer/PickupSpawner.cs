@@ -24,7 +24,6 @@ namespace GameServer
 
         public Pickup SpawnRandom()
         {
-            Console.WriteLine("SPAWN RANDOM");
             int randomValueFactoryType = random.Next(0, 4);
             if(randomValueFactoryType != 0)
             {
@@ -38,14 +37,13 @@ namespace GameServer
 
         public Pickup SpawnOneValuePickup()
         {
-            Console.WriteLine("SPAWN ONE");
             Pickup pickup = new Pickup();
+
             int randomValuePickupType = random.Next(0, 3);
             Console.WriteLine(randomValuePickupType);
             if (randomValuePickupType == 0)
             {
                 pickup = onePickupFactory.CreateAmmoPickup();
-                Console.WriteLine("0");
             }
             else if (randomValuePickupType == 1)
             {
@@ -55,7 +53,6 @@ namespace GameServer
             {
                 pickup = onePickupFactory.CreateSpeedPickup();
             }
-            Console.WriteLine("ONE PICKUP " + pickup.Id);
             return pickup;
         }
 

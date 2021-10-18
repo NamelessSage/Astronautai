@@ -18,14 +18,11 @@ namespace GameServer
 
         public OnePickupFactory onepickupFactory = new OnePickupFactory();
         public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
-<<<<<<< HEAD
         public EnemySpawner enemySpawner = new EnemySpawner();
         public PickupSpawner pickupSpawner = new PickupSpawner();
 
-=======
         public EnemySpawner spawner = new EnemySpawner();
         ObjectDestructor destructor = new ObjectDestructor();
->>>>>>> c4a7fde54bc0a041711e9509380a17a043e654f4
         public GameData()
         {
 
@@ -147,25 +144,7 @@ namespace GameServer
             {
                 if (!Collides(new Coordinates(pickup.X, pickup.Y), pickup.Size, new Coordinates(player.X, player.Y), player.Size))
                 {
-                    if(pickup as AmmoPickup != null)
-                    {
-                        AmmoPickup p = (AmmoPickup)pickup;
-                        p.Action(player, pickup);
-                    }
-
-                    if (pickup as HealthPickup != null)
-                    {
-                        HealthPickup p = (HealthPickup)pickup;
-                        p.Action(player, pickup);
-                    }
-
-                    if (pickup as SpeedPickup != null)
-                    {
-                        SpeedPickup p = (SpeedPickup)pickup;
-                        p.Action(player, pickup);
-                    }
-
-                    Console.WriteLine("ACTION");
+                    pickup.Action(player, pickup);
                     Player playerUpdated = pickup.Action(player, pickup);
 
                     UpdateAsteroidCoords();

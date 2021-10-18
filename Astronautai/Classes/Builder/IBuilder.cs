@@ -8,10 +8,10 @@ namespace Astronautai.Classes.Builder
 {
     interface IBuilder
     {
+        void SetType(string type);
         void SetId(int id);
         void SetValue(int value);
         void SetCoordinates(int x, int y);
-        //void SetType(string type);
         void SetImage(string img);
         void SetSize(int size);
         void Reset();

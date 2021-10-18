@@ -13,5 +13,4 @@ namespace Class_diagram
             return player;
         }
     }
-	
 }

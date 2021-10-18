@@ -1,4 +1,5 @@
 ﻿using Astronautai.Classes.Builder;
+using Astronautai.Classes.Factory;
 using Class_diagram;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,6 @@ namespace Astronautai.Classes
             }
             finally
             {
-                Console.WriteLine("FINALLY");
                 Reset();
             }
         }
@@ -53,6 +53,22 @@ namespace Astronautai.Classes
         public void SetSize(int size) 
         {
             pickup.Size = size;
+        }
+
+        public void SetType(string type)
+        {
+            if(type == "AmmoPickup")
+            {
+                pickup = new AmmoPickup();
+            }
+            if(type == "HealthPickup")
+            {
+                pickup = new HealthPickup();
+            }
+            if(type == "SpeedPickup")
+            {
+                pickup = new SpeedPickup();
+            }
         }
 
         public void Reset()
