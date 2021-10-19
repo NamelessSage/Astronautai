@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Astronautai.Classes
 {
-    class Prototype
+    public abstract class Prototype
     {
+         public abstract Prototype Clone();
+        
     }
 }

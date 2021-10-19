@@ -233,6 +233,7 @@
     <Compile Include="Classes\Pickup.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Projectile.cs" />
+    <Compile Include="Classes\Prototype.cs" />
     <Compile Include="Classes\ServerInput.cs" />
     <Compile Include="Classes\SmallAsteroid.cs" />
     <Compile Include="Classes\Strategy\IAsteroidMoveStrategy.cs" />
