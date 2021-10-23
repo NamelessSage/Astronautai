@@ -420,7 +420,7 @@ namespace Astronautai
                 points[2] = new Point(obs.X + obs.Size, obs.Y + obs.Size);
                 points[3] = new Point(obs.X + obs.Size, obs.Y);
 
-                Brush brush = new SolidBrush(Color.DarkGreen);
+                Brush brush = new SolidBrush(Color.Black);
                 g.FillPolygon(brush, points);
             }
         }

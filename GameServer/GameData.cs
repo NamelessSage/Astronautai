@@ -334,11 +334,18 @@ namespace GameServer
         public void GenerateObstacles()
         {
             Map map = Map.Instance;
-            for (int i = 0; i < 5; i++)
+            Random ran = new Random();
+            Obstacle obs = new Obstacle(0,0,0, 25);
+            
+            for (int i = 0; i < 6; i++)
             {
-                Obstacle obs = new Obstacle(i, 300 + (i*8), 400+ (i*8), 25);
-                map.obstacles.Add(obs);
+                Obstacle obs2 = (Obstacle)obs.Clone();
+                obs2.Id = i;
+                obs2.X = ran.Next(50, 500);
+                obs2.Y = ran.Next(50, 500);
+                map.obstacles.Add(obs2);
             }
+
         }
         public List<Obstacle> GetObstacles()
         {

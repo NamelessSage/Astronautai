@@ -1,6 +1,8 @@
+using Astronautai.Classes;
+
 namespace Class_diagram
 {
-	public class Obstacle
+	public class Obstacle : Prototype
 	{		
 		public int Id { get; set; }
         public int Size { get; set; }
@@ -13,6 +15,11 @@ namespace Class_diagram
             X = x;
             Y = y;
             Size = size;
+        }
+
+        public override Prototype Clone()
+        { 
+            return (Prototype)this.MemberwiseClone();
         }
     }
 }
