@@ -77,13 +77,24 @@ namespace GameServer
 
         public void UpdateProjectileCoords()
         {
-
             Map map = Map.Instance;
             foreach (Projectile p in map.projectiles)
             {
                 if(destructor.RemoveProjectile(p))
                 {
                     break;
+                }
+                foreach(Enemy e in map.enemies)
+                {
+                    if (!Collides(p.GetCoordinates(), 5, e.GetCoordinates(), e.Size))
+                    {
+                        e.Health--;
+                        if (e.Health <= 0)
+                        {
+                            destructor.RemoveEnemyNoCheck(e);
+                        }
+                        destructor.RemoveProjectileNoCheck(p);
+                    }
                 }
                 switch (p.Direction)
                 {
@@ -135,7 +146,7 @@ namespace GameServer
             Map map = Map.Instance;
             foreach (Player player in map.players)
             {
-                if (!Collides(new Coordinates(enemy.X, enemy.Y), enemy.Size, new Coordinates(player.X, player.Y), player.Size))
+                if (!Collides(new Coordinates(player.X, player.Y), player.Size, new Coordinates(enemy.X, enemy.Y), enemy.Size))
                 {
                     player.Health -= enemy.Damage;
                     UpdatePlayer(player);

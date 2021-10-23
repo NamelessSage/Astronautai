@@ -84,7 +84,6 @@ namespace GameServer
             if (map.pickups.Count < SpawnMax)
             {
                 Pickup pickup = SpawnRandom();
-
                 map.pickups.Add(pickup);
                 var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
                 context.Clients.All.addPickup(pickup);
