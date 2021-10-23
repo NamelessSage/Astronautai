@@ -43,7 +43,7 @@ namespace GameServer
         {
             EnemyCreator creator = new EnemyCreator();
             int id = map.enemyCounter;
-            int type = rnd.Next(0, 2);
+            int type = rnd.Next(0, 3);
 
             if(type == 0)
             {
