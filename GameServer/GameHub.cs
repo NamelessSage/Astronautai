@@ -77,7 +77,7 @@ namespace GameServer
             player = data.PlayerCanMove(player);
             data.UpdatePlayer(player);
             Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y} {player.Rotation}");
-            Clients.All.movePlayer(player.Username, player.X, player.Y, player.Rotation);
+            Clients.All.movePlayer(player);
         }
 
         public void AddProjectile(Projectile projectile, Player player)

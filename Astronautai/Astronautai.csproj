@@ -208,6 +208,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Decorator\CurrentPlayerDecorator.cs" />
+    <Compile Include="Classes\Decorator\CurrentPoweredUpDecorator.cs" />
+    <Compile Include="Classes\Decorator\Decorator.cs" />
+    <Compile Include="Classes\Decorator\PlayerImage.cs" />
+    <Compile Include="Classes\Decorator\PoweredUpDecorator.cs" />
     <Compile Include="Classes\Factory\AbstractPickupFactory.cs" />
     <Compile Include="Classes\Factory\BasicPickup\AmmoPickup.cs" />
     <Compile Include="Classes\AverageAsteroid.cs" />
@@ -290,8 +295,10 @@
     <Content Include="Objects\averageAsteroid.jpg" />
     <Content Include="Objects\bigAsteroid.jpg" />
     <Content Include="Objects\currentPlayer.png" />
+    <Content Include="Objects\currentPlayerFast.png" />
     <Content Include="Objects\healthPickup.png" />
     <Content Include="Objects\player.png" />
+    <Content Include="Objects\playerFast.png" />
     <Content Include="Objects\projectile.png" />
     <Content Include="Objects\smulAsteroid.jpg" />
     <Content Include="Objects\speedPickup.jpg" />
@@ -314,5 +321,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

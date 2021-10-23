@@ -4,8 +4,8 @@
 
 namespace Class_diagram
 {
-	public class Player
-	{
+	public class Player : PlayerImage
+    {
         const int MaxPlayerHealth = 3;
         const int MaxPlayerAmmo = 10;
         const int MaxPlayerSpeed = 48;
@@ -76,6 +76,11 @@ namespace Class_diagram
         public override string ToString()
         {
             return Username;
+        }
+
+        public override string GetImage()
+        {
+            return @"..//..//Objects//player.png";
         }
     }
 }

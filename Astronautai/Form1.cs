@@ -50,17 +50,23 @@ namespace Astronautai
             Bitmap playerBitmap;
 
             //Move player
-            server.On<string, int, int, char>("movePlayer", (name, x, y, rotation) =>
+            server.On<Player>("movePlayer", (pl) =>
             {
-                var pictureBox = this.Controls.Find(name, true)[0] as PictureBox;
-                pictureBox.Location = new Point(x, y);
-
-                if (CurrentPlayerUsername == name)
+                var pictureBox = this.Controls.Find(pl.Username, true)[0] as PictureBox;
+                pictureBox.Location = new Point(pl.X, pl.Y);
+                PlayerImage plImage = pl;
+                if (CurrentPlayerUsername == pl.Username)
                 {
-                    player.X = x;
-                    player.Y = y;
-                    playerBitmap = (Bitmap)Bitmap.FromFile(@"..//..//Objects//currentPlayer.png");
-                    switch (rotation)
+                    plImage = new CurrentPlayerDecorator(pl);
+                    if(pl.Speed != 16)
+                    {
+                        plImage = new CurrentPoweredUpDecorator(pl);
+                    }
+
+                    player.X = pl.X;
+                    player.Y = pl.Y;
+                    playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
+                    switch (pl.Rotation)
                     {
                         case 'S':
                             playerBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
@@ -75,8 +81,12 @@ namespace Astronautai
                 }
                 else
                 {
-                    playerBitmap = (Bitmap)Bitmap.FromFile(@"..//..//Objects//player.png");
-                    switch (rotation)
+                    if (pl.Speed != 16)
+                    {
+                        plImage = new PoweredUpDecorator(pl);
+                    }
+                    playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
+                    switch (pl.Rotation)
                     {
                         case 'S':
                             playerBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
