@@ -28,9 +28,9 @@ namespace Astronautai
         bool startGame = false;
         bool gameLoopStarted = false;
 
-        PickupFactory pickupFactory = new PickupFactory();
 
         List<Player> playerList;
+        public List<Obstacle> obstacles;
         int projectileCounter;
 
 
@@ -224,6 +224,18 @@ namespace Astronautai
                 }));
             });
 
+            server.On<List<Obstacle>>("getObstacles", (obstacle) =>
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    Console.WriteLine("Im getting Obstacles");
+                    obstacles = obstacle;
+                    panel1.Paint += new PaintEventHandler(panel1_Draw);
+                    panel1.Refresh();
+                }));
+
+            });
+
             hubConnection.Start().Wait();
         }
 
@@ -305,6 +317,8 @@ namespace Astronautai
         private void StartGameButton_Click(object sender, EventArgs e)
         {
             server.Invoke("GetPlayers").Wait();
+            server.Invoke("GenerateObstacles");
+            server.Invoke("GetObstacles");
             server.Invoke("StartGame");
         }
 
@@ -342,10 +356,6 @@ namespace Astronautai
                 healthLabel.Text = "Health: " + player.Health + "/" + PlayerStartHealth;
                 ammoLabel.Visible = true;
                 ammoLabel.Text = "Ammo: " + player.Ammo + "/" + PlayerStartAmmo;
-
-                server.Invoke("AddAsteroid", "Small");
-                server.Invoke("AddAsteroid", "Big");
-                server.Invoke("AddAsteroid", "Average");
             }
 
             if (gameLoopStarted)
@@ -381,17 +391,37 @@ namespace Astronautai
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            if (panel1.BorderStyle == BorderStyle.FixedSingle)
-            {
-                int thickness = 20;
-                int halfThickness = thickness / 2;
-                using (Pen p = new Pen(Color.Black, thickness))
+
+                if (panel1.BorderStyle == BorderStyle.FixedSingle)
                 {
-                    e.Graphics.DrawRectangle(p, new Rectangle(halfThickness,
-                                                              halfThickness,
-                                                              panel1.ClientSize.Width - thickness,
-                                                              panel1.ClientSize.Height - thickness));
+                    int thickness = 20;
+                    int halfThickness = thickness / 2;
+                    using (Pen p = new Pen(Color.Black, thickness))
+                    {
+                        e.Graphics.DrawRectangle(p, new Rectangle(halfThickness,
+                                                                  halfThickness,
+                                                                  panel1.ClientSize.Width - thickness,
+                                                                  panel1.ClientSize.Height - thickness));
+                    }
                 }
+
+        }
+
+        private void panel1_Draw(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            foreach (Obstacle obs in obstacles)
+            {
+                Console.WriteLine("Obstacle " + obs.Id);
+                Point[] points = new Point[4];
+
+                points[0] = new Point(obs.X, obs.Y);
+                points[1] = new Point(obs.X, obs.Y + obs.Size);
+                points[2] = new Point(obs.X + obs.Size, obs.Y + obs.Size);
+                points[3] = new Point(obs.X + obs.Size, obs.Y);
+
+                Brush brush = new SolidBrush(Color.DarkGreen);
+                g.FillPolygon(brush, points);
             }
         }
 

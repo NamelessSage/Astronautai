@@ -38,9 +38,9 @@ namespace Astronautai
             this.PlayerNameInputLabel = new System.Windows.Forms.Label();
             this.playerFocus = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.speedLabel = new System.Windows.Forms.Label();
             this.ammoLabel = new System.Windows.Forms.Label();
             this.healthLabel = new System.Windows.Forms.Label();
-            this.speedLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.astroDataSetBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -122,6 +122,17 @@ namespace Astronautai
             this.panel1.TabIndex = 6;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // speedLabel
+            // 
+            this.speedLabel.AutoSize = true;
+            this.speedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.speedLabel.Location = new System.Drawing.Point(577, 577);
+            this.speedLabel.Name = "speedLabel";
+            this.speedLabel.Size = new System.Drawing.Size(131, 25);
+            this.speedLabel.TabIndex = 7;
+            this.speedLabel.Text = "Speed: 16/48";
+            this.speedLabel.Visible = false;
+            // 
             // ammoLabel
             // 
             this.ammoLabel.AutoSize = true;
@@ -143,17 +154,6 @@ namespace Astronautai
             this.healthLabel.TabIndex = 5;
             this.healthLabel.Text = "Health: 0/3";
             this.healthLabel.Visible = false;
-            // 
-            // speedLabel
-            // 
-            this.speedLabel.AutoSize = true;
-            this.speedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.speedLabel.Location = new System.Drawing.Point(577, 577);
-            this.speedLabel.Name = "speedLabel";
-            this.speedLabel.Size = new System.Drawing.Size(131, 25);
-            this.speedLabel.TabIndex = 7;
-            this.speedLabel.Text = "Speed: 16/48";
-            this.speedLabel.Visible = false;
             // 
             // Form1
             // 

@@ -107,18 +107,27 @@ namespace GameServer
 
         public bool CheckCollisionPlayers(Player p)
         {
+            bool collides = true;
             Map map = Map.Instance;
             foreach (Player p2 in map.players)
             {
                 if (p.Username != p2.Username)
                 {
-                    if (!Collides(new Coordinates(p.X,p.Y), p.Size, new Coordinates(p2.X, p2.Y), p2.Size))
+                    if (!Collides(new Coordinates(p.X, p.Y), p.Size, new Coordinates(p2.X, p2.Y), p2.Size))
                     {
-                        return false;
+                        collides = false;
                     }
                 }
             }
-            return true;
+            foreach (Obstacle obs in map.obstacles)
+            {
+
+                if (!Collides(new Coordinates(p.X, p.Y), p.Size, new Coordinates(obs.X, obs.Y), obs.Size))
+                {
+                    collides = false;
+                }
+            }
+            return collides;
         }
 
         public bool CheckCollisionEnemy(Enemy enemy)
@@ -153,6 +162,7 @@ namespace GameServer
             }
             return true;
         }
+
 
         public bool CheckMapEdge(Coordinates coords)
         {
@@ -320,6 +330,20 @@ namespace GameServer
             }
 
             return count / map.players.Count;
+        }
+        public void GenerateObstacles()
+        {
+            Map map = Map.Instance;
+            for (int i = 0; i < 5; i++)
+            {
+                Obstacle obs = new Obstacle(i, 300 + (i*8), 400+ (i*8), 25);
+                map.obstacles.Add(obs);
+            }
+        }
+        public List<Obstacle> GetObstacles()
+        {
+            Map map = Map.Instance;
+            return map.obstacles;
         }
     }
 }

@@ -42,8 +42,12 @@ namespace GameServer
         public void GetPlayers()
         {
             List<Player> players = data.GetPlayers();
-
             Clients.All.getPlayers(players);
+        }
+        public void GetObstacles()
+        {
+            List<Obstacle> obst = data.GetObstacles();
+            Clients.All.getObstacles(obst);
         }
 
         public void GetPlayersCaller()
@@ -116,6 +120,10 @@ namespace GameServer
             _timer = new System.Timers.Timer(_timerInterval);
             _timer.Elapsed += new ElapsedEventHandler(UpdateTicks);
             _timer.Start();
+        }
+        public void GenerateObstacles()
+        {
+            data.GenerateObstacles();
         }
     } 
 }
