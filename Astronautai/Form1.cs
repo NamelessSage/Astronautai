@@ -1,4 +1,5 @@
 ﻿using Astronautai.Classes;
+using Astronautai.Classes.Command;
 using Astronautai.Classes.Factory;
 using Class_diagram;
 using Microsoft.AspNet.SignalR.Client;
@@ -33,6 +34,9 @@ namespace Astronautai
         public List<Obstacle> obstacles;
         int projectileCounter;
 
+        MoveList moveList = new MoveList();
+        Move move;
+
 
         public Form1()
         {
@@ -65,6 +69,7 @@ namespace Astronautai
 
                     player.X = pl.X;
                     player.Y = pl.Y;
+                    move.Player = player;
                     playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
                     switch (pl.Rotation)
                     {
@@ -277,6 +282,8 @@ namespace Astronautai
                 JoinGameButton.Visible = false;
                 StartGameButton.Visible = true;
                 server.Invoke("AddPlayerOnJoin", player);
+                move = new Move(player, 'W');
+
             }
         }
 
@@ -369,24 +376,33 @@ namespace Astronautai
         {
             if (e.KeyCode == Keys.W)
             {
-                player.Rotation = 'W';
-                server.Invoke("MovePlayer", player);
+                Execute(move, moveList, new MoveCommand(move, 'W'));
+                //player.Rotation = 'W';
+                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.S)
             {
-                player.Rotation = 'S';
-                server.Invoke("MovePlayer", player);
+                Execute(move, moveList, new MoveCommand(move, 'S'));
+                //player.Rotation = 'S';
+                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.A)
             {
-                player.Rotation = 'A';
-                server.Invoke("MovePlayer", player);
+                Execute(move, moveList, new MoveCommand(move, 'A'));
+                //player.Rotation = 'A';
+                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.D)
             {
-                player.Rotation = 'D';
-                server.Invoke("MovePlayer", player);
+                Execute(move, moveList, new MoveCommand(move, 'D'));
+                //player.Rotation = 'D';
+                //server.Invoke("MovePlayer", player);
             }
+            if (e.KeyCode == Keys.Z)
+            {
+                moveList.Undo();
+            }
+
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -533,6 +549,12 @@ namespace Astronautai
             };
             this.Controls.Add(pickupPictureBox);
             pickupPictureBox.BringToFront();
+        }
+
+        private void Execute(Move m, MoveList lst, ICommand moveCommand)
+        {
+            lst.SetCommand(moveCommand);
+            lst.Invoke();
         }
     }
 }

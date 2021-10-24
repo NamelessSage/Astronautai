@@ -208,6 +208,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Command\MoveList.cs" />
     <Compile Include="Classes\Decorator\CurrentPlayerDecorator.cs" />
     <Compile Include="Classes\Decorator\CurrentPoweredUpDecorator.cs" />
     <Compile Include="Classes\Decorator\Decorator.cs" />
@@ -233,7 +234,10 @@
     <Compile Include="Classes\Factory\PickupFactory.cs" />
     <Compile Include="Classes\Factory\BasicPickup\HealthPickup.cs" />
     <Compile Include="Classes\Factory\BasicPickup\SpeedPickup.cs" />
+    <Compile Include="Classes\Command\ICommand.cs" />
     <Compile Include="Classes\Map.cs" />
+    <Compile Include="Classes\Command\Move.cs" />
+    <Compile Include="Classes\Command\MoveCommand.cs" />
     <Compile Include="Classes\Obstacle.cs" />
     <Compile Include="Classes\Pickup.cs" />
     <Compile Include="Classes\Player.cs" />

@@ -155,7 +155,6 @@ namespace GameServer
             }
             return true;
         }
-
         public bool CheckNotCollisionPickup(Pickup pickup)
         {
             Map map = Map.Instance;
@@ -173,8 +172,6 @@ namespace GameServer
             }
             return true;
         }
-
-
         public bool CheckMapEdge(Coordinates coords)
         {
             if (coords.X < 25 || coords.X > 750)
@@ -185,7 +182,6 @@ namespace GameServer
 
             return true;
         }
-
         private bool Collides(Coordinates o1, int size1, Coordinates o2, int size2)
         {
             if ((o1.X > o2.X && o1.X < o2.X + size2) && (o1.Y > o2.Y && o1.Y < o2.Y + size2) ||
@@ -198,7 +194,6 @@ namespace GameServer
             }
             return true;
         }
-
         public Player PlayerCanMove(Player player)
         {
             if (player.Rotation == 'W')
@@ -256,25 +251,21 @@ namespace GameServer
             }
             return player;
         }
-
         public void AddAsteroid()
         {
             Map map = Map.Instance;
             map.enemies.Add(enemySpawner.CreateAsteroid(map));
         }
-
         public List<Enemy> GetEnemies()
         {
             Map map = Map.Instance;
             return map.enemies;
         }
-
         public List<Pickup> GetPickups()
         {
             Map map = Map.Instance;
             return map.pickups;
         }
-
         public void UpdateAsteroidCoords()
         {
             Map map = Map.Instance;
@@ -311,7 +302,6 @@ namespace GameServer
                 }
             }
         }
-
         public int UpdatePickups()
         {
             Map map = Map.Instance;
@@ -330,7 +320,6 @@ namespace GameServer
             }
             return -1;
         }
-
         public int GetAveragePlayerHealth()
         {
             Map map = Map.Instance;
