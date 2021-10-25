@@ -8,8 +8,8 @@ namespace Astronautai.Classes.Strategy
 {
     interface IAsteroidMoveStrategy
     {
-        void MoveSlow();
-        void MoveAverage();
-        void MoveFast();
+        void SetMoveSlow();
+        void SetMoveAverage();
+        void SetMoveFast();
     }
 }

@@ -284,16 +284,17 @@ namespace GameServer
                     int averagePlayerHealth = GetAveragePlayerHealth();
                     if (averagePlayerHealth == 3)
                     {
-                        enemy.MoveSlow();
+                        enemy.SetMoveSlow();
                     }
                     else if(averagePlayerHealth < 3 && averagePlayerHealth > 1)
                     {
-                        enemy.MoveAverage();
+                        enemy.SetMoveAverage();
                     }
                     else
                     {
-                        enemy.MoveFast();
+                        enemy.SetMoveFast();
                     }
+                    enemy.Move();
                 }
                 else
                 {

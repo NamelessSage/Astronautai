@@ -54,22 +54,19 @@ namespace Class_diagram
             }
         }
 
-        public void MoveSlow()
+        public void SetMoveSlow()
         {
             Speed = 1;
-            Move();
         }
 
-        public void MoveAverage()
+        public void SetMoveAverage()
         {
             Speed = 2;
-            Move();
         }
 
-        public void MoveFast()
+        public void SetMoveFast()
         {
             Speed = 3;
-            Move();
         }
 
         public Coordinates GetCoordinates()

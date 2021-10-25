@@ -4,7 +4,7 @@
 
 namespace Class_diagram
 {
-	public class Turent : Enemy
+	public class Turret : Enemy
 	{
 
 	}

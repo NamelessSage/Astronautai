@@ -221,7 +221,6 @@
     <Compile Include="Classes\Builder\IBuilder.cs" />
     <Compile Include="Classes\Builder\PickupBuilder.cs" />
     <Compile Include="Classes\Coordinates.cs" />
-    <Compile Include="Classes\Creator.cs" />
     <Compile Include="Classes\Enemy.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxAmmoPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxHealthPickup.cs" />
