@@ -327,7 +327,15 @@ namespace GameServer
             int count = 0;
             foreach (Player player in map.players)
             {
-                count += player.Health; 
+                if(player.Health <= 0) 
+                {
+                    count += 0;
+                }
+                else
+                {
+                    count += player.Health;
+                }
+                
             }
 
             return count / map.players.Count;

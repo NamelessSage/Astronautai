@@ -278,6 +278,7 @@
     <None Include="AstroDataSet.xss">
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Objects\bigAsteroid.xcf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -297,6 +298,7 @@
     <Content Include="Objects\ammoPickup.jpg" />
     <Content Include="Objects\averageAsteroid.jpg" />
     <Content Include="Objects\bigAsteroid.jpg" />
+    <Content Include="Objects\bigAsteroid.png" />
     <Content Include="Objects\currentPlayer.png" />
     <Content Include="Objects\currentPlayerFast.png" />
     <Content Include="Objects\healthPickup.png" />

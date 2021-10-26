@@ -101,17 +101,21 @@ namespace GameServer
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
             subject.Notify();
-
+            
             data.UpdateProjectileCoords();
 
             data.UpdateAsteroidCoords();
             Clients.All.updateTicks(data.GetProjectiles());
             Clients.All.updateTicksAsteroids(data.GetEnemies());
-
+            Clients.All.updatePlayerData(data.GetPlayers());
             int deletePickupId = data.UpdatePickups();
             Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
 
-            Clients.All.updatePlayerData(data.GetPlayers());
+            
+            if(data.GetAveragePlayerHealth() <= 0)
+            {
+                GameOver();
+            }
         }
 
         public void GetProjectiles()
@@ -131,6 +135,11 @@ namespace GameServer
         public void GenerateObstacles()
         {
             data.GenerateObstacles();
+        }
+        public void GameOver()
+        {
+            Clients.All.gameOver(true);
+            _timer.Stop();
         }
     } 
 }
