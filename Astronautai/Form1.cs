@@ -68,16 +68,37 @@ namespace Astronautai
                     PlayerImage plImage = pl;
                     if (CurrentPlayerUsername == pl.Username)
                     {
+                        Graphics g = Graphics.FromImage(pictureBox.Image);
                         plImage = new CurrentPlayerDecorator(pl);
-                        if (pl.Speed != 16)
-                        {
-                            plImage = new CurrentPoweredUpDecorator(pl);
-                        }
-
+                        CurrentPoweredUpDecorator plImageAddon = new CurrentPoweredUpDecorator(pl);
                         player.X = pl.X;
                         player.Y = pl.Y;
                         move.Player = player;
-                        playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
+                        playerBitmap = new Bitmap(player.Size, player.Size);
+                        //playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
+                        using (var gs = Graphics.FromImage(playerBitmap))
+                        {
+                            gs.DrawImage(pictureBox.Image, 0, 0);
+                            if (pl.Speed > 16)
+                            {
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(plImageAddon.GetImage()), player.Size/4, player.Size/4);
+                            }
+                        }
+
+                        switch (moveList.GetLast())
+                        {
+                            case 'S':
+                                playerBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
+                                break;
+                            case 'A':
+                                playerBitmap.RotateFlip(RotateFlipType.Rotate270FlipY);
+                                break;
+                            case 'D':
+                                playerBitmap.RotateFlip(RotateFlipType.Rotate90FlipY);
+                                break;
+                            default:
+                                break;
+                        }
                         switch (pl.Rotation)
                         {
                             case 'S':

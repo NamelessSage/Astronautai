@@ -10,5 +10,6 @@ namespace Astronautai.Classes
     {
         void ExecuteAction();
         void Undo();
+        char LastMove();
     }
 }

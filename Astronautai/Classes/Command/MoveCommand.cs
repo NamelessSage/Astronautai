@@ -69,5 +69,9 @@ namespace Astronautai.Classes
                 IsCommandExecuted = false;
             }
         }
+        public char LastMove()
+        {
+            return _direction;
+        }
     }
 }
