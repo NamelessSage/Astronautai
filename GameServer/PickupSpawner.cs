@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 
 using static Astronautai.Classes.Observer;
+using GameServer.Classes;
 
 namespace GameServer
 {
-    public class PickupSpawner : IObserver
+    public class PickupSpawner : Spawner, IObserver
     {
         const int SpawnMax = 1;
         Random random;
@@ -78,7 +79,7 @@ namespace GameServer
             }
         }
 
-        public void Update()
+        public override void Update()
         {
             Map map = Map.Instance;
             if (map.pickups.Count < SpawnMax)

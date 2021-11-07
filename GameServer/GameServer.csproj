@@ -70,6 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Adapter\EnemySpawnerAdapter.cs" />
+    <Compile Include="Classes\Adapter\PickupSpawnerAdapter.cs" />
+    <Compile Include="Classes\Adapter\Spawner.cs" />
     <Compile Include="Classes\ObjectDestructor.cs" />
     <Compile Include="Classes\Observer.cs" />
     <Compile Include="EnemyCreator.cs" />

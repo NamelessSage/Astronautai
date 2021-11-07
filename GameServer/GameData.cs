@@ -17,10 +17,9 @@ namespace GameServer
 
         public OnePickupFactory onepickupFactory = new OnePickupFactory();
         public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
-        public EnemySpawner enemySpawner = new EnemySpawner();
-        public PickupSpawner pickupSpawner = new PickupSpawner();
+        public EnemySpawnerAdapter enemySpawner = new EnemySpawnerAdapter();
+        public PickupSpawnerAdapter pickupSpawner = new PickupSpawnerAdapter();
 
-        public EnemySpawner spawner = new EnemySpawner();
         ObjectDestructor destructor = new ObjectDestructor();
         public GameData()
         {
@@ -254,7 +253,7 @@ namespace GameServer
         public void AddAsteroid()
         {
             Map map = Map.Instance;
-            map.enemies.Add(enemySpawner.CreateAsteroid(map));
+            map.enemies.Add(enemySpawner.Spawn());
         }
         public List<Enemy> GetEnemies()
         {

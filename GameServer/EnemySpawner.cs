@@ -1,4 +1,5 @@
 ﻿using Class_diagram;
+using GameServer.Classes;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using static Astronautai.Classes.Observer;
 
 namespace GameServer
 {
-    public class EnemySpawner : IObserver
+    public class EnemySpawner : Spawner, IObserver
     {
         Random rnd;
 
@@ -65,7 +66,7 @@ namespace GameServer
             }
         }
 
-        public void Update()
+        public override void Update()
         {
             Map map = Map.Instance;
             
