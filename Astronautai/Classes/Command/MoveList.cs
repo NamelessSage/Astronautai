@@ -31,5 +31,13 @@ namespace Astronautai.Classes.Command
                 command.Undo();
             }
         }
+        public char GetLast()
+        {
+            if (_commands.Count() < 2)
+            {
+                return 'W';
+            }
+            return _commands[_commands.Count() - 2].LastMove();
+        }
     }
 }
