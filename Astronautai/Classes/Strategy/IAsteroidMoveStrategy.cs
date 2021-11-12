@@ -11,5 +11,6 @@ namespace Astronautai.Classes.Strategy
         void SetMoveSlow();
         void SetMoveAverage();
         void SetMoveFast();
+        void SetMoveNone();
     }
 }

@@ -54,6 +54,11 @@ namespace Class_diagram
             }
         }
 
+        public void SetMoveNone()
+        {
+            Speed = 0;
+        }
+
         public void SetMoveSlow()
         {
             Speed = 1;
