@@ -17,7 +17,7 @@ namespace GameServer
 
         public OnePickupFactory onepickupFactory = new OnePickupFactory();
         public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
-        public EnemySpawnerAdapter enemySpawner = new EnemySpawnerAdapter();
+        public EnemySpawner enemySpawner = new EnemySpawner();
         public PickupSpawnerAdapter pickupSpawner = new PickupSpawnerAdapter();
 
         ObjectDestructor destructor = new ObjectDestructor();
@@ -253,18 +253,21 @@ namespace GameServer
         public void AddAsteroid()
         {
             Map map = Map.Instance;
-            map.enemies.Add(enemySpawner.Spawn());
+            map.enemies.Add(enemySpawner.Spawn(map));
         }
+
         public List<Enemy> GetEnemies()
         {
             Map map = Map.Instance;
             return map.enemies;
         }
+
         public List<Pickup> GetPickups()
         {
             Map map = Map.Instance;
             return map.pickups;
         }
+
         public void UpdateAsteroidCoords()
         {
             Map map = Map.Instance;
@@ -302,6 +305,7 @@ namespace GameServer
                 }
             }
         }
+
         public int UpdatePickups()
         {
             Map map = Map.Instance;
@@ -320,6 +324,7 @@ namespace GameServer
             }
             return -1;
         }
+
         public int GetAveragePlayerHealth()
         {
             Map map = Map.Instance;
@@ -339,6 +344,7 @@ namespace GameServer
 
             return count / map.players.Count;
         }
+
         public void GenerateObstacles()
         {
             Map map = Map.Instance;

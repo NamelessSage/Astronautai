@@ -12,7 +12,7 @@ using GameServer.Classes;
 
 namespace GameServer
 {
-    public class PickupSpawner : Spawner, IObserver
+    public class PickupSpawner : IObserver
     {
         const int SpawnMax = 1;
         Random random;
@@ -79,7 +79,7 @@ namespace GameServer
             }
         }
 
-        public override void Update()
+        public void Update()
         {
             Map map = Map.Instance;
             if (map.pickups.Count < SpawnMax)

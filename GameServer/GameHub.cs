@@ -18,11 +18,12 @@ namespace GameServer
     public class GameHub : Hub
     {
         GameData data = new GameData();
+        Subject subject = new Subject();
+
         bool started = false;
         private System.Timers.Timer _timer;
         private int _timerInterval = 50;
-        Subject subject = new Subject();
-
+        
         
         public GameHub()
         {
@@ -132,10 +133,12 @@ namespace GameServer
             _timer.Elapsed += new ElapsedEventHandler(UpdateTicks);
             _timer.Start();
         }
+
         public void GenerateObstacles()
         {
             data.GenerateObstacles();
         }
+
         public void GameOver()
         {
             Clients.All.gameOver(true);

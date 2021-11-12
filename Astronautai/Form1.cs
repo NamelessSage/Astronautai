@@ -38,6 +38,7 @@ namespace Astronautai
         MoveList moveList = new MoveList();
         Move move;
 
+        UITextManager uITextManager = new UITextManager();
 
         public Form1()
         {
@@ -374,14 +375,7 @@ namespace Astronautai
                 startGame = false;
                 gameLoopStarted = true;
 
-                StartGameButton.Visible = false;
-                JoinGameButton.Visible = false;
-                PlayerUsernameTextBox.Visible = false;
-
-                healthLabel.Visible = true;
-                healthLabel.Text = "Health: " + player.Health + "/" + PlayerStartHealth;
-                ammoLabel.Visible = true;
-                ammoLabel.Text = "Ammo: " + player.Ammo + "/" + PlayerStartAmmo;
+                uITextManager.StartGame(StartGameButton, JoinGameButton, PlayerUsernameTextBox, healthLabel, ammoLabel, PlayerStartHealth, PlayerStartAmmo);
             }
 
             if (gameOver) {
@@ -394,10 +388,9 @@ namespace Astronautai
                 player.X = -10000;
                 player.Y = -10000;
                 player.Health = -100;
-                ammoLabel.Text = "";
-                healthLabel.Text = "GGWP";
-            }
 
+                uITextManager.GameOver(healthLabel, ammoLabel);
+            }
             else if (gameLoopStarted)
             {
                 if (player.Health <= 0)
@@ -409,13 +402,12 @@ namespace Astronautai
                     player.X = -10000;
                     player.Y = -10000;
                     player.Health = -100;
-                    healthLabel.Text = "Dead";
-                    ammoLabel.Text = "";
+
+                    uITextManager.PlayerDead(healthLabel, ammoLabel);
                 }
                 else
                 {
-                    healthLabel.Text = "Health: " + player.Health + "/" + PlayerStartHealth;
-                    ammoLabel.Text = "Ammo: " + player.Ammo + "/" + PlayerStartAmmo;
+                    uITextManager.UpdateLabels(healthLabel, ammoLabel, player.Health, player.Ammo);
                 }
             }
         }
@@ -515,8 +507,7 @@ namespace Astronautai
                 default:
                     break;
             }
-            ammoLabel.Text = "Ammo: " + player.Ammo + "/" + PlayerStartAmmo;
-
+            uITextManager.UpdateAmmo(ammoLabel, player.Ammo);
             projectile.Id = count;
             CreateProjectilePictureBox(projectile);
             server.Invoke("AddProjectile", projectile, player);

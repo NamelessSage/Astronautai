@@ -40,7 +40,7 @@ namespace GameServer
             return new Coordinates(x, y);
         }
 
-        public Enemy CreateAsteroid(Map map)
+        public Enemy Spawn(Map map)
         {
             EnemyCreator creator = new EnemyCreator();
             int id = map.enemyCounter;
@@ -72,7 +72,7 @@ namespace GameServer
             
             if (map.enemies.Count < 30)
             {
-                map.enemies.Add(CreateAsteroid(map));
+                map.enemies.Add(Spawn(map));
             }
         }
     }
