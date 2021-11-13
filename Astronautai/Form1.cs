@@ -153,9 +153,9 @@ namespace Astronautai
                 {
                     if (CurrentPlayerUsername == players[i].Username)
                     {
-                        int x = player.Ammo;
+                        //int x = player.Ammo;
                         player = players[i];
-                        player.Ammo = x;
+                        //player.Ammo = x;
                     }
                 }
 

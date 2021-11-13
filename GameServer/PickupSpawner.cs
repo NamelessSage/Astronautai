@@ -14,7 +14,7 @@ namespace GameServer
 {
     public class PickupSpawner : IObserver
     {
-        const int SpawnMax = 1;
+        const int SpawnMax = 2;
         Random random;
 
         OnePickupFactory onePickupFactory;
