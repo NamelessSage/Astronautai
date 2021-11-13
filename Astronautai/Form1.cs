@@ -324,7 +324,6 @@ namespace Astronautai
                 StartGameButton.Visible = true;
                 server.Invoke("AddPlayerOnJoin", player);
                 move = new Move(player, 'W');
-
             }
         }
 
@@ -414,6 +413,7 @@ namespace Astronautai
             }
             else if (gameLoopStarted)
             {
+                
                 if (player.Health <= 0)
                 {
                     Execute(move, moveList, new MoveCommand(move, 'W'));
@@ -435,6 +435,7 @@ namespace Astronautai
 
         private void playerFocus_KeyDown(object sender, KeyEventArgs e)
         {
+            move.UpdatePlayer(player);
             if (e.KeyCode == Keys.W)
             {
                 Execute(move, moveList, new MoveCommand(move, 'W'));
@@ -463,7 +464,6 @@ namespace Astronautai
             {
                 moveList.Undo();
             }
-
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

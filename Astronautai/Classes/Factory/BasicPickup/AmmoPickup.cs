@@ -9,7 +9,6 @@ namespace Class_diagram
         public override Player Action(Player player, Pickup pickup)
         {
             player.AddAmmo(pickup.Value);
-            System.Console.WriteLine("Ammo: " + player.Ammo); //Su ammo kazkas negerai
             return player;
         }
     }

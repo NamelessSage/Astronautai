@@ -161,7 +161,6 @@ namespace GameServer
             {
                 if (!Collides(new Coordinates(pickup.X, pickup.Y), pickup.Size, new Coordinates(player.X, player.Y), player.Size))
                 {
-                    pickup.Action(player, pickup);
                     Player playerUpdated = pickup.Action(player, pickup);
 
                     UpdateAsteroidCoords();

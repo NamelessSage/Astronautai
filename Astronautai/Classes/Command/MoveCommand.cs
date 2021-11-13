@@ -18,6 +18,7 @@ namespace Astronautai.Classes
             _move = move;
             _direction = dir;
         }
+
         public void ExecuteAction()
         {
             if (_direction == 'W')

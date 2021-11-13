@@ -16,8 +16,6 @@ namespace Astronautai.Classes
 
         private readonly IHubProxy server;
 
-
-
         public Move(Player player, char direction)
         {
             Player = player;
@@ -26,6 +24,12 @@ namespace Astronautai.Classes
             HubConnection hubConnection = new HubConnection("http://localhost:8080");
             server = hubConnection.CreateHubProxy("serveris");
             hubConnection.Start().Wait();
+        }
+
+        public void UpdatePlayer(Player player)
+        {
+            Player = player;
+            Direction = player.Rotation;
         }
 
         public void MoveW()
