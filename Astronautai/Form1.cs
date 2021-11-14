@@ -497,10 +497,10 @@ namespace Astronautai
                 //Console.WriteLine("Obstacle " + obs.Id);
                 Point[] points = new Point[4];
 
-                points[0] = new Point(obs.X, obs.Y);
-                points[1] = new Point(obs.X, obs.Y + obs.Size);
-                points[2] = new Point(obs.X + obs.Size, obs.Y + obs.Size);
-                points[3] = new Point(obs.X + obs.Size, obs.Y);
+                points[0] = new Point(obs.coordinates.X, obs.coordinates.Y);
+                points[1] = new Point(obs.coordinates.X, obs.coordinates.Y + obs.Size);
+                points[2] = new Point(obs.coordinates.X + obs.Size, obs.coordinates.Y + obs.Size);
+                points[3] = new Point(obs.coordinates.X + obs.Size, obs.coordinates.Y);
 
                 Brush brush = new SolidBrush(Color.Black);
                 g.FillPolygon(brush, points);
