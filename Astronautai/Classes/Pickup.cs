@@ -17,6 +17,9 @@ namespace Class_diagram
 
 		}
 
-		public virtual Player Action(Player player, Pickup pickup) { return new Player(); }
+		public virtual Player Action(Player player, Pickup pickup)
+		{ 
+			return new Player(); 
+		}
     }
 }
