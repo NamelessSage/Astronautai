@@ -31,11 +31,43 @@ namespace UnitTestProject
         }
 
         [TestMethod]
-        public void TestCheckNotCollisionPickupTrue()
+        public void TestCheckNotCollisionPickup()
         {
-            Pickup pickup = createTestPickup();
+            Pickup pickup = createTestPickup(10,10);
             Assert.AreEqual(true, gameData.CheckNotCollisionPickup(pickup));
+            pickup = createTestPickup(100, 100);
+            Assert.AreEqual(false, gameData.CheckNotCollisionPickup(pickup));
         }
+        [TestMethod]
+        public void TestAddPlayerAndGetPlayer()
+        {
+            Player player = createTestPlayer();
+            gameData.AddPlayer(player);
+            Assert.AreEqual(player, gameData.GetPlayers()[0]);
+        }
+
+        [TestMethod]
+        public void TestAddProjectileAndGetProjectile()
+        {
+            Projectile projectile = createTestProjectile(10,10);
+            gameData.AddProjectile(projectile);
+            Assert.AreEqual(projectile, gameData.GetProjectiles()[0]);
+        }
+
+        [TestMethod]
+        public void TestUpdateProjectilesCoords()
+        {
+            Projectile projectile = createTestProjectile(10, 10);
+            gameData.UpdateProjectileCoords();
+            Assert.AreEqual(projectile.Y - 10, gameData.GetProjectiles()[0].Y);
+        }
+        [TestMethod]
+        public void TestCheckMapEdge()
+        {
+            Assert.AreEqual(true, gameData.CheckMapEdge(new Coordinates(110,100)));
+            Assert.AreEqual(false, gameData.CheckMapEdge(new Coordinates(1100, 1000)));
+        }
+
 
         public Player createTestPlayer()
         {
@@ -50,15 +82,25 @@ namespace UnitTestProject
             enemy.Size = 10;
             enemy.X = 100;
             enemy.Y = 100;
+            enemy.Rotation = 'W';
             return enemy;
         }
-        public Pickup createTestPickup()
+        public Pickup createTestPickup(int x, int y)
         {
             Pickup pickup = new Pickup();
             pickup.Size = 10;
-            pickup.X = 100;
-            pickup.Y = 100;
+            pickup.X = x;
+            pickup.Y = y;
             return pickup;
+        }
+
+        public Projectile createTestProjectile(int x, int y)
+        {
+            Projectile projectile = new Projectile();
+            projectile.X = x;
+            projectile.Y = y;
+            projectile.Direction = 'W';
+            return projectile;
         }
     }
 }
