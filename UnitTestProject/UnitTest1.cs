@@ -328,7 +328,35 @@ namespace UnitTestProject
             Map map2 = Map.Instance;
             Assert.AreEqual(map, map2);
         }
-        
+        [TestMethod]
+        public void TestMove()
+        {
+            Player player = createTestPlayer();
+            Move move = new Move(player,'W');
+            Move movetest = move;
+            move.MoveD();
+            Assert.AreEqual(move.Direction, 'D');
+            move.MoveS();
+            Assert.AreEqual(move.Direction, 'S'); 
+            move.MoveW();
+            Assert.AreEqual(move.Direction, 'W');  
+            move.MoveA();
+            Assert.AreEqual(move.Direction, 'A');
+
+            move.UndoD();
+            Assert.AreEqual(move.Direction, 'D');
+            move.UndoS();
+            Assert.AreEqual(move.Direction, 'S');
+            move.UndoW();
+            Assert.AreEqual(move.Direction, 'W');
+            move.UndoA();
+            Assert.AreEqual(move.Direction, 'A');
+
+            move.UpdatePlayer(movetest.Player);
+
+            Assert.AreEqual(movetest.Player, move.Player);
+
+        }
         public Player createTestPlayer()
         {
             Player player = new Player("test", 3, 10, 25, 16);

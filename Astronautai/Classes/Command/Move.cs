@@ -9,7 +9,7 @@ using Microsoft.AspNet.SignalR.Client;
 namespace Astronautai.Classes
 {
 
-    class Move
+    public class Move
     {
         public Player Player { get; set; }
         public char Direction { get; set; }
@@ -22,8 +22,8 @@ namespace Astronautai.Classes
             Direction = direction;
             Player.Rotation = direction;
             HubConnection hubConnection = new HubConnection("http://localhost:8080");
-            server = hubConnection.CreateHubProxy("serveris");
-            hubConnection.Start().Wait();
+            //server = hubConnection.CreateHubProxy("serveris");
+            //hubConnection.Start().Wait();
         }
 
         public void UpdatePlayer(Player player)
@@ -36,7 +36,7 @@ namespace Astronautai.Classes
         {
             Player.Rotation = 'W';
             Direction = 'W';
-            server.Invoke("MovePlayer", Player);
+            //server.Invoke("MovePlayer", Player);
         }
 
         
@@ -44,7 +44,7 @@ namespace Astronautai.Classes
         {
             Player.Rotation = 'A';
             Direction = 'A';
-            server.Invoke("MovePlayer", Player);
+           //server.Invoke("MovePlayer", Player);
         }
 
 
@@ -52,7 +52,7 @@ namespace Astronautai.Classes
         {
             Player.Rotation = 'S';
             Direction = 'S';
-            server.Invoke("MovePlayer", Player);
+            //server.Invoke("MovePlayer", Player);
         }
 
 
@@ -60,7 +60,7 @@ namespace Astronautai.Classes
         {
             Player.Rotation = 'D';
             Direction = 'D';
-            server.Invoke("MovePlayer", Player);
+            //server.Invoke("MovePlayer", Player);
         }
 
         public void UndoW()
@@ -68,7 +68,7 @@ namespace Astronautai.Classes
             Player.Rotation = 'W';
             Direction = 'W';
             Player.Y += Player.Speed;
-            server.Invoke("UndoMovePlayer", Player);
+            //server.Invoke("UndoMovePlayer", Player);
         }
 
 
@@ -77,7 +77,7 @@ namespace Astronautai.Classes
             Player.Rotation = 'A';
             Direction = 'A';
             Player.X += Player.Speed;
-            server.Invoke("UndoMovePlayer", Player);
+            //server.Invoke("UndoMovePlayer", Player);
         }
 
 
@@ -86,7 +86,7 @@ namespace Astronautai.Classes
             Player.Rotation = 'S';
             Direction = 'S';
             Player.Y -= Player.Speed;
-            server.Invoke("UndoMovePlayer", Player);
+            //server.Invoke("UndoMovePlayer", Player);
         }
 
 
@@ -95,7 +95,7 @@ namespace Astronautai.Classes
             Player.Rotation = 'D';
             Direction = 'D';
             Player.X -= Player.Speed;
-            server.Invoke("UndoMovePlayer", Player);
+            //server.Invoke("UndoMovePlayer", Player);
         }
         
 
