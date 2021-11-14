@@ -5,6 +5,7 @@ using GameServer;
 using System.Collections.Generic;
 using Astronautai.Classes.Factory;
 using Astronautai.Classes;
+using Astronautai.Classes.Factory;
 
 namespace UnitTestProject
 {
@@ -261,18 +262,23 @@ namespace UnitTestProject
         public void TestBuilder()
         {
             PickupBuilder builder = new PickupBuilder();
+            builder.SetType("AmmoPickup");
             builder.SetId(10);
             builder.SetCoordinates(10, 10);
             builder.SetImage("10");
             builder.SetSize(10);
             builder.SetValue(10);
-            Pickup pic = builder.GetBuildable();
-            Pickup pic2 = new Pickup() { Id = 10, X = 10, Y = 10, ImagePath = "10", Size = 10, Value = 10 };
+            AmmoPickup pic = (AmmoPickup)builder.GetBuildable();
+            AmmoPickup pic2 = new AmmoPickup() { Id = 10, X = 10, Y = 10, ImagePath = "10", Size = 10, Value = 10 };
             Assert.AreEqual(pic.X, pic2.X);
             Assert.AreEqual(pic.Y, pic2.Y);
             Assert.AreEqual(pic.ImagePath, pic2.ImagePath);
             Assert.AreEqual(pic.Size, pic2.Size);
             Assert.AreEqual(pic.Value, pic2.Value);
+            Assert.AreEqual(pic.Value, pic2.Value);
+            Assert.AreEqual(pic.Type, pic2.Type);
+
+
         }
 
         [TestMethod]
@@ -281,6 +287,14 @@ namespace UnitTestProject
             Map map = Map.Instance;
             Map map2 = Map.Instance;
             Assert.AreEqual(map, map2);
+        }
+        
+        public Player createTestPlayer()
+        {
+            Player player = new Player("test", 3, 10, 25, 16);
+            player.SetCoordinates(100, 100);
+            player.Rotation = 'W';
+            return player;
         }
 
         public Enemy createTestEnemy()
