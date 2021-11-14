@@ -5,7 +5,6 @@ using GameServer;
 using System.Collections.Generic;
 using Astronautai.Classes.Factory;
 using Astronautai.Classes;
-using Astronautai.Classes.Factory;
 
 namespace UnitTestProject
 {
@@ -13,6 +12,89 @@ namespace UnitTestProject
     public class UnitTest1
     {
         GameData gameData = new GameData();
+        [DataTestMethod]
+        [DataRow(100, 100, 'W')]
+        [DataRow(100, 100, 'A')]
+        [DataRow(100, 100, 'S')]
+        [DataRow(100, 100, 'D')]
+        [DataRow(100, 100, 'Q')]
+        [DataRow(100, 100, 'E')]
+        [DataRow(100, 100, 'Z')]
+        [DataRow(100, 100, 'C')]
+
+        public void TestEnemyMove(int x,int y, char rot)
+        {
+            Enemy enemy = new Enemy();
+            enemy.Speed = 10;
+            enemy.X = x;
+            enemy.Y = y;
+            enemy.Rotation = rot;
+            enemy.Move();
+            if (rot == 'W' || rot== 'A' || rot == 'S' || rot == 'D')
+            {
+                Assert.AreEqual(enemy.Speed, Math.Abs(enemy.X+enemy.Y-x-y));
+            }
+            else
+            {
+                Assert.AreEqual(enemy.Speed, Math.Abs(enemy.X - x));
+                Assert.AreEqual(enemy.Speed, Math.Abs(enemy.Y - y));
+            }
+        }
+        [TestMethod]
+        public void TestEnemyMoveBadRotation()
+        {
+            Enemy enemy = new Enemy();
+            enemy.Speed = 10;
+            enemy.X = 100;
+            enemy.Y = 100;
+            enemy.Rotation = 'G';
+            enemy.Move();
+            Assert.AreEqual(100, enemy.X);
+            Assert.AreEqual(100, enemy.Y);
+        }
+        [TestMethod]
+        public void TestEnemySetMoveNone()
+        {
+            Enemy enemy = new Enemy();
+            enemy.Speed = 10;
+            enemy.SetMoveNone();
+            Assert.AreEqual(0, enemy.Speed);
+        }
+        [TestMethod]
+        public void TestEnemySetMoveSlow()
+        {
+            Enemy enemy = new Enemy();
+            enemy.Speed = 10;
+            enemy.SetMoveSlow();
+            Assert.AreEqual(1, enemy.Speed);
+        }
+        [TestMethod]
+        public void TestEnemySetMoveAverage()
+        {
+            Enemy enemy = new Enemy();
+            enemy.Speed = 10;
+            enemy.SetMoveAverage();
+            Assert.AreEqual(2, enemy.Speed);
+        }
+        [TestMethod]
+        public void TestEnemySetMoveFast()
+        {
+            Enemy enemy = new Enemy();
+            enemy.Speed = 10;
+            enemy.SetMoveFast();
+            Assert.AreEqual(3, enemy.Speed);
+        }
+        [TestMethod]
+        public void TestProjectileConstructor()
+        {
+            Projectile projectile = new Projectile();
+            Player player = createTestPlayer();
+            projectile.Id = 0;
+            projectile.Player = player;
+            projectile.Direction = 'W';
+            Assert.AreEqual(0, projectile.Id);
+            Assert.AreEqual("test", projectile.Player.Username);
+        }
         [TestMethod]
         public void TestPlayerConstructorUserName()
         {
@@ -20,9 +102,18 @@ namespace UnitTestProject
             Assert.AreEqual("test", player.Username);
         }
         [TestMethod]
+        public void TestPlayerAddSpeed()
+        {
+            Player player = createTestPlayer(10, 10, 'W', 3);
+            player.Speed = 1;
+            Assert.AreEqual(1, player.Speed);
+            player.AddSpeed(1);
+            Assert.AreEqual(2, player.Speed);
+        }
+        [TestMethod]
         public void TestPlayerAddHealth()
         {
-            Player player = createTestPlayer(100,100,'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             player.Health = 1;
             Assert.AreEqual(1, player.Health);
             player.AddHealth(1);
@@ -31,7 +122,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerAddAmmo()
         {
-            Player player = createTestPlayer(100, 100, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             player.Ammo = 1;
             Assert.AreEqual(1, player.Ammo);
             player.AddAmmo(1);
@@ -40,7 +131,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerRemoveAmmo()
         {
-            Player player = createTestPlayer(100, 100, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             Assert.AreEqual(10, player.Ammo);
             player.RemoveAmmo();
             Assert.AreEqual(9, player.Ammo);
@@ -48,11 +139,9 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerGetImage()
         {
-            Player player = createTestPlayer(100, 100, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             Assert.AreEqual(@"..//..//Objects//player.png", player.GetImage());
         }
-
-
 
         [TestMethod]
         public void TestSmallAsteroidConstructor()
@@ -111,7 +200,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestAmmoPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             player.RemoveAmmo();
             int oldAmmo = player.Ammo;
             Assert.AreEqual(9, oldAmmo);
@@ -125,7 +214,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestHealthPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             player.Health = 1;
             int oldHealth = player.Health;
             Assert.AreEqual(1, oldHealth);
@@ -140,7 +229,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestSpeedMaxPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             int oldSpeed = player.Speed;
             MaxPickupFactory factory = new MaxPickupFactory();
             SpeedPickup pickup = (SpeedPickup)factory.CreateSpeedPickup();
@@ -152,7 +241,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestAmmoMaxPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             player.Ammo=5;
             Assert.AreEqual(5, player.Ammo);
             MaxPickupFactory factory = new MaxPickupFactory();
@@ -165,7 +254,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestHealthMaxPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             player.Health = 1;
             int oldHealth = player.Health;
             Assert.AreEqual(1, oldHealth);
