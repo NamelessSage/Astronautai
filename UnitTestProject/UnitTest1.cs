@@ -113,7 +113,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerAddHealth()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(100,100,'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             player.Health = 1;
             Assert.AreEqual(1, player.Health);
             player.AddHealth(1);
@@ -122,7 +126,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerAddAmmo()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(100, 100, 'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             player.Ammo = 1;
             Assert.AreEqual(1, player.Ammo);
             player.AddAmmo(1);
@@ -131,7 +139,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerRemoveAmmo()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(100, 100, 'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             Assert.AreEqual(10, player.Ammo);
             player.RemoveAmmo();
             Assert.AreEqual(9, player.Ammo);
@@ -139,7 +151,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerGetImage()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(100, 100, 'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             Assert.AreEqual(@"..//..//Objects//player.png", player.GetImage());
         }
 
@@ -200,7 +216,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestAmmoPickup()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(10, 10, 'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             player.RemoveAmmo();
             int oldAmmo = player.Ammo;
             Assert.AreEqual(9, oldAmmo);
@@ -214,7 +234,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestHealthPickup()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(10, 10, 'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             player.Health = 1;
             int oldHealth = player.Health;
             Assert.AreEqual(1, oldHealth);
@@ -229,7 +253,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestSpeedMaxPickup()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(10, 10, 'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             int oldSpeed = player.Speed;
             MaxPickupFactory factory = new MaxPickupFactory();
             SpeedPickup pickup = (SpeedPickup)factory.CreateSpeedPickup();
@@ -241,7 +269,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestAmmoMaxPickup()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(10, 10, 'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             player.Ammo=5;
             Assert.AreEqual(5, player.Ammo);
             MaxPickupFactory factory = new MaxPickupFactory();
@@ -254,7 +286,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestHealthMaxPickup()
         {
+<<<<<<< HEAD
             Player player = createTestPlayer(10, 10, 'W', 3);
+=======
+            Player player = createTestPlayer(10, 10, 'W',3);
+>>>>>>> cbd568cd672e6f74b2629b825a658e48fb12abff
             player.Health = 1;
             int oldHealth = player.Health;
             Assert.AreEqual(1, oldHealth);
@@ -417,7 +453,35 @@ namespace UnitTestProject
             Map map2 = Map.Instance;
             Assert.AreEqual(map, map2);
         }
-        
+        [TestMethod]
+        public void TestMove()
+        {
+            Player player = createTestPlayer();
+            Move move = new Move(player,'W');
+            Move movetest = move;
+            move.MoveD();
+            Assert.AreEqual(move.Direction, 'D');
+            move.MoveS();
+            Assert.AreEqual(move.Direction, 'S'); 
+            move.MoveW();
+            Assert.AreEqual(move.Direction, 'W');  
+            move.MoveA();
+            Assert.AreEqual(move.Direction, 'A');
+
+            move.UndoD();
+            Assert.AreEqual(move.Direction, 'D');
+            move.UndoS();
+            Assert.AreEqual(move.Direction, 'S');
+            move.UndoW();
+            Assert.AreEqual(move.Direction, 'W');
+            move.UndoA();
+            Assert.AreEqual(move.Direction, 'A');
+
+            move.UpdatePlayer(movetest.Player);
+
+            Assert.AreEqual(movetest.Player, move.Player);
+
+        }
         public Player createTestPlayer()
         {
             Player player = new Player("test", 3, 10, 25, 16);
