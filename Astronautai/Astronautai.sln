@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Astronautai", "Astronautai.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "..\GameServer\GameServer.csproj", "{DADD413A-DE30-45F2-BAC0-9375D0AB2E13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "..\UnitTestProject\UnitTestProject.csproj", "{8A5C0F27-0761-44CF-B022-FB025151E1F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DADD413A-DE30-45F2-BAC0-9375D0AB2E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DADD413A-DE30-45F2-BAC0-9375D0AB2E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DADD413A-DE30-45F2-BAC0-9375D0AB2E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A5C0F27-0761-44CF-B022-FB025151E1F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A5C0F27-0761-44CF-B022-FB025151E1F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A5C0F27-0761-44CF-B022-FB025151E1F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A5C0F27-0761-44CF-B022-FB025151E1F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
