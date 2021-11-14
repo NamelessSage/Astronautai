@@ -24,7 +24,6 @@ namespace GameServer
         private System.Timers.Timer _timer;
         private int _timerInterval = 50;
         
-        
         public GameHub()
         {
 
@@ -53,11 +52,8 @@ namespace GameServer
 
         public void GetPlayersCaller()
         {
-
             List<Player> players = data.GetPlayers();
-            Console.WriteLine("Returnin players to caller - " + players.Count());
-
-            Clients.Caller.getPlayersCaller(players); //SEND TO EVERYONE ??
+            Clients.Caller.getPlayersCaller(players);
         }
 
         public void StartGame()
@@ -81,20 +77,18 @@ namespace GameServer
         {
             player = data.PlayerCanMove(player);
             data.UpdatePlayer(player);
-            //Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y} {player.Rotation}");
             Clients.All.movePlayer(player);
         }
 
         public void UndoMovePlayer(Player player)
         {
             data.UpdatePlayer(player);
-            //Console.WriteLine($"Moving player: {player.Username} {player.X} {player.Y} {player.Rotation}");
             Clients.All.movePlayer(player);
         }
 
         public void AddProjectile(Projectile projectile, Player player)
         {
-            Console.WriteLine("Adding projectile with id = " + projectile.Id);
+            //Console.WriteLine("Adding projectile with id = " + projectile.Id);
             data.UpdatePlayer(player);
             data.AddProjectile(projectile);
         }
@@ -112,7 +106,6 @@ namespace GameServer
             int deletePickupId = data.UpdatePickups();
             Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
 
-            
             if(data.GetAveragePlayerHealth() <= 0)
             {
                 GameOver();
@@ -128,7 +121,6 @@ namespace GameServer
 
         public void StartTimer()
         {
-            Console.WriteLine("started timer");
             _timer = new System.Timers.Timer(_timerInterval);
             _timer.Elapsed += new ElapsedEventHandler(UpdateTicks);
             _timer.Start();

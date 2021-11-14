@@ -30,6 +30,7 @@ namespace Astronautai.Classes.Factory
             builder.SetValue(10);
             return builder.GetBuildable();
         }
+
         public override Pickup CreateHealthPickup()
         {
             count++;
@@ -43,6 +44,7 @@ namespace Astronautai.Classes.Factory
             builder.SetValue(3);
             return builder.GetBuildable();
         }
+
         public override Pickup CreateSpeedPickup()
         {
             count++;

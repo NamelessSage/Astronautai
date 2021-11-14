@@ -49,6 +49,10 @@ namespace Class_diagram
             if(Health < MaxPlayerHealth)
             {
                 Health += amount;
+                if(Health >= MaxPlayerHealth)
+                {
+                    Health = MaxPlayerHealth;
+                }
             }
         }
 
@@ -57,6 +61,10 @@ namespace Class_diagram
             if (Ammo < MaxPlayerAmmo)
             {
                 Ammo += amount;
+                if (Ammo >= MaxPlayerAmmo)
+                {
+                    Ammo = MaxPlayerAmmo;
+                }
             }
         }
 
@@ -70,6 +78,10 @@ namespace Class_diagram
             if (Speed < MaxPlayerSpeed)
             {
                 Speed += amount;
+                if (Speed >= MaxPlayerSpeed)
+                {
+                    Speed = MaxPlayerSpeed;
+                }
             }
         }
 

@@ -30,12 +30,12 @@ namespace Astronautai
         bool gameLoopStarted = false;
         bool gameOver = false;
 
-
         List<Player> playerList;
         public List<Obstacle> obstacles;
         int projectileCounter;
 
         MoveList moveList = new MoveList();
+        MoveCommand moveCommand;
         Move move;
 
         UITextManager uITextManager = new UITextManager();
@@ -301,7 +301,7 @@ namespace Astronautai
 
         private void JoinGameButton_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("JOIN GAME");
+            Console.WriteLine("JOINED GAME");
             bool existing = false;
 
             server.On<List<Player>>("getPlayersCaller", (players) =>
@@ -320,8 +320,7 @@ namespace Astronautai
                 player.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
                 PlayerNameInputLabel.Text += PlayerUsernameTextBox.Text;
                 CurrentPlayerUsername = PlayerUsernameTextBox.Text;
-                JoinGameButton.Visible = false;
-                StartGameButton.Visible = true;
+                uITextManager.UpdateButtonsAfterClientJoin(JoinGameButton, StartGameButton);
                 server.Invoke("AddPlayerOnJoin", player);
                 move = new Move(player, 'W');
             }
@@ -401,7 +400,8 @@ namespace Astronautai
             if (gameOver) {
                 var pictureBox = this.Controls.Find(player.Username, true)[0] as PictureBox;
                 pictureBox.Visible = false;
-                Execute(move, moveList, new MoveCommand(move, 'W'));
+                moveCommand = new MoveCommand(move, 'W');
+                Execute(move, moveList, moveCommand);
                 player.Ammo = 0;
                 player.Speed = 0;
                 player.Size = 0;
@@ -416,7 +416,8 @@ namespace Astronautai
                 
                 if (player.Health <= 0)
                 {
-                    Execute(move, moveList, new MoveCommand(move, 'W'));
+                    moveCommand = new MoveCommand(move, 'W');
+                    Execute(move, moveList, moveCommand);
                     player.Ammo = 0;
                     player.Speed = 0;
                     player.Size = 0;
@@ -438,25 +439,29 @@ namespace Astronautai
             move.UpdatePlayer(player);
             if (e.KeyCode == Keys.W)
             {
-                Execute(move, moveList, new MoveCommand(move, 'W'));
+                moveCommand = new MoveCommand(move, 'W');
+                Execute(move, moveList, moveCommand);
                 //player.Rotation = 'W';
                 //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.S)
             {
-                Execute(move, moveList, new MoveCommand(move, 'S'));
+                moveCommand = new MoveCommand(move, 'S');
+                Execute(move, moveList, moveCommand);
                 //player.Rotation = 'S';
                 //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.A)
             {
-                Execute(move, moveList, new MoveCommand(move, 'A'));
+                moveCommand = new MoveCommand(move, 'A');
+                Execute(move, moveList, moveCommand);
                 //player.Rotation = 'A';
                 //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.D)
             {
-                Execute(move, moveList, new MoveCommand(move, 'D'));
+                moveCommand = new MoveCommand(move, 'D');
+                Execute(move, moveList, moveCommand);
                 //player.Rotation = 'D';
                 //server.Invoke("MovePlayer", player);
             }
@@ -489,7 +494,7 @@ namespace Astronautai
             var g = e.Graphics;
             foreach (Obstacle obs in obstacles)
             {
-                Console.WriteLine("Obstacle " + obs.Id);
+                //Console.WriteLine("Obstacle " + obs.Id);
                 Point[] points = new Point[4];
 
                 points[0] = new Point(obs.X, obs.Y);
@@ -504,9 +509,7 @@ namespace Astronautai
 
         private void AddProjectile(int count)
         {
-            Projectile projectile = new Projectile();
-            projectile.Player = player;
-            projectile.Direction = player.Rotation;
+            Projectile projectile = new Projectile(player);
             switch (player.Rotation)
             {
                 case 'W':
@@ -614,7 +617,6 @@ namespace Astronautai
         }
         private void AddPickup(Pickup pickup)
         {
-            Console.WriteLine("Pickup added!");
             var pickupPictureBox = new PictureBox
             {
                 Name = "Pickup" + pickup.Id,

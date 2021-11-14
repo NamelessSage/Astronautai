@@ -14,7 +14,7 @@ namespace GameServer
 {
     public class PickupSpawner : IObserver
     {
-        const int SpawnMax = 2;
+        const int SpawnMax = 4;
         Random random;
 
         OnePickupFactory onePickupFactory;
@@ -45,7 +45,6 @@ namespace GameServer
             Pickup pickup = new Pickup();
 
             int randomValuePickupType = random.Next(0, 3);
-            Console.WriteLine(randomValuePickupType);
             if (randomValuePickupType == 0)
             {
                 pickup = onePickupFactory.CreateAmmoPickup();
@@ -64,7 +63,6 @@ namespace GameServer
         public Pickup SpawnMaxValuePickup()
         {
             int randomValuePickupType = random.Next(0, 3);
-            Console.WriteLine(randomValuePickupType);
             if (randomValuePickupType == 0)
             {
                 return maxPickupFactory.CreateAmmoPickup();

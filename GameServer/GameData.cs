@@ -13,14 +13,12 @@ namespace GameServer
     public class GameData
     {
         public static Map map;
-        public PickupFactory pickupFactory = new PickupFactory();
 
-        public OnePickupFactory onepickupFactory = new OnePickupFactory();
-        public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
         public EnemySpawner enemySpawner = new EnemySpawner();
         public PickupSpawnerAdapter pickupSpawner = new PickupSpawnerAdapter();
 
         ObjectDestructor destructor = new ObjectDestructor();
+
         public GameData()
         {
 

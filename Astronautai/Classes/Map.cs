@@ -19,6 +19,7 @@ namespace Class_diagram
 		public List<Player> players = new List<Player>();
 		public int projectileCounter = 0;
 		public int enemyCounter = 0;
+
 		private Map() 
 		{ 
 

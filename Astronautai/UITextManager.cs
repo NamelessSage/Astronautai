@@ -76,5 +76,11 @@ namespace Astronautai
         {
             HealthManager.UpdateLabel(healthLabel, playerHealth);
         }
+
+        public void UpdateButtonsAfterClientJoin(Button joinGameButton, Button startGameButton)
+        {
+            joinGameButton.Visible = false;
+            startGameButton.Visible = true;
+        }
     }
 }

@@ -10,9 +10,10 @@ namespace Class_diagram
 		public Player Player { get; set; }
 		public char Direction { get; set; }
 
-        public Projectile() : base()
+        public Projectile(Player player) : base()
         {
-
+            Player = player;
+            Direction = player.Rotation;
         }
         public Coordinates GetCoordinates()
         {
