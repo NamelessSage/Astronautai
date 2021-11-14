@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Astronautai.Classes
 {
-    class PickupBuilder : IBuilder 
+    public class PickupBuilder : IBuilder 
     { 
         private Pickup pickup;
 
