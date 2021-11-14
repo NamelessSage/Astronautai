@@ -46,18 +46,23 @@ namespace Class_diagram
 
         public void AddHealth(int amount)
         {
-            if(Health < MaxPlayerHealth)
+            if(Health+amount> MaxPlayerHealth)
             {
-                Health += amount;
+                Health = MaxPlayerHealth;
+                return;
             }
+            Health += amount;
+
         }
 
         public void AddAmmo(int amount)
         {
-            if (Ammo < MaxPlayerAmmo)
+            if (Ammo + amount > MaxPlayerAmmo)
             {
-                Ammo += amount;
+                Ammo = MaxPlayerAmmo;
+                return;
             }
+            Ammo += amount;
         }
 
         public void RemoveAmmo()
@@ -67,10 +72,12 @@ namespace Class_diagram
 
         public void AddSpeed(int amount)
         {
-            if (Speed < MaxPlayerSpeed)
+            if (Speed + amount > MaxPlayerSpeed)
             {
-                Speed += amount;
+                Speed = MaxPlayerSpeed;
+                return;
             }
+            Speed += amount;
         }
 
         public override string ToString()

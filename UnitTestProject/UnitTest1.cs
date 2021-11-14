@@ -137,6 +137,45 @@ namespace UnitTestProject
             Assert.AreEqual(oldHealth + 1, player.Health);
         }
 
+        [TestMethod]
+        public void TestSpeedMaxPickup()
+        {
+            Player player = createTestPlayer(10, 10, 'W');
+            int oldSpeed = player.Speed;
+            MaxPickupFactory factory = new MaxPickupFactory();
+            SpeedPickup pickup = (SpeedPickup)factory.CreateSpeedPickup();
+
+            player = pickup.Action(player, pickup);
+
+            Assert.AreEqual(oldSpeed + 10, player.Speed);
+        }
+        [TestMethod]
+        public void TestAmmoMaxPickup()
+        {
+            Player player = createTestPlayer(10, 10, 'W');
+            player.Ammo=5;
+            Assert.AreEqual(5, player.Ammo);
+            MaxPickupFactory factory = new MaxPickupFactory();
+            AmmoPickup pickup = (AmmoPickup)factory.CreateAmmoPickup();
+
+            player = pickup.Action(player, pickup);
+
+            Assert.AreEqual(10, player.Ammo);
+        }
+        [TestMethod]
+        public void TestHealthMaxPickup()
+        {
+            Player player = createTestPlayer(10, 10, 'W');
+            player.Health = 1;
+            int oldHealth = player.Health;
+            Assert.AreEqual(1, oldHealth);
+            MaxPickupFactory factory = new MaxPickupFactory();
+            HealthPickup pickup = (HealthPickup)factory.CreateHealthPickup();
+
+            player = pickup.Action(player, pickup);
+
+            Assert.AreEqual(oldHealth + 2, player.Health);
+        }
 
         [TestMethod]
         public void TestPlayerCanMoveTrue()
