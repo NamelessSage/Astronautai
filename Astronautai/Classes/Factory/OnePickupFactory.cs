@@ -13,7 +13,6 @@ namespace Astronautai.Classes.Factory
         const int pickupSize = 20;
         Random random;
 
-
         public OnePickupFactory()
         {
             random = new Random();

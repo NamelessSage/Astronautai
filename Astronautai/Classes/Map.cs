@@ -29,6 +29,5 @@ namespace Class_diagram
 		{
 			get { return instance; }
 		}
-
 	}
 }

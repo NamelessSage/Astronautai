@@ -83,7 +83,7 @@ namespace GameServer
                 }
                 foreach(Enemy e in map.enemies)
                 {
-                    if (!Collides(p.GetCoordinates(), 5, e.GetCoordinates(), e.Size))
+                    if (!Collides(p.X, p.Y, 5, e.X, e.Y, e.Size))
                     {
                         e.Health--;
                         if (e.Health <= 0)
@@ -121,7 +121,7 @@ namespace GameServer
             {
                 if (p.Username != p2.Username)
                 {
-                    if (!Collides(new Coordinates(p.X, p.Y), p.Size, new Coordinates(p2.X, p2.Y), p2.Size))
+                    if (!Collides(p.X, p.Y, p.Size, p2.X, p2.Y, p2.Size))
                     {
                         collides = false;
                     }
@@ -130,7 +130,7 @@ namespace GameServer
             foreach (Obstacle obs in map.obstacles)
             {
 
-                if (!Collides(new Coordinates(p.X, p.Y), p.Size, new Coordinates(obs.X, obs.Y), obs.Size))
+                if (!Collides(p.X, p.Y, p.Size, obs.X, obs.Y, obs.Size))
                 {
                     collides = false;
                 }
@@ -143,7 +143,7 @@ namespace GameServer
             Map map = Map.Instance;
             foreach (Player player in map.players)
             {
-                if (!Collides(new Coordinates(player.X, player.Y), player.Size, new Coordinates(enemy.X, enemy.Y), enemy.Size))
+                if (!Collides(player.X, player.Y, player.Size, enemy.X, enemy.Y, enemy.Size))
                 {
                     player.Health -= enemy.Damage;
                     UpdatePlayer(player);
@@ -157,7 +157,7 @@ namespace GameServer
             Map map = Map.Instance;
             foreach (Player player in map.players)
             {
-                if (!Collides(new Coordinates(pickup.X, pickup.Y), pickup.Size, new Coordinates(player.X, player.Y), player.Size))
+                if (!Collides(pickup.X, pickup.Y, pickup.Size, player.X, player.Y, player.Size))
                 {
                     Player playerUpdated = pickup.Action(player, pickup);
 
@@ -168,28 +168,31 @@ namespace GameServer
             }
             return true;
         }
-        public bool CheckMapEdge(Coordinates coords)
+
+        public bool CheckMapEdge(int x, int y)
         {
-            if (coords.X < 25 || coords.X > 750)
+            if (x < 25 || x > 750)
                 return false;
 
-            if (coords.Y < 25 || coords.Y > 550)
+            if (y < 25 || y > 550)
                 return false;
 
             return true;
         }
-        private bool Collides(Coordinates o1, int size1, Coordinates o2, int size2)
+
+        private bool Collides(int x1, int y1, int size1, int x2, int y2, int size2)
         {
-            if ((o1.X > o2.X && o1.X < o2.X + size2) && (o1.Y > o2.Y && o1.Y < o2.Y + size2) ||
-                        (o1.X + size1 > o2.X && o1.X + size1 < o2.X + size2) && (o1.Y > o2.Y && o1.Y < o2.Y + size2) ||
-                        (o1.X > o2.X && o1.X < o2.X + size2) && (o1.Y + size1 > o2.Y && o1.Y + size1 < o2.Y + size2) ||
-                        (o1.X + size1 > o2.X && o1.X + size1 < o2.X + size2) &&
-                        (o1.Y + size1 > o2.Y && o1.Y + size1 < o2.Y + size2))
+            if ((x1 > x2 && x1 < x2 + size2) && (y1 > y2 && y1 < y2 + size2) ||
+                        (x1 + size1 > x2 && x1 + size1 < x2 + size2) && (y1 > y2 && y1 < y2 + size2) ||
+                        (x1 > x2 && x1 < x2 + size2) && (y1 + size1 > y2 && y1 + size1 < y2 + size2) ||
+                        (x1 + size1 > x2 && x1 + size1 < x2 + size2) &&
+                        (y1 + size1 > y2 && y1 + size1 < y2 + size2))
             {
                 return false;
             }
             return true;
         }
+
         public Player PlayerCanMove(Player player)
         {
             if (player.Rotation == 'W')
@@ -197,10 +200,9 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                Coordinates coordinates = new Coordinates(temp.X, temp.Y - player.Speed);
                 temp.Y = temp.Y - player.Speed;
 
-                if (CheckMapEdge(coordinates) && CheckCollisionPlayers(temp))
+                if (CheckMapEdge(temp.X, temp.Y - player.Speed) && CheckCollisionPlayers(temp))
                 {
                     player.Y = temp.Y;
                     return player;
@@ -211,9 +213,9 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                Coordinates coordinates = new Coordinates(temp.X - player.Speed, temp.Y);
                 temp.X = temp.X - player.Speed;
-                if (CheckMapEdge(coordinates) && CheckCollisionPlayers(temp))
+
+                if (CheckMapEdge(temp.X - player.Speed, temp.Y) && CheckCollisionPlayers(temp))
                 {
                     player.X = temp.X;
                     return player;
@@ -224,9 +226,9 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                Coordinates coordinates = new Coordinates(temp.X, temp.Y + player.Speed);
                 temp.Y = temp.Y + player.Speed;
-                if (CheckMapEdge(coordinates) && CheckCollisionPlayers(temp))
+
+                if (CheckMapEdge(temp.X, temp.Y + player.Speed) && CheckCollisionPlayers(temp))
                 {
                     player.Y = temp.Y;
                     return player;
@@ -237,9 +239,10 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                Coordinates coordinates = new Coordinates(temp.X + player.Speed, temp.Y);
+                Coordinates coordinates = new Coordinates();
                 temp.X = temp.X + player.Speed;
-                if (CheckMapEdge(coordinates) && CheckCollisionPlayers(temp))
+
+                if (CheckMapEdge(temp.X + player.Speed, temp.Y) && CheckCollisionPlayers(temp))
                 {
                     player.X = temp.X;
                     return player;
@@ -308,11 +311,7 @@ namespace GameServer
             Map map = Map.Instance;
             foreach (Pickup pickup in map.pickups)
             {
-                if (CheckNotCollisionPickup(pickup))
-                {
-                    
-                }
-                else
+                if (!CheckNotCollisionPickup(pickup))
                 {
                     int id = pickup.Id;
                     map.pickups.Remove(pickup);
@@ -346,7 +345,7 @@ namespace GameServer
         {
             Map map = Map.Instance;
             Random ran = new Random();
-            Obstacle obs = new Obstacle(0,0,0, 25);
+            Obstacle obs = new Obstacle(0, 0, 0, 25);
             
             for (int i = 0; i < 6; i++)
             {

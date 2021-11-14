@@ -15,6 +15,5 @@ namespace Astronautai.Classes.Builder
         void SetImage(string img);
         void SetSize(int size);
         void Reset();
-        
     }
 }
