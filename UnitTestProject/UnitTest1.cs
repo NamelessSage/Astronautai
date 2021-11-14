@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using GameServer;
 using System.Collections.Generic;
+using Astronautai.Classes.Factory;
 
 namespace UnitTestProject
 {
@@ -10,6 +11,62 @@ namespace UnitTestProject
     public class UnitTest1
     {
         GameData gameData = new GameData();
+        [TestMethod]
+        public void TestSmallAsteroidConstructor()
+        {
+            Coordinates coordinates = new Coordinates(100,100);
+            SmallAsteroid small = new SmallAsteroid(0, 'W', coordinates);
+
+            Assert.AreEqual(small.Id, 0);
+            Assert.AreEqual(small.Health, 1);
+            Assert.AreEqual(small.Damage, 1);
+            Assert.AreEqual(small.Size, 20);
+            Assert.AreEqual(small.X, 100);
+            Assert.AreEqual(small.Y, 100);
+        }
+
+        [TestMethod]
+        public void TestSBigAsteroidConstructor()
+        {
+            Coordinates coordinates = new Coordinates(100, 100);
+            BigAsteroid big = new BigAsteroid(0, 'W', coordinates);
+
+            Assert.AreEqual(big.Id, 0);
+            Assert.AreEqual(big.Health, 3);
+            Assert.AreEqual(big.Damage, 2);
+            Assert.AreEqual(big.Size, 50);
+            Assert.AreEqual(big.X, 100);
+            Assert.AreEqual(big.Y, 100);
+        }
+
+        [TestMethod]
+        public void TestSAverageAsteroidConstructor()
+        {
+            Coordinates coordinates = new Coordinates(100, 100);
+            AverageAsteroid average = new AverageAsteroid(0, 'W', coordinates);
+
+            Assert.AreEqual(average.Id, 0);
+            Assert.AreEqual(average.Health, 2);
+            Assert.AreEqual(average.Damage, 1);
+            Assert.AreEqual(average.Size, 35);
+            Assert.AreEqual(average.X, 100);
+            Assert.AreEqual(average.Y, 100);
+        }
+
+        [TestMethod]
+        public void TestSpeedPickup()
+        {
+            Player player = createTestPlayer();
+            int oldSpeed = player.Speed;
+            OnePickupFactory factory = new OnePickupFactory();
+            SpeedPickup pickup = (SpeedPickup)factory.CreateSpeedPickup();
+            
+            player = pickup.Action(player, pickup);
+
+            Assert.AreEqual(oldSpeed + 1, player.Speed);
+        }
+
+
         [TestMethod]
         public void TestPlayerCanMoveTrue()
         {
@@ -84,6 +141,7 @@ namespace UnitTestProject
         public Player createTestPlayer()
         {
             Player player = new Player("test", 3, 10, 25, 16);
+            player.Speed = 10;
             player.SetCoordinates(100, 100);
             player.Rotation = 'W';
             return player;
