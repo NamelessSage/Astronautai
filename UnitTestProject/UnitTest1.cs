@@ -5,6 +5,7 @@ using GameServer;
 using System.Collections.Generic;
 using Astronautai.Classes.Factory;
 using Astronautai.Classes;
+using Astronautai.Classes.Factory;
 
 namespace UnitTestProject
 {
@@ -12,6 +13,47 @@ namespace UnitTestProject
     public class UnitTest1
     {
         GameData gameData = new GameData();
+        [TestMethod]
+        public void TestPlayerConstructorUserName()
+        {
+            Player player = new Player("test");
+            Assert.AreEqual("test", player.Username);
+        }
+        [TestMethod]
+        public void TestPlayerAddHealth()
+        {
+            Player player = createTestPlayer(100,100,'W');
+            player.Health = 1;
+            Assert.AreEqual(1, player.Health);
+            player.AddHealth(1);
+            Assert.AreEqual(2, player.Health);
+        }
+        [TestMethod]
+        public void TestPlayerAddAmmo()
+        {
+            Player player = createTestPlayer(100, 100, 'W');
+            player.Ammo = 1;
+            Assert.AreEqual(1, player.Ammo);
+            player.AddAmmo(1);
+            Assert.AreEqual(2, player.Ammo);
+        }
+        [TestMethod]
+        public void TestPlayerRemoveAmmo()
+        {
+            Player player = createTestPlayer(100, 100, 'W');
+            Assert.AreEqual(10, player.Ammo);
+            player.RemoveAmmo();
+            Assert.AreEqual(9, player.Ammo);
+        }
+        [TestMethod]
+        public void TestPlayerGetImage()
+        {
+            Player player = createTestPlayer(100, 100, 'W');
+            Assert.AreEqual(@"..//..//Objects//player.png", player.GetImage());
+        }
+
+
+
         [TestMethod]
         public void TestSmallAsteroidConstructor()
         {
@@ -61,10 +103,38 @@ namespace UnitTestProject
             int oldSpeed = player.Speed;
             OnePickupFactory factory = new OnePickupFactory();
             SpeedPickup pickup = (SpeedPickup)factory.CreateSpeedPickup();
-            
+
             player = pickup.Action(player, pickup);
 
             Assert.AreEqual(oldSpeed + 1, player.Speed);
+        }
+        [TestMethod]
+        public void TestAmmoPickup()
+        {
+            Player player = createTestPlayer(10, 10, 'W');
+            player.RemoveAmmo();
+            int oldAmmo = player.Ammo;
+            Assert.AreEqual(9, oldAmmo);
+            OnePickupFactory factory = new OnePickupFactory();
+            AmmoPickup pickup = (AmmoPickup)factory.CreateAmmoPickup();
+
+            player = pickup.Action(player, pickup);
+
+            Assert.AreEqual(oldAmmo + 1, player.Ammo);
+        }
+        [TestMethod]
+        public void TestHealthPickup()
+        {
+            Player player = createTestPlayer(10, 10, 'W');
+            player.Health = 1;
+            int oldHealth = player.Health;
+            Assert.AreEqual(1, oldHealth);
+            OnePickupFactory factory = new OnePickupFactory();
+            HealthPickup pickup = (HealthPickup)factory.CreateHealthPickup();
+
+            player = pickup.Action(player, pickup);
+
+            Assert.AreEqual(oldHealth + 1, player.Health);
         }
 
 
@@ -193,18 +263,23 @@ namespace UnitTestProject
         public void TestBuilder()
         {
             PickupBuilder builder = new PickupBuilder();
+            builder.SetType("AmmoPickup");
             builder.SetId(10);
             builder.SetCoordinates(10, 10);
             builder.SetImage("10");
             builder.SetSize(10);
             builder.SetValue(10);
-            Pickup pic = builder.GetBuildable();
-            Pickup pic2 = new Pickup() { Id = 10, X = 10, Y = 10, ImagePath = "10", Size = 10, Value = 10 };
+            AmmoPickup pic = (AmmoPickup)builder.GetBuildable();
+            AmmoPickup pic2 = new AmmoPickup() { Id = 10, X = 10, Y = 10, ImagePath = "10", Size = 10, Value = 10 };
             Assert.AreEqual(pic.X, pic2.X);
             Assert.AreEqual(pic.Y, pic2.Y);
             Assert.AreEqual(pic.ImagePath, pic2.ImagePath);
             Assert.AreEqual(pic.Size, pic2.Size);
             Assert.AreEqual(pic.Value, pic2.Value);
+            Assert.AreEqual(pic.Value, pic2.Value);
+            Assert.AreEqual(pic.Type, pic2.Type);
+
+
         }
 
         [TestMethod]
@@ -213,6 +288,14 @@ namespace UnitTestProject
             Map map = Map.Instance;
             Map map2 = Map.Instance;
             Assert.AreEqual(map, map2);
+        }
+        
+        public Player createTestPlayer()
+        {
+            Player player = new Player("test", 3, 10, 25, 16);
+            player.SetCoordinates(100, 100);
+            player.Rotation = 'W';
+            return player;
         }
 
         [TestMethod]

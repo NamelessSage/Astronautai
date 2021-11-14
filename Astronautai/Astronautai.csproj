@@ -231,7 +231,6 @@
     <Compile Include="Classes\Factory\Onepickup\OneHealthPickup.cs" />
     <Compile Include="Classes\Factory\OnePickupFactory.cs" />
     <Compile Include="Classes\Factory\Onepickup\OneSpeedPickup.cs" />
-    <Compile Include="Classes\Factory\PickupFactory.cs" />
     <Compile Include="Classes\Factory\BasicPickup\HealthPickup.cs" />
     <Compile Include="Classes\Factory\BasicPickup\SpeedPickup.cs" />
     <Compile Include="Classes\Command\ICommand.cs" />
