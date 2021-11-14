@@ -22,7 +22,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerAddHealth()
         {
-            Player player = createTestPlayer(100,100,'W');
+            Player player = createTestPlayer(100,100,'W',3);
             player.Health = 1;
             Assert.AreEqual(1, player.Health);
             player.AddHealth(1);
@@ -31,7 +31,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerAddAmmo()
         {
-            Player player = createTestPlayer(100, 100, 'W');
+            Player player = createTestPlayer(100, 100, 'W',3);
             player.Ammo = 1;
             Assert.AreEqual(1, player.Ammo);
             player.AddAmmo(1);
@@ -40,7 +40,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerRemoveAmmo()
         {
-            Player player = createTestPlayer(100, 100, 'W');
+            Player player = createTestPlayer(100, 100, 'W',3);
             Assert.AreEqual(10, player.Ammo);
             player.RemoveAmmo();
             Assert.AreEqual(9, player.Ammo);
@@ -48,7 +48,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerGetImage()
         {
-            Player player = createTestPlayer(100, 100, 'W');
+            Player player = createTestPlayer(100, 100, 'W',3);
             Assert.AreEqual(@"..//..//Objects//player.png", player.GetImage());
         }
 
@@ -111,7 +111,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestAmmoPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W',3);
             player.RemoveAmmo();
             int oldAmmo = player.Ammo;
             Assert.AreEqual(9, oldAmmo);
@@ -125,7 +125,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestHealthPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W',3);
             player.Health = 1;
             int oldHealth = player.Health;
             Assert.AreEqual(1, oldHealth);
@@ -140,7 +140,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestSpeedMaxPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W',3);
             int oldSpeed = player.Speed;
             MaxPickupFactory factory = new MaxPickupFactory();
             SpeedPickup pickup = (SpeedPickup)factory.CreateSpeedPickup();
@@ -152,7 +152,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestAmmoMaxPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W',3);
             player.Ammo=5;
             Assert.AreEqual(5, player.Ammo);
             MaxPickupFactory factory = new MaxPickupFactory();
@@ -165,7 +165,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestHealthMaxPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W',3);
             player.Health = 1;
             int oldHealth = player.Health;
             Assert.AreEqual(1, oldHealth);
