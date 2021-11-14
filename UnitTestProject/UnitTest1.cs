@@ -13,6 +13,47 @@ namespace UnitTestProject
     {
         GameData gameData = new GameData();
         [TestMethod]
+        public void TestPlayerConstructorUserName()
+        {
+            Player player = new Player("test");
+            Assert.AreEqual("test", player.Username);
+        }
+        [TestMethod]
+        public void TestPlayerAddHealth()
+        {
+            Player player = createTestPlayer(100,100,'W');
+            player.Health = 1;
+            Assert.AreEqual(1, player.Health);
+            player.AddHealth(1);
+            Assert.AreEqual(2, player.Health);
+        }
+        [TestMethod]
+        public void TestPlayerAddAmmo()
+        {
+            Player player = createTestPlayer(100, 100, 'W');
+            player.Ammo = 1;
+            Assert.AreEqual(1, player.Ammo);
+            player.AddAmmo(1);
+            Assert.AreEqual(2, player.Ammo);
+        }
+        [TestMethod]
+        public void TestPlayerRemoveAmmo()
+        {
+            Player player = createTestPlayer(100, 100, 'W');
+            Assert.AreEqual(10, player.Ammo);
+            player.RemoveAmmo();
+            Assert.AreEqual(9, player.Ammo);
+        }
+        [TestMethod]
+        public void TestPlayerGetImage()
+        {
+            Player player = createTestPlayer(100, 100, 'W');
+            Assert.AreEqual(@"..//..//Objects//player.png", player.GetImage());
+        }
+
+
+
+        [TestMethod]
         public void TestSmallAsteroidConstructor()
         {
             Coordinates coordinates = new Coordinates(100,100);
@@ -61,10 +102,38 @@ namespace UnitTestProject
             int oldSpeed = player.Speed;
             OnePickupFactory factory = new OnePickupFactory();
             SpeedPickup pickup = (SpeedPickup)factory.CreateSpeedPickup();
-            
+
             player = pickup.Action(player, pickup);
 
             Assert.AreEqual(oldSpeed + 1, player.Speed);
+        }
+        [TestMethod]
+        public void TestAmmoPickup()
+        {
+            Player player = createTestPlayer(10, 10, 'W');
+            player.RemoveAmmo();
+            int oldAmmo = player.Ammo;
+            Assert.AreEqual(9, oldAmmo);
+            OnePickupFactory factory = new OnePickupFactory();
+            AmmoPickup pickup = (AmmoPickup)factory.CreateAmmoPickup();
+
+            player = pickup.Action(player, pickup);
+
+            Assert.AreEqual(oldAmmo + 1, player.Ammo);
+        }
+        [TestMethod]
+        public void TestHealthPickup()
+        {
+            Player player = createTestPlayer(10, 10, 'W');
+            player.Health = 1;
+            int oldHealth = player.Health;
+            Assert.AreEqual(1, oldHealth);
+            OnePickupFactory factory = new OnePickupFactory();
+            HealthPickup pickup = (HealthPickup)factory.CreateHealthPickup();
+
+            player = pickup.Action(player, pickup);
+
+            Assert.AreEqual(oldHealth + 1, player.Health);
         }
 
 
