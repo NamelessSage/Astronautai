@@ -13,7 +13,7 @@ namespace GameServer
     public class GameData
     {
         public static Map map;
-        public PickupFactory pickupFactory = new PickupFactory();
+       
 
         public OnePickupFactory onepickupFactory = new OnePickupFactory();
         public MaxPickupFactory maxpickupFactory = new MaxPickupFactory();
