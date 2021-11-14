@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using GameServer;
+using System.Collections.Generic;
 
 namespace UnitTestProject
 {
@@ -67,7 +68,18 @@ namespace UnitTestProject
             Assert.AreEqual(true, gameData.CheckMapEdge(new Coordinates(110,100)));
             Assert.AreEqual(false, gameData.CheckMapEdge(new Coordinates(1100, 1000)));
         }
-
+        [TestMethod]
+        public void TestAveragePlayerHealth()
+        {
+            Assert.AreEqual(3, gameData.GetAveragePlayerHealth());
+        }
+        [TestMethod]
+        public void TestGenerateObstaclesAndGetObstacles()
+        {
+            gameData.GenerateObstacles();
+            List<Obstacle> obs = new List<Obstacle>();
+            Assert.AreNotEqual(obs, gameData.GetObstacles());
+        }
 
         public Player createTestPlayer()
         {
