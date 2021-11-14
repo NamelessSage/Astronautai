@@ -99,7 +99,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestSpeedPickup()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W', 3);
             int oldSpeed = player.Speed;
             OnePickupFactory factory = new OnePickupFactory();
             SpeedPickup pickup = (SpeedPickup)factory.CreateSpeedPickup();
@@ -180,22 +180,23 @@ namespace UnitTestProject
         [TestMethod]
         public void TestPlayerCanMoveTrue()
         {
-            Player player = createTestPlayer(100, 100, 'W');
-            Player playerMove = gameData.PlayerCanMove(createTestPlayer(100, 100, 'W'));
+            Player player = createTestPlayer(100, 100, 'W', 3);
+            Player playerMove = gameData.PlayerCanMove(createTestPlayer(100, 100, 'W', 3));
 
             Assert.AreEqual(player.Y - player.Speed, playerMove.Y);
-            playerMove = gameData.PlayerCanMove(createTestPlayer(100, 100, 'A'));
+            playerMove = gameData.PlayerCanMove(createTestPlayer(100, 100, 'A', 3));
             Assert.AreEqual(player.X - player.Speed, playerMove.X);
-            playerMove = gameData.PlayerCanMove(createTestPlayer(100, 100, 'S'));
+            playerMove = gameData.PlayerCanMove(createTestPlayer(100, 100, 'S', 3));
             Assert.AreEqual(player.Y + player.Speed, playerMove.Y);
-            playerMove = gameData.PlayerCanMove(createTestPlayer(100, 100, 'D'));
+            playerMove = gameData.PlayerCanMove(createTestPlayer(100, 100, 'D', 3));
             Assert.AreEqual(player.X + player.Speed, playerMove.X);
         }
         [TestMethod]
         public void TestCheckCollisionPlayersTrue()
         {
-            Player player = createTestPlayer(10, 10, 'W');
-            Player player1 = createTestPlayer(15, 15, 'A');
+            Player player = createTestPlayer(10, 10, 'W',3);
+            Player player1 = createTestPlayer(15, 15, 'A', 3);
+            gameData.GenerateObstacles();
             gameData.AddPlayer(player);
             gameData.AddPlayer(player1);
             Assert.AreEqual(false, gameData.CheckCollisionPlayers(player));
@@ -218,7 +219,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestAddPlayerAndGetPlayer()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W',3);
             gameData.AddPlayer(player);
             Assert.AreEqual(player, gameData.GetPlayers()[1]);
         }
@@ -271,7 +272,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestUpdatePlayer()
         {
-            Player player = createTestPlayer(10, 10, 'W');
+            Player player = createTestPlayer(10, 10, 'W',3);
             gameData.UpdatePlayer(player);
             Assert.AreEqual(player, gameData.GetPlayers()[0]);
         }
@@ -283,15 +284,15 @@ namespace UnitTestProject
         [TestMethod]
         public void TestAddAsteroidAndUpdateAsteroidCoords()
         {
-            gameData.AddPlayer(createTestPlayer(10, 10, 'W'));
+            gameData.AddPlayer(createTestPlayer(10, 10, 'W',3));
             gameData.AddAsteroid();
             gameData.UpdateAsteroidCoords();
-            //Assert.IsNotNull(gameData.GetEnemies());
+            Assert.IsNotNull(gameData.GetEnemies());
         }
 
-        public Player createTestPlayer(int x, int y, char rot)
+        public Player createTestPlayer(int x, int y, char rot, int hp)
         {
-            Player player = new Player("test"+x.ToString(), 3, 10, 25, 16);
+            Player player = new Player("test"+x.ToString(), hp, 10, 25, 16);
             player.SetCoordinates(x, y);
             player.Rotation = rot;
             return player;
@@ -335,6 +336,15 @@ namespace UnitTestProject
             player.Rotation = 'W';
             return player;
         }
+
+        [TestMethod]
+        public void TestAddPlayerOnJoinHub()
+        {
+            GameHub hub = new GameHub();
+            hub.AddPlayerOnJoin(createTestPlayer(10, 10, 'W', 3));
+            Assert.AreEqual(3,hub.data.GetPlayers().Count);
+        }
+
 
         public Enemy createTestEnemy()
         {

@@ -17,7 +17,7 @@ namespace GameServer
     [HubName("serveris")]
     public class GameHub : Hub
     {
-        GameData data = new GameData();
+        public GameData data = new GameData();
         Subject subject = new Subject();
 
         bool started = false;
