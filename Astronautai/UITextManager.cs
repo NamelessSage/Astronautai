@@ -11,6 +11,7 @@ namespace Astronautai
     {
         HealthManager HealthManager;
         AmmoManager AmmoManager;
+        ButtonManager ButtonManager;
 
         string GameOverHealthString;
         string GameOverAmmoString;
@@ -36,10 +37,7 @@ namespace Astronautai
 
         public void StartGame(Button startGame, Button joinGame, TextBox playerUsernameInput, Label healthLabel, Label ammoLabel, int playerStartHealth, int playerStartAmmo)
         {
-            startGame.Visible = false;
-            joinGame.Visible = false;
-            playerUsernameInput.Visible = false;
-
+            ButtonManager.StartGame(startGame, joinGame, playerUsernameInput);
             DisplayLabels(healthLabel, ammoLabel, playerStartHealth, playerStartAmmo);
         }
 
@@ -79,6 +77,7 @@ namespace Astronautai
 
         public void UpdateButtonsAfterClientJoin(Button joinGameButton, Button startGameButton)
         {
+            ButtonManager.ClientJoin(startGameButton, joinGameButton);
             joinGameButton.Visible = false;
             startGameButton.Visible = true;
         }
