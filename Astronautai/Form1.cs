@@ -412,7 +412,6 @@ namespace Astronautai
             }
             else if (gameLoopStarted)
             {
-                
                 if (player.Health <= 0)
                 {
                     moveCommand = new MoveCommand(move, 'W');
@@ -440,29 +439,21 @@ namespace Astronautai
             {
                 moveCommand = new MoveCommand(move, 'W');
                 Execute(move, moveList, moveCommand);
-                //player.Rotation = 'W';
-                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.S)
             {
                 moveCommand = new MoveCommand(move, 'S');
                 Execute(move, moveList, moveCommand);
-                //player.Rotation = 'S';
-                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.A)
             {
                 moveCommand = new MoveCommand(move, 'A');
                 Execute(move, moveList, moveCommand);
-                //player.Rotation = 'A';
-                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.D)
             {
                 moveCommand = new MoveCommand(move, 'D');
                 Execute(move, moveList, moveCommand);
-                //player.Rotation = 'D';
-                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.Z)
             {

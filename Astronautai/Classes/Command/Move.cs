@@ -8,7 +8,6 @@ using Microsoft.AspNet.SignalR.Client;
 
 namespace Astronautai.Classes
 {
-
     class Move
     {
         public Player Player { get; set; }
@@ -39,7 +38,6 @@ namespace Astronautai.Classes
             server.Invoke("MovePlayer", Player);
         }
 
-        
         public void MoveA()
         {
             Player.Rotation = 'A';
@@ -47,14 +45,12 @@ namespace Astronautai.Classes
             server.Invoke("MovePlayer", Player);
         }
 
-
         public void MoveS()
         {
             Player.Rotation = 'S';
             Direction = 'S';
             server.Invoke("MovePlayer", Player);
         }
-
 
         public void MoveD()
         {
@@ -71,7 +67,6 @@ namespace Astronautai.Classes
             server.Invoke("UndoMovePlayer", Player);
         }
 
-
         public void UndoA()
         {
             Player.Rotation = 'A';
@@ -80,7 +75,6 @@ namespace Astronautai.Classes
             server.Invoke("UndoMovePlayer", Player);
         }
 
-
         public void UndoS()
         {
             Player.Rotation = 'S';
@@ -88,7 +82,6 @@ namespace Astronautai.Classes
             Player.Y -= Player.Speed;
             server.Invoke("UndoMovePlayer", Player);
         }
-
 
         public void UndoD()
         {
