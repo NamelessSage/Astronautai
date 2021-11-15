@@ -70,35 +70,24 @@ namespace Astronautai
                     if (CurrentPlayerUsername == pl.Username)
                     {
                         Graphics g = Graphics.FromImage(pictureBox.Image);
-                        plImage = new CurrentPlayerDecorator(pl);
-                        CurrentPoweredUpDecorator plImageAddon = new CurrentPoweredUpDecorator(pl);
+                        plImage = new CurrentPlayerDecorator(new CurrentPoweredUpDecorator(new NoAmmoDecorator(pl)));
+                        string[] playrDc = plImage.GetImage().Split(',');
+                       
                         player.X = pl.X;
                         player.Y = pl.Y;
                         move.Player = player;
                         playerBitmap = new Bitmap(player.Size, player.Size);
-                        //playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
+                        playerBitmap = (Bitmap)Bitmap.FromFile(playrDc[3]);
                         using (var gs = Graphics.FromImage(playerBitmap))
                         {
-                            gs.DrawImage(pictureBox.Image, 0, 0);
                             if (pl.Speed > 16)
                             {
-                                gs.DrawImage((Bitmap)Bitmap.FromFile(plImageAddon.GetImage()), player.Size/4, player.Size/4);
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(playrDc[2]), player.Size / 4, player.Size / 4);
                             }
-                        }
-
-                        switch (moveList.GetLast())
-                        {
-                            case 'S':
-                                playerBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
-                                break;
-                            case 'A':
-                                playerBitmap.RotateFlip(RotateFlipType.Rotate270FlipY);
-                                break;
-                            case 'D':
-                                playerBitmap.RotateFlip(RotateFlipType.Rotate90FlipY);
-                                break;
-                            default:
-                                break;
+                            if (pl.Ammo == 0)
+                            {
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(playrDc[1]), 15, 15);
+                            }
                         }
                         switch (pl.Rotation)
                         {
@@ -115,11 +104,21 @@ namespace Astronautai
                     }
                     else
                     {
-                        if (pl.Speed != 16)
+                        plImage = new PoweredUpDecorator(new NoAmmoDecorator(pl));
+                        string[] playrDc = plImage.GetImage().Split(',');
+                        playerBitmap = new Bitmap(player.Size, player.Size);
+                        playerBitmap = (Bitmap)Bitmap.FromFile(playrDc[0]);
+                        using (var gs = Graphics.FromImage(playerBitmap))
                         {
-                            plImage = new PoweredUpDecorator(pl);
+                            if (pl.Speed > 16)
+                            {
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(playrDc[2]), player.Size / 4, player.Size / 4);
+                            }
+                            if (pl.Ammo == 0)
+                            {
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(playrDc[1]), 15, 15);
+                            }
                         }
-                        playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
                         switch (pl.Rotation)
                         {
                             case 'S':
@@ -413,7 +412,6 @@ namespace Astronautai
             }
             else if (gameLoopStarted)
             {
-                
                 if (player.Health <= 0)
                 {
                     moveCommand = new MoveCommand(move, 'W');
@@ -441,29 +439,21 @@ namespace Astronautai
             {
                 moveCommand = new MoveCommand(move, 'W');
                 Execute(move, moveList, moveCommand);
-                //player.Rotation = 'W';
-                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.S)
             {
                 moveCommand = new MoveCommand(move, 'S');
                 Execute(move, moveList, moveCommand);
-                //player.Rotation = 'S';
-                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.A)
             {
                 moveCommand = new MoveCommand(move, 'A');
                 Execute(move, moveList, moveCommand);
-                //player.Rotation = 'A';
-                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.D)
             {
                 moveCommand = new MoveCommand(move, 'D');
                 Execute(move, moveList, moveCommand);
-                //player.Rotation = 'D';
-                //server.Invoke("MovePlayer", player);
             }
             if (e.KeyCode == Keys.Z)
             {

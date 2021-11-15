@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Class_diagram
+namespace Astronautai.Classes.Strategy
 {
-    public interface PlayerImage
+    public abstract class MoveStrategy
     {
-        string GetImage();
+        public abstract int MoveAlgorithm();
     }
 }

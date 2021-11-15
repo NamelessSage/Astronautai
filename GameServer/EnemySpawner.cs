@@ -70,7 +70,7 @@ namespace GameServer
         {
             Map map = Map.Instance;
             
-            if (map.enemies.Count < 30)
+            if (map.enemies.Count < 15)
             {
                 map.enemies.Add(Spawn(map));
             }
