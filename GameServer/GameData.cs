@@ -131,7 +131,7 @@ namespace GameServer
             foreach (Obstacle obs in map.obstacles)
             {
 
-                if (!Collides(p.X, p.Y, p.Size, obs.X, obs.Y, obs.Size))
+                if (!Collides(p.X, p.Y, p.Size, obs.coordinates.X, obs.coordinates.Y, obs.Size))
                 {
                     collides = false;
                 }
@@ -349,14 +349,14 @@ namespace GameServer
         {
             Map map = Map.Instance;
             Random ran = new Random();
-            Obstacle obs = new Obstacle(0, 0, 0, 25);
+            Obstacle obs = new Obstacle(0,new Coordinates(100,100), 25);
             
             for (int i = 0; i < 6; i++)
             {
-                Obstacle obs2 = (Obstacle)obs.Clone();
+                Obstacle obs2 = (Obstacle)obs.CloneDeep();
                 obs2.Id = i;
-                obs2.X = ran.Next(50, 500);
-                obs2.Y = ran.Next(50, 500);
+                obs2.coordinates.X = ran.Next(50, 500);
+                obs2.coordinates.Y = ran.Next(50, 500);
                 map.obstacles.Add(obs2);
             }
 

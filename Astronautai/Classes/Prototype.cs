@@ -9,5 +9,6 @@ namespace Astronautai.Classes
     public abstract class Prototype
     {
          public abstract Prototype Clone();
+         public abstract Prototype CloneDeep();
     }
 }

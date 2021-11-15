@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Class_diagram
 {
-    public abstract class PlayerImage
+    public interface PlayerImage
     {
-        public abstract string GetImage();
+        string GetImage();
     }
 }
