@@ -9,26 +9,17 @@ using System.Threading.Tasks;
 
 namespace Astronautai.Classes
 {
-    class PickupBuilder : IBuilder 
+    public abstract class PickupBuilder : IBuilder 
     { 
-        private Pickup pickup;
+        protected Pickup pickup;
 
         public PickupBuilder()
         {
             pickup = new Pickup();
         }
 
-        public Pickup GetBuildable()
-        {
-            try
-            {
-                return pickup;
-            }
-            finally
-            {
-                Reset();
-            }
-        }
+        public abstract Pickup GetBuildable();
+       
 
         public void SetId(int id)
         {
@@ -57,23 +48,20 @@ namespace Astronautai.Classes
 
         public void SetType(string type)
         {
-            if(type == "AmmoPickup")
+            if (type == "AmmoPickup")
             {
                 pickup = new AmmoPickup();
             }
-            if(type == "HealthPickup")
+            if (type == "HealthPickup")
             {
                 pickup = new HealthPickup();
             }
-            if(type == "SpeedPickup")
+            if (type == "SpeedPickup")
             {
                 pickup = new SpeedPickup();
             }
         }
 
-        public void Reset()
-        {
-            pickup = new Pickup();
-        }
+        public abstract void Reset();
     }
 }

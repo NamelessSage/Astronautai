@@ -170,6 +170,7 @@ namespace GameServer
             return true;
         }
 
+
         public bool CheckMapEdge(int x, int y)
         {
             if (x < 25 || x > 750)
@@ -349,8 +350,9 @@ namespace GameServer
         {
             Map map = Map.Instance;
             Random ran = new Random();
-            Obstacle obs = new Obstacle(0,new Coordinates(100,100), 25);
             
+            Obstacle obs = new Obstacle(0, new Coordinates(100, 100), 25);
+
             for (int i = 0; i < 6; i++)
             {
                 Obstacle obs2 = (Obstacle)obs.CloneDeep();
@@ -359,12 +361,61 @@ namespace GameServer
                 obs2.coordinates.Y = ran.Next(50, 500);
                 map.obstacles.Add(obs2);
             }
+            GenerateHazzards();
+        }
+        public void GenerateHazzards()
+        {
+            Map map = Map.Instance;
+            Random ran = new Random();
+
+            Hazard fire = new Fire(new HazardDamage(), new HazardMovement());
+            Hazard water = new Water(new HazardDamage(), new HazardMovement());
+            Hazard water1 = new Water(new HazardDamage(), new HazardMovement());
+            Hazard water2 = new Water(new HazardDamage(), new HazardMovement());
+            Hazard fire1 = new Fire(new HazardDamage(), new HazardMovement());
+            Hazard fire2 = new Fire(new HazardDamage(), new HazardMovement());
+            Hazard fire3 = new Fire(new HazardDamage(), new HazardMovement());
+
+            fire.X = 200;
+            fire.Y = 200;
+            fire1.X = 250;
+            fire1.Y = 150;
+            fire2.X = 400;
+            fire2.Y = 300;
+            fire3.X = 100;
+            fire3.Y = 500;
+            water.X = 400;
+            water.Y = 100;
+            water1.X = 400;
+            water1.Y = 600;
+            water2.X = 80;
+            water2.Y = 100;
+            map.hazards.Add(fire);
+            map.hazards.Add(fire1);
+            map.hazards.Add(fire2);
+            map.hazards.Add(fire3);
+            map.hazards.Add(water1);
+            map.hazards.Add(water2);
+            map.hazards.Add(water);
+
+            Console.WriteLine(fire.Effect());
+            Console.WriteLine(fire1.Effect());
+            Console.WriteLine(fire2.Effect());
+            Console.WriteLine(fire3.Effect());
+            Console.WriteLine(water.Effect());
+            Console.WriteLine(water1.Effect());
+            Console.WriteLine(water2.Effect());
 
         }
         public List<Obstacle> GetObstacles()
         {
             Map map = Map.Instance;
             return map.obstacles;
+        }
+        public List<Hazard> GetHazards()
+        {
+            Map map = Map.Instance;
+            return map.hazards;
         }
     }
 }

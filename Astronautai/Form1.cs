@@ -32,6 +32,7 @@ namespace Astronautai
 
         List<Player> playerList;
         public List<Obstacle> obstacles;
+        public List<Hazard> hazards = new List<Hazard>();
         int projectileCounter;
 
         MoveList moveList = new MoveList();
@@ -275,11 +276,28 @@ namespace Astronautai
                 {
                     Console.WriteLine("Im getting Obstacles");
                     obstacles = obstacle;
+                }));
+
+            });
+            server.On<List<Fire>, List<Water>>("getHazards", (fire, water) =>
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    Console.WriteLine("Im getting Hazards");
+                    foreach(Fire fr in fire)
+                    {
+                        hazards.Add(fr);
+                    }
+                    foreach (Water wt in water)
+                    {
+                        hazards.Add(wt);
+                    }
                     panel1.Paint += new PaintEventHandler(panel1_Draw);
                     panel1.Refresh();
                 }));
 
             });
+
 
             hubConnection.Start().Wait();
         }
@@ -364,6 +382,7 @@ namespace Astronautai
             server.Invoke("GetPlayers").Wait();
             server.Invoke("GenerateObstacles");
             server.Invoke("GetObstacles");
+            server.Invoke("GetHazards");
             server.Invoke("StartGame");
         }
 
@@ -484,7 +503,7 @@ namespace Astronautai
             var g = e.Graphics;
             foreach (Obstacle obs in obstacles)
             {
-                //Console.WriteLine("Obstacle " + obs.Id);
+                Console.WriteLine("Obstacle " + obs.Id);
                 Point[] points = new Point[4];
 
                 points[0] = new Point(obs.coordinates.X, obs.coordinates.Y);
@@ -493,6 +512,22 @@ namespace Astronautai
                 points[3] = new Point(obs.coordinates.X + obs.Size, obs.coordinates.Y);
 
                 Brush brush = new SolidBrush(Color.Black);
+                g.FillPolygon(brush, points);
+            }
+            foreach (Hazard hz in hazards)
+            {
+                Point[] points = new Point[4];
+
+                points[0] = new Point(hz.X, hz.Y);
+                points[1] = new Point(hz.X, hz.Y + 20);
+                points[2] = new Point(hz.X + 20, hz.Y + 20);
+                points[3] = new Point(hz.X + 20, hz.Y);
+                Brush brush = new SolidBrush(Color.Blue);
+                if (hz.GetType() == typeof(Fire))
+                {
+                    brush = new SolidBrush(Color.Red);
+                }
+
                 g.FillPolygon(brush, points);
             }
         }

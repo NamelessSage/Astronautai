@@ -1,5 +1,5 @@
 
-
+using Astronautai;
 using System.Collections.Generic;
 /**
 * @(#) Map.cs
@@ -12,6 +12,7 @@ namespace Class_diagram
 
 		public List<Enemy> enemies = new List<Enemy>();
 		public List<Obstacle> obstacles = new List<Obstacle>();
+		public List<Hazard> hazards = new List<Hazard>();
 		public List<Projectile> projectiles = new List<Projectile>();
 		public int Score = 0;
 		public int Difficulty = 0;
