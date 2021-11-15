@@ -78,8 +78,6 @@ namespace Astronautai
         public void UpdateButtonsAfterClientJoin(Button joinGameButton, Button startGameButton)
         {
             ButtonManager.ClientJoin(startGameButton, joinGameButton);
-            joinGameButton.Visible = false;
-            startGameButton.Visible = true;
         }
     }
 }
