@@ -209,6 +209,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Builder\SpeedPickupBuilder.cs" />
+    <Compile Include="Classes\Builder\HealthPickupBuilder.cs" />
+    <Compile Include="Classes\Builder\AmmoPickupBuilder.cs" />
     <Compile Include="Classes\Command\MoveList.cs" />
     <Compile Include="Classes\Decorator\CurrentPlayerDecorator.cs" />
     <Compile Include="Classes\Decorator\CurrentPoweredUpDecorator.cs" />
