@@ -97,7 +97,5 @@ namespace Astronautai.Classes
             Player.X -= Player.Speed;
             server.Invoke("UndoMovePlayer", Player);
         }
-        
-
     }
 }

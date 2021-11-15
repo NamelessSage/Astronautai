@@ -7,6 +7,7 @@ using Astronautai;
 using System.Linq;
 using Astronautai.Classes.Factory;
 using GameServer.Classes;
+using Astronautai.Classes.Strategy;
 
 namespace GameServer
 {
@@ -239,7 +240,6 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                Coordinates coordinates = new Coordinates();
                 temp.X = temp.X + player.Speed;
 
                 if (CheckMapEdge(temp.X + player.Speed, temp.Y) && CheckCollisionPlayers(temp))
@@ -286,15 +286,19 @@ namespace GameServer
                     int averagePlayerHealth = GetAveragePlayerHealth();
                     if (averagePlayerHealth == 3)
                     {
-                        enemy.SetMoveSlow();
+                        enemy.SetMoveStrategy(new SlowMoveStrategy());
                     }
                     else if(averagePlayerHealth < 3 && averagePlayerHealth > 1)
                     {
-                        enemy.SetMoveAverage();
+                        enemy.SetMoveStrategy(new MediumMoveStrategy());
+                    }
+                    else if(averagePlayerHealth == 1)
+                    {
+                        enemy.SetMoveStrategy(new FastMoveStrategy());
                     }
                     else
                     {
-                        enemy.SetMoveFast();
+                        enemy.SetMoveStrategy(new NoneMoveStrategy());
                     }
                     enemy.Move();
                 }
