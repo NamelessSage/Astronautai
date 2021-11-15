@@ -90,7 +90,7 @@ namespace Class_diagram
             return Username;
         }
 
-        public override string GetImage()
+        public string GetImage()
         {
             return @"..//..//Objects//player.png";
         }

@@ -214,7 +214,8 @@
     <Compile Include="Classes\Decorator\CurrentPoweredUpDecorator.cs" />
     <Compile Include="Classes\Decorator\Decorator.cs" />
     <Compile Include="Classes\Decorator\PlayerImage.cs" />
-    <Compile Include="Classes\Decorator\PoweredUpDecorator.cs" />
+    <Compile Include="Classes\Decorator\PoweredUpDecorator - Copy.cs" />
+    <Compile Include="Classes\Decorator\NoAmmoDecorator.cs" />
     <Compile Include="Classes\Factory\AbstractPickupFactory.cs" />
     <Compile Include="Classes\Factory\BasicPickup\AmmoPickup.cs" />
     <Compile Include="Classes\AverageAsteroid.cs" />

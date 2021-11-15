@@ -8,10 +8,8 @@ namespace Class_diagram
 {
     class PoweredUpDecorator : Decorator
     {
-        public PoweredUpDecorator(PlayerImage player) : base(player) { }
-        public override string GetImage()
-        {
-            return @"..//..//Objects//playerFast.png";
+        public PoweredUpDecorator(PlayerImage player) : base(player) {
+            image = @"..//..//Objects//playerFast.png";
         }
     }
 }
