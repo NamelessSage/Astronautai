@@ -398,6 +398,14 @@ namespace GameServer
             map.hazards.Add(water2);
             map.hazards.Add(water);
 
+            Console.WriteLine(fire.Effect());
+            Console.WriteLine(fire1.Effect());
+            Console.WriteLine(fire2.Effect());
+            Console.WriteLine(fire3.Effect());
+            Console.WriteLine(water.Effect());
+            Console.WriteLine(water1.Effect());
+            Console.WriteLine(water2.Effect());
+
         }
         public List<Obstacle> GetObstacles()
         {

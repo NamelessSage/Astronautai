@@ -21,6 +21,7 @@ namespace Astronautai
         {
             HealthManager = new HealthManager();
             AmmoManager = new AmmoManager();
+            ButtonManager = new ButtonManager();
             GameOverHealthString = "GG WP";
             GameOverAmmoString = "";
             PlayerDeadString = "Dead";
@@ -30,6 +31,7 @@ namespace Astronautai
         {
             HealthManager = new HealthManager();
             AmmoManager = new AmmoManager();
+            ButtonManager = new ButtonManager();
             GameOverHealthString = gameOverString;
             GameOverAmmoString = "";
             PlayerDeadString = "Dead";

@@ -209,6 +209,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ButtonManager.cs" />
     <Compile Include="Classes\Bridge\HazardDamage.cs" />
     <Compile Include="Classes\Bridge\Hazard.cs" />
     <Compile Include="Classes\Bridge\Fire.cs" />
