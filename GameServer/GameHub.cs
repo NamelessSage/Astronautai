@@ -22,7 +22,7 @@ namespace GameServer
 
         bool started = false;
         private System.Timers.Timer _timer;
-        private int _timerInterval = 50;
+        private int _timerInterval = 100;
         
         public GameHub()
         {

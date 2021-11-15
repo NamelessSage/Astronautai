@@ -215,6 +215,9 @@
     <Compile Include="Classes\Bridge\IBridge.cs" />
     <Compile Include="Classes\Bridge\HazardMovement.cs" />
     <Compile Include="Classes\Bridge\Water.cs" />
+    <Compile Include="Classes\Builder\SpeedPickupBuilder.cs" />
+    <Compile Include="Classes\Builder\HealthPickupBuilder.cs" />
+    <Compile Include="Classes\Builder\AmmoPickupBuilder.cs" />
     <Compile Include="Classes\Command\MoveList.cs" />
     <Compile Include="Classes\Decorator\CurrentPlayerDecorator.cs" />
     <Compile Include="Classes\Decorator\CurrentPoweredUpDecorator.cs" />
@@ -252,7 +255,12 @@
     <Compile Include="Classes\Prototype.cs" />
     <Compile Include="Classes\ServerInput.cs" />
     <Compile Include="Classes\SmallAsteroid.cs" />
+    <Compile Include="Classes\Strategy\FastMoveStrategy.cs" />
     <Compile Include="Classes\Strategy\IAsteroidMoveStrategy.cs" />
+    <Compile Include="Classes\Strategy\MediumMoveStrategy.cs" />
+    <Compile Include="Classes\Strategy\MoveStrategy.cs" />
+    <Compile Include="Classes\Strategy\NoneMoveStrategy.cs" />
+    <Compile Include="Classes\Strategy\SlowMoveStrategy.cs" />
     <Compile Include="Classes\Turret.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

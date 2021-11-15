@@ -1,4 +1,5 @@
-﻿using Class_diagram;
+﻿using Astronautai.Classes.Builder;
+using Class_diagram;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Astronautai.Classes.Factory
         public override Pickup CreateAmmoPickup()
         {
             count++;
-            PickupBuilder builder = new PickupBuilder();
+            PickupBuilder builder = new AmmoPickupBuilder();
             builder.SetType("AmmoPickup");
             builder.SetId(count);
             builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
@@ -35,7 +36,7 @@ namespace Astronautai.Classes.Factory
         {
             count++;
             random = new Random();
-            PickupBuilder builder = new PickupBuilder();
+            PickupBuilder builder = new HealthPickupBuilder();
             builder.SetType("HealthPickup");
             builder.SetId(count);
             builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
@@ -49,7 +50,7 @@ namespace Astronautai.Classes.Factory
         {
             count++;
             random = new Random();
-            PickupBuilder builder = new PickupBuilder();
+            PickupBuilder builder = new SpeedPickupBuilder();
             builder.SetType("SpeedPickup");
             builder.SetId(count);
             builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
