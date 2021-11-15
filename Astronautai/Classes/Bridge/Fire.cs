@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Astronautai
+{
+    public class Fire : Hazard
+    {
+        public Fire(IBridge bridge1, IBridge bridge2) : base(bridge1, bridge2)
+        {
+        }
+        public override string Effect()
+        {
+            return "Damage," + bridge1.valueDangerous() +','+ bridge2.valueDangerous();
+        }
+    }
+}

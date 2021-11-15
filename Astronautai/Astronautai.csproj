@@ -209,12 +209,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AstroDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Bridge\HazardDamage.cs" />
+    <Compile Include="Classes\Bridge\Hazard.cs" />
+    <Compile Include="Classes\Bridge\Fire.cs" />
+    <Compile Include="Classes\Bridge\IBridge.cs" />
+    <Compile Include="Classes\Bridge\HazardMovement.cs" />
+    <Compile Include="Classes\Bridge\Water.cs" />
     <Compile Include="Classes\Command\MoveList.cs" />
     <Compile Include="Classes\Decorator\CurrentPlayerDecorator.cs" />
     <Compile Include="Classes\Decorator\CurrentPoweredUpDecorator.cs" />
     <Compile Include="Classes\Decorator\Decorator.cs" />
     <Compile Include="Classes\Decorator\PlayerImage.cs" />
-    <Compile Include="Classes\Decorator\PoweredUpDecorator - Copy.cs" />
+    <Compile Include="Classes\Decorator\PoweredUpDecorator.cs" />
     <Compile Include="Classes\Decorator\NoAmmoDecorator.cs" />
     <Compile Include="Classes\Factory\AbstractPickupFactory.cs" />
     <Compile Include="Classes\Factory\BasicPickup\AmmoPickup.cs" />

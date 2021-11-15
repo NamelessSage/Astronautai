@@ -49,6 +49,21 @@ namespace GameServer
             List<Obstacle> obst = data.GetObstacles();
             Clients.All.getObstacles(obst);
         }
+        public void GetHazards()
+        {
+            List<Hazard> hz = data.GetHazards();
+            List<Fire> fire = new List<Fire>();
+            List<Water> water = new List<Water>();
+            foreach (Hazard h in hz)
+            {
+                if(h.Effect().Contains("Damage"))
+                    fire.Add((Fire)h);
+                if (h.Effect().Contains("Slowdown"))
+                    water.Add((Water)h);
+            }
+
+            Clients.All.getHazards(fire, water);
+        }
 
         public void GetPlayersCaller()
         {
