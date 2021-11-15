@@ -70,35 +70,24 @@ namespace Astronautai
                     if (CurrentPlayerUsername == pl.Username)
                     {
                         Graphics g = Graphics.FromImage(pictureBox.Image);
-                        plImage = new CurrentPlayerDecorator(pl);
-                        CurrentPoweredUpDecorator plImageAddon = new CurrentPoweredUpDecorator(pl);
+                        plImage = new CurrentPlayerDecorator(new CurrentPoweredUpDecorator(new NoAmmoDecorator(pl)));
+                        string[] playrDc = plImage.GetImage().Split(',');
+                       
                         player.X = pl.X;
                         player.Y = pl.Y;
                         move.Player = player;
                         playerBitmap = new Bitmap(player.Size, player.Size);
-                        //playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
+                        playerBitmap = (Bitmap)Bitmap.FromFile(playrDc[3]);
                         using (var gs = Graphics.FromImage(playerBitmap))
                         {
-                            gs.DrawImage(pictureBox.Image, 0, 0);
                             if (pl.Speed > 16)
                             {
-                                gs.DrawImage((Bitmap)Bitmap.FromFile(plImageAddon.GetImage()), player.Size/4, player.Size/4);
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(playrDc[2]), player.Size / 4, player.Size / 4);
                             }
-                        }
-
-                        switch (moveList.GetLast())
-                        {
-                            case 'S':
-                                playerBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
-                                break;
-                            case 'A':
-                                playerBitmap.RotateFlip(RotateFlipType.Rotate270FlipY);
-                                break;
-                            case 'D':
-                                playerBitmap.RotateFlip(RotateFlipType.Rotate90FlipY);
-                                break;
-                            default:
-                                break;
+                            if (pl.Ammo == 0)
+                            {
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(playrDc[1]), 15, 15);
+                            }
                         }
                         switch (pl.Rotation)
                         {
@@ -115,11 +104,21 @@ namespace Astronautai
                     }
                     else
                     {
-                        if (pl.Speed != 16)
+                        plImage = new PoweredUpDecorator(new NoAmmoDecorator(pl));
+                        string[] playrDc = plImage.GetImage().Split(',');
+                        playerBitmap = new Bitmap(player.Size, player.Size);
+                        playerBitmap = (Bitmap)Bitmap.FromFile(playrDc[0]);
+                        using (var gs = Graphics.FromImage(playerBitmap))
                         {
-                            plImage = new PoweredUpDecorator(pl);
+                            if (pl.Speed > 16)
+                            {
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(playrDc[2]), player.Size / 4, player.Size / 4);
+                            }
+                            if (pl.Ammo == 0)
+                            {
+                                gs.DrawImage((Bitmap)Bitmap.FromFile(playrDc[1]), 15, 15);
+                            }
                         }
-                        playerBitmap = (Bitmap)Bitmap.FromFile(plImage.GetImage());
                         switch (pl.Rotation)
                         {
                             case 'S':
@@ -488,10 +487,10 @@ namespace Astronautai
                 //Console.WriteLine("Obstacle " + obs.Id);
                 Point[] points = new Point[4];
 
-                points[0] = new Point(obs.X, obs.Y);
-                points[1] = new Point(obs.X, obs.Y + obs.Size);
-                points[2] = new Point(obs.X + obs.Size, obs.Y + obs.Size);
-                points[3] = new Point(obs.X + obs.Size, obs.Y);
+                points[0] = new Point(obs.coordinates.X, obs.coordinates.Y);
+                points[1] = new Point(obs.coordinates.X, obs.coordinates.Y + obs.Size);
+                points[2] = new Point(obs.coordinates.X + obs.Size, obs.coordinates.Y + obs.Size);
+                points[3] = new Point(obs.coordinates.X + obs.Size, obs.coordinates.Y);
 
                 Brush brush = new SolidBrush(Color.Black);
                 g.FillPolygon(brush, points);

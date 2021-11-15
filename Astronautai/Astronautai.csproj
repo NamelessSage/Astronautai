@@ -214,7 +214,8 @@
     <Compile Include="Classes\Decorator\CurrentPoweredUpDecorator.cs" />
     <Compile Include="Classes\Decorator\Decorator.cs" />
     <Compile Include="Classes\Decorator\PlayerImage.cs" />
-    <Compile Include="Classes\Decorator\PoweredUpDecorator.cs" />
+    <Compile Include="Classes\Decorator\PoweredUpDecorator - Copy.cs" />
+    <Compile Include="Classes\Decorator\NoAmmoDecorator.cs" />
     <Compile Include="Classes\Factory\AbstractPickupFactory.cs" />
     <Compile Include="Classes\Factory\BasicPickup\AmmoPickup.cs" />
     <Compile Include="Classes\AverageAsteroid.cs" />
@@ -245,7 +246,12 @@
     <Compile Include="Classes\Prototype.cs" />
     <Compile Include="Classes\ServerInput.cs" />
     <Compile Include="Classes\SmallAsteroid.cs" />
+    <Compile Include="Classes\Strategy\FastMoveStrategy.cs" />
     <Compile Include="Classes\Strategy\IAsteroidMoveStrategy.cs" />
+    <Compile Include="Classes\Strategy\MediumMoveStrategy.cs" />
+    <Compile Include="Classes\Strategy\MoveStrategy.cs" />
+    <Compile Include="Classes\Strategy\NoneMoveStrategy.cs" />
+    <Compile Include="Classes\Strategy\SlowMoveStrategy.cs" />
     <Compile Include="Classes\Turret.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

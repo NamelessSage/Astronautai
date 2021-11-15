@@ -8,10 +8,9 @@ namespace Class_diagram
 {
     class CurrentPlayerDecorator : Decorator
     {
-        public CurrentPlayerDecorator(PlayerImage player) : base(player) { }
-        public override string GetImage()
-        {
-            return @"..//..//Objects//currentPlayer.png";
+        public CurrentPlayerDecorator(PlayerImage player) : base(player) {
+            image = @"..//..//Objects//currentPlayer.png";
         }
+
     }
 }

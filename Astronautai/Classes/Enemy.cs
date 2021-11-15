@@ -2,7 +2,7 @@ using Astronautai.Classes.Strategy;
 
 namespace Class_diagram
 {
-	public class Enemy : Coordinates, IAsteroidMoveStrategy
+	public class Enemy
 	{
 		public int Id { get; set; }
 		public int Health { get; set; }
@@ -11,8 +11,11 @@ namespace Class_diagram
 		public int Damage { get; set; }
 		public char Rotation { get; set; }
         public int Speed { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        MoveStrategy moveStrategy;
 
-		public Enemy()
+        public Enemy()
 		{
 
 		}
@@ -54,24 +57,10 @@ namespace Class_diagram
             }
         }
 
-        public void SetMoveNone()
+        public void SetMoveStrategy(MoveStrategy strategy)
         {
-            Speed = 0;
-        }
-
-        public void SetMoveSlow()
-        {
-            Speed = 1;
-        }
-
-        public void SetMoveAverage()
-        {
-            Speed = 2;
-        }
-
-        public void SetMoveFast()
-        {
-            Speed = 3;
+            moveStrategy = strategy;
+            Speed = strategy.MoveAlgorithm();
         }
 
         public Coordinates GetCoordinates()

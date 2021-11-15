@@ -6,20 +6,25 @@ namespace Class_diagram
 	{		
 		public int Id { get; set; }
         public int Size { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
 
-        public Obstacle(int id, int x, int y, int size)
+        public Coordinates coordinates { get; set; }
+
+        public Obstacle(int id, Coordinates cord, int size)
         {
             Id = id;
-            X = x;
-            Y = y;
+            coordinates = cord;
             Size = size;
         }
 
         public override Prototype Clone()
-        { 
-            return (Prototype)this.MemberwiseClone();
+        {
+            return (Obstacle)this.MemberwiseClone();
+        }
+        public override Prototype CloneDeep()
+        {
+            Obstacle obs = (Obstacle)this.MemberwiseClone();
+            obs.coordinates = new Coordinates(coordinates.X,coordinates.Y);
+            return obs;
         }
     }
 }
