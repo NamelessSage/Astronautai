@@ -576,7 +576,7 @@ namespace Astronautai
                 Name = "Projectile" + p.Id,
                 Size = new Size(projectileSize, projectileSize),
                 Location = new Point(p.X, p.Y),
-                Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.jpg")).GetImage(),
+                Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.png")).GetImage(),
             };
 
             this.Controls.Add(projectilePictureBox);
