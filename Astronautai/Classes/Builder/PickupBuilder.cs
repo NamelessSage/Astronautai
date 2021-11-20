@@ -1,5 +1,6 @@
 ﻿using Astronautai.Classes.Builder;
 using Astronautai.Classes.Factory;
+using Astronautai.Classes.Factory.BasicPickup;
 using Class_diagram;
 using System;
 using System.Collections.Generic;
@@ -60,8 +61,17 @@ namespace Astronautai.Classes
             {
                 pickup = new SpeedPickup();
             }
+            if (type == "MultiPickup")
+            {
+                pickup = new MultiPickup();
+            }
         }
 
         public abstract void Reset();
+
+        public void SetEffects(List<Pickup> effects)
+        {
+            pickup.Effects = effects;
+        }
     }
 }

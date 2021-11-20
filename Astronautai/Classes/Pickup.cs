@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 /**
- * @(#) Pickups.cs
- */
-
+* @(#) Pickups.cs
+*/
 namespace Class_diagram
 {
 	public class Pickup
@@ -13,6 +13,7 @@ namespace Class_diagram
 		public int Size { get; set; }
 		public int X { get; set; }
 		public int Y { get; set; }
+		public List<Pickup> Effects { get; set; }
 
 		public Pickup()
 		{

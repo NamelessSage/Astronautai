@@ -42,27 +42,30 @@ namespace GameServer
 
         public Pickup SpawnOneValuePickup()
         {
-            Pickup pickup = new Pickup();
-
-            int randomValuePickupType = random.Next(0, 3);
+            int randomValuePickupType = random.Next(4, 5);
             if (randomValuePickupType == 0)
             {
-                pickup = onePickupFactory.CreateAmmoPickup();
+                return onePickupFactory.CreateAmmoPickup();
             }
             else if (randomValuePickupType == 1)
             {
-                pickup = onePickupFactory.CreateHealthPickup();
+                return onePickupFactory.CreateHealthPickup();
+            }
+            else if (randomValuePickupType == 2)
+            {
+                return onePickupFactory.CreateSpeedPickup();
             }
             else
             {
-                pickup = onePickupFactory.CreateSpeedPickup();
+                Console.WriteLine("spawning one pickup");
+                return onePickupFactory.CreateMultiPickup();
             }
-            return pickup;
+
         }
 
         public Pickup SpawnMaxValuePickup()
         {
-            int randomValuePickupType = random.Next(0, 3);
+            int randomValuePickupType = random.Next(4, 5);
             if (randomValuePickupType == 0)
             {
                 return maxPickupFactory.CreateAmmoPickup();
@@ -71,9 +74,14 @@ namespace GameServer
             {
                 return maxPickupFactory.CreateHealthPickup();
             }
-            else
+            else if (randomValuePickupType == 2)
             {
                 return maxPickupFactory.CreateSpeedPickup();
+            }
+            else
+            {
+                Console.WriteLine("spawning max pickup");
+                return maxPickupFactory.CreateMultiPickup();
             }
         }
 
