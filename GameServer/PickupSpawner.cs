@@ -42,7 +42,7 @@ namespace GameServer
 
         public Pickup SpawnOneValuePickup()
         {
-            int randomValuePickupType = random.Next(4, 5);
+            int randomValuePickupType = random.Next(0, 4);
             if (randomValuePickupType == 0)
             {
                 return onePickupFactory.CreateAmmoPickup();
@@ -57,7 +57,6 @@ namespace GameServer
             }
             else
             {
-                Console.WriteLine("spawning one pickup");
                 return onePickupFactory.CreateMultiPickup();
             }
 
@@ -65,7 +64,7 @@ namespace GameServer
 
         public Pickup SpawnMaxValuePickup()
         {
-            int randomValuePickupType = random.Next(4, 5);
+            int randomValuePickupType = random.Next(0, 4);
             if (randomValuePickupType == 0)
             {
                 return maxPickupFactory.CreateAmmoPickup();
@@ -80,7 +79,6 @@ namespace GameServer
             }
             else
             {
-                Console.WriteLine("spawning max pickup");
                 return maxPickupFactory.CreateMultiPickup();
             }
         }
