@@ -9,7 +9,6 @@ namespace Class_diagram
 	public class Map
 	{
 		private static readonly Map instance = new Map();
-
 		public List<Enemy> enemies = new List<Enemy>();
 		public List<Obstacle> obstacles = new List<Obstacle>();
 		public List<Hazard> hazards = new List<Hazard>();
@@ -23,7 +22,7 @@ namespace Class_diagram
 
 		private Map() 
 		{ 
-
+				
 		}
 
 		public static Map Instance

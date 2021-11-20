@@ -216,6 +216,7 @@
     <Compile Include="Classes\Bridge\IBridge.cs" />
     <Compile Include="Classes\Bridge\HazardMovement.cs" />
     <Compile Include="Classes\Bridge\Water.cs" />
+    <Compile Include="Classes\Builder\MultiPickupBuilder.cs" />
     <Compile Include="Classes\Builder\SpeedPickupBuilder.cs" />
     <Compile Include="Classes\Builder\HealthPickupBuilder.cs" />
     <Compile Include="Classes\Builder\AmmoPickupBuilder.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Classes\Builder\PickupBuilder.cs" />
     <Compile Include="Classes\Coordinates.cs" />
     <Compile Include="Classes\Enemy.cs" />
+    <Compile Include="Classes\Factory\BasicPickup\MultiPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxAmmoPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxHealthPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickupFactory.cs" />
@@ -323,6 +325,7 @@
     <Content Include="Objects\currentPlayer.png" />
     <Content Include="Objects\currentPlayerFast.png" />
     <Content Include="Objects\healthPickup.png" />
+    <Content Include="Objects\multiPickup.jpg" />
     <Content Include="Objects\player.png" />
     <Content Include="Objects\playerFast.png" />
     <Content Include="Objects\projectile.png" />

@@ -59,5 +59,23 @@ namespace Astronautai.Classes.Factory
             builder.SetValue(10);
             return builder.GetBuildable();
         }
+
+        public override Pickup CreateMultiPickup()
+        {
+            count++;
+            PickupBuilder builder = new MultiPickupBuilder();
+            builder.SetType("MultiPickup");
+            builder.SetId(count);
+            builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
+            builder.SetImage(@"..//..//Objects//multiPickup.jpg");
+            builder.SetSize(pickupSize);
+            builder.SetValue(1);
+            List<Pickup> effects = new List<Pickup>();
+            effects.Add(CreateSpeedPickup());
+            effects.Add(CreateHealthPickup());
+            effects.Add(CreateAmmoPickup());
+            builder.SetEffects(effects);
+            return builder.GetBuildable();
+        }
     }
 }
