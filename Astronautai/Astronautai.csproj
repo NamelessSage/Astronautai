@@ -246,6 +246,8 @@
     <Compile Include="Classes\Factory\BasicPickup\HealthPickup.cs" />
     <Compile Include="Classes\Factory\BasicPickup\SpeedPickup.cs" />
     <Compile Include="Classes\Command\ICommand.cs" />
+    <Compile Include="Classes\Flyweight\Flyweight.cs" />
+    <Compile Include="Classes\Flyweight\FlyweightFactory.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Command\Move.cs" />
     <Compile Include="Classes\Command\MoveCommand.cs" />

@@ -41,6 +41,13 @@ namespace Astronautai
 
         UITextManager uITextManager = new UITextManager();
 
+        FlyweightFactory flyweightsFactory = new FlyweightFactory(
+                (Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg"),
+                (Bitmap)Bitmap.FromFile(@"..//..//Objects//averageAsteroid.jpg"),
+                (Bitmap)Bitmap.FromFile(@"..//..//Objects//bigAsteroid.jpg"),
+                (Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.png")
+            );
+
         public Form1()
         {
             ServerInput inp = new ServerInput(this);
@@ -569,7 +576,7 @@ namespace Astronautai
                 Name = "Projectile" + p.Id,
                 Size = new Size(projectileSize, projectileSize),
                 Location = new Point(p.X, p.Y),
-                Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.png"),
+                Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.jpg")).GetImage(),
             };
 
             this.Controls.Add(projectilePictureBox);
@@ -598,7 +605,7 @@ namespace Astronautai
                     Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
-                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg"),
+                    Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg")).GetImage(),
                 };
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
                 gp.AddEllipse(0, 0, asteroidPictureBox.Width - 1, asteroidPictureBox.Height - 1);
@@ -614,7 +621,7 @@ namespace Astronautai
                     Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
-                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//averageAsteroid.jpg"),
+                    Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//averageAsteroid.jpg")).GetImage(),
                 };
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
                 gp.AddEllipse(0, 0, asteroidPictureBox.Width - 1, asteroidPictureBox.Height - 1);
@@ -630,7 +637,7 @@ namespace Astronautai
                     Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
-                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//bigAsteroid.jpg"),
+                    Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//bigAsteroid.jpg")).GetImage(),
                 };
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
                 gp.AddEllipse(0, 0, asteroidPictureBox.Width - 1, asteroidPictureBox.Height - 1);
