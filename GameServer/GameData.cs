@@ -160,8 +160,9 @@ namespace GameServer
             {
                 if (!Collides(pickup.X, pickup.Y, pickup.Size, player.X, player.Y, player.Size))
                 {
+                    
                     Player playerUpdated = pickup.Action(player, pickup);
-
+                    Console.WriteLine(player.Speed);
                     UpdateAsteroidCoords();
                     UpdatePlayer(playerUpdated);
                     return false;
