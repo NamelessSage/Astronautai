@@ -161,7 +161,6 @@ namespace GameServer
                 if (!Collides(pickup.X, pickup.Y, pickup.Size, player.X, player.Y, player.Size))
                 {
                     Player playerUpdated = pickup.Action(player, pickup);
-
                     UpdateAsteroidCoords();
                     UpdatePlayer(playerUpdated);
                     return false;
@@ -202,9 +201,9 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                temp.Y = temp.Y - player.Speed;
+                temp.Y = temp.Y - player.GetState().MoveSpeed;
 
-                if (CheckMapEdge(temp.X, temp.Y - player.Speed) && CheckCollisionPlayers(temp))
+                if (CheckMapEdge(temp.X, temp.Y - player.GetState().MoveSpeed) && CheckCollisionPlayers(temp))
                 {
                     player.Y = temp.Y;
                     return player;
@@ -215,9 +214,9 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                temp.X = temp.X - player.Speed;
+                temp.X = temp.X - player.GetState().MoveSpeed;
 
-                if (CheckMapEdge(temp.X - player.Speed, temp.Y) && CheckCollisionPlayers(temp))
+                if (CheckMapEdge(temp.X - player.GetState().MoveSpeed, temp.Y) && CheckCollisionPlayers(temp))
                 {
                     player.X = temp.X;
                     return player;
@@ -228,9 +227,9 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                temp.Y = temp.Y + player.Speed;
+                temp.Y = temp.Y + player.GetState().MoveSpeed;
 
-                if (CheckMapEdge(temp.X, temp.Y + player.Speed) && CheckCollisionPlayers(temp))
+                if (CheckMapEdge(temp.X, temp.Y + player.GetState().MoveSpeed) && CheckCollisionPlayers(temp))
                 {
                     player.Y = temp.Y;
                     return player;
@@ -241,9 +240,9 @@ namespace GameServer
                 Player temp = new Player();
                 temp.SetCoordinates(player.X, player.Y);
                 temp.Size = player.Size;
-                temp.X = temp.X + player.Speed;
+                temp.X = temp.X + player.GetState().MoveSpeed;
 
-                if (CheckMapEdge(temp.X + player.Speed, temp.Y) && CheckCollisionPlayers(temp))
+                if (CheckMapEdge(temp.X + player.GetState().MoveSpeed, temp.Y) && CheckCollisionPlayers(temp))
                 {
                     player.X = temp.X;
                     return player;
@@ -251,6 +250,7 @@ namespace GameServer
             }
             return player;
         }
+
         public void AddAsteroid()
         {
             Map map = Map.Instance;
@@ -398,14 +398,6 @@ namespace GameServer
             map.hazards.Add(water2);
             map.hazards.Add(water);
 
-            Console.WriteLine(fire.Effect());
-            Console.WriteLine(fire1.Effect());
-            Console.WriteLine(fire2.Effect());
-            Console.WriteLine(fire3.Effect());
-            Console.WriteLine(water.Effect());
-            Console.WriteLine(water1.Effect());
-            Console.WriteLine(water2.Effect());
-
         }
         public List<Obstacle> GetObstacles()
         {
@@ -417,5 +409,7 @@ namespace GameServer
             Map map = Map.Instance;
             return map.hazards;
         }
+
+
     }
 }

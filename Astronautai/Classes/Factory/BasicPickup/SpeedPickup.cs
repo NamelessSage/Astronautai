@@ -12,7 +12,7 @@ namespace Astronautai.Classes.Factory
         public override Player Action(Player player, Pickup pickup)
         {
             player.AddSpeed(pickup.Value);
-
+            player.GetState().ChangeSpeed(player.Speed);
             return player;
         }
     }

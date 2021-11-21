@@ -10,7 +10,9 @@ using Astronautai.Classes.Factory;
 using Class_diagram;
 using System.Windows.Forms;
 using System.Timers;
+using Astronautai.Classes.States;
 using static Astronautai.Classes.Observer;
+using Newtonsoft.Json;
 
 namespace GameServer
 {
@@ -36,6 +38,7 @@ namespace GameServer
 
         public void AddPlayerOnJoin(Player player)
         {
+            player.SetState(new Normal(player.Speed));
             data.AddPlayer(player);
         }
 
@@ -90,6 +93,7 @@ namespace GameServer
 
         public void MovePlayer(Player player)
         {
+            player = SetState(player);
             player = data.PlayerCanMove(player);
             data.UpdatePlayer(player);
             Clients.All.movePlayer(player);
@@ -97,13 +101,14 @@ namespace GameServer
 
         public void UndoMovePlayer(Player player)
         {
+            player = SetState(player);
             data.UpdatePlayer(player);
             Clients.All.movePlayer(player);
         }
 
         public void AddProjectile(Projectile projectile, Player player)
         {
-            //Console.WriteLine("Adding projectile with id = " + projectile.Id);
+            player = SetState(player);
             data.UpdatePlayer(player);
             data.AddProjectile(projectile);
         }
@@ -111,7 +116,6 @@ namespace GameServer
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
             subject.Notify();
-            
             data.UpdateProjectileCoords();
 
             data.UpdateAsteroidCoords();
@@ -119,11 +123,22 @@ namespace GameServer
             Clients.All.updateTicksAsteroids(data.GetEnemies());
             Clients.All.updatePlayerData(data.GetPlayers());
             int deletePickupId = data.UpdatePickups();
-            Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
 
-            if(data.GetAveragePlayerHealth() <= 0)
+            Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
+            UpdateEffects();
+
+            if (data.GetAveragePlayerHealth() <= 0)
             {
                 GameOver();
+            }
+        }
+
+        public void UpdateEffects()
+        {
+            List<Player> players = data.GetPlayers();
+            foreach (Player p in players)
+            {
+                p.DecreaseDurration();
             }
         }
 
@@ -151,5 +166,15 @@ namespace GameServer
             Clients.All.gameOver(true);
             _timer.Stop();
         }
+
+        public Player SetState(Player player)
+        {
+            Player serverPlayer = data.GetPlayers().Find(p => p.Username == player.Username);
+            player.SetState(serverPlayer.GetState());
+            player.Effect = serverPlayer.Effect;
+            player.TickDurration = serverPlayer.TickDurration;
+            return player;
+        }
+
     } 
 }

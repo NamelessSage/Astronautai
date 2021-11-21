@@ -1,7 +1,11 @@
-/**
- * @(#) Player.cs
- */
 
+
+using Astronautai.Classes;
+using Astronautai.Classes.States;
+using System;
+/**
+* @(#) Player.cs
+*/
 namespace Class_diagram
 {
 	public class Player : PlayerImage
@@ -18,10 +22,26 @@ namespace Class_diagram
         public int X { get; set; }
         public int Y { get; set; }
         public char Rotation { get; set; }
+        public string Effect { get; set; }
+        public int TickDurration { get; set; }
+        private State state;
+
+
+
+
+        public State GetState()
+        {
+            return state;
+        }
+
+        public void SetState(State state)
+        {
+            this.state = state;
+        }
+
 
         public Player()
         {
-
         }
 
         public Player(string username)
@@ -36,6 +56,8 @@ namespace Class_diagram
             Ammo = ammo;
             Size = size;
             Speed = speed;
+            Effect = "";
+            TickDurration = -1;
         }
 
         public void SetCoordinates(int x, int y)
@@ -94,5 +116,31 @@ namespace Class_diagram
         {
             return @"..//..//Objects//player.png";
         }
+
+        public void Affect(string effect)
+        {
+            SetState(GetState().ChangeSpeed(0));
+            Effect = effect;
+            TickDurration = 10;
+        }
+
+        public void DecreaseDurration()
+        {
+            if (TickDurration > 1)
+            {
+                TickDurration -= 1;
+            }
+            else
+            {
+                if (Effect != "")
+                {
+                    Console.WriteLine("effect ending");
+                    TickDurration = -1;
+                    Effect = "";
+                    SetState(GetState().ChangeSpeed(Speed));
+                }
+            }
+        }
+
     }
 }

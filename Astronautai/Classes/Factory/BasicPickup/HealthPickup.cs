@@ -9,6 +9,7 @@ namespace Class_diagram
 		public override Player Action(Player player, Pickup pickup)
 		{
 			player.AddHealth(pickup.Value);
+			player.Affect("Stunned");
 			return player;
 		}
 	}
