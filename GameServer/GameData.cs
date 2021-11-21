@@ -16,6 +16,7 @@ namespace GameServer
         public static Map map;
 
         public EnemySpawner enemySpawner = new EnemySpawner();
+        public HazardSpawner hazardSpawner = new HazardSpawner();
         public PickupSpawnerAdapter pickupSpawner = new PickupSpawnerAdapter();
 
         ObjectDestructor destructor = new ObjectDestructor();
@@ -160,9 +161,43 @@ namespace GameServer
             {
                 if (!Collides(pickup.X, pickup.Y, pickup.Size, player.X, player.Y, player.Size))
                 {
+                    
                     Player playerUpdated = pickup.Action(player, pickup);
                     UpdateAsteroidCoords();
                     UpdatePlayer(playerUpdated);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool CheckNotCollisionHazard(Hazard hz, int size)
+        {
+            Map map = Map.Instance;
+            foreach (Player player in map.players)
+            {
+                if (!Collides(hz.X, hz.Y, size, player.X, player.Y, player.Size))
+                {
+                    string hazzard = hz.Effect();
+                    string[] hzrd = hazzard.Split(',');
+                    if (hazzard.Contains("Damage")) {
+
+                        player.Health -= int.Parse(hzrd[1]);
+                    }
+                    if (hazzard.Contains("Slowdown"))
+                    {
+                        player.Health -= int.Parse(hzrd[1]);
+                        if(player.Speed >= 20)
+                            player.Speed -= 10;
+                        else
+                            player.Speed = 10;
+
+                    }
+                    
+
+                    Console.WriteLine(player.Speed);
+
+                    UpdatePlayer(player);
                     return false;
                 }
             }
@@ -326,6 +361,20 @@ namespace GameServer
             return -1;
         }
 
+        public int UpdateHazards()
+        {
+            Map map = Map.Instance;
+            foreach (Hazard hz in map.hazards)
+            {
+                if (!CheckNotCollisionHazard(hz, 10))
+                {
+                    map.hazards.Remove(hz);
+                    return hz.id;
+                }
+            }
+            return -1;
+        }
+
         public int GetAveragePlayerHealth()
         {
             Map map = Map.Instance;
@@ -366,37 +415,11 @@ namespace GameServer
         public void GenerateHazzards()
         {
             Map map = Map.Instance;
-            Random ran = new Random();
 
-            Hazard fire = new Fire(new HazardDamage(), new HazardMovement());
-            Hazard water = new Water(new HazardDamage(), new HazardMovement());
-            Hazard water1 = new Water(new HazardDamage(), new HazardMovement());
-            Hazard water2 = new Water(new HazardDamage(), new HazardMovement());
-            Hazard fire1 = new Fire(new HazardDamage(), new HazardMovement());
-            Hazard fire2 = new Fire(new HazardDamage(), new HazardMovement());
-            Hazard fire3 = new Fire(new HazardDamage(), new HazardMovement());
-
-            fire.X = 200;
-            fire.Y = 200;
-            fire1.X = 250;
-            fire1.Y = 150;
-            fire2.X = 400;
-            fire2.Y = 300;
-            fire3.X = 100;
-            fire3.Y = 500;
-            water.X = 400;
-            water.Y = 100;
-            water1.X = 400;
-            water1.Y = 600;
-            water2.X = 80;
-            water2.Y = 100;
-            map.hazards.Add(fire);
-            map.hazards.Add(fire1);
-            map.hazards.Add(fire2);
-            map.hazards.Add(fire3);
-            map.hazards.Add(water1);
-            map.hazards.Add(water2);
-            map.hazards.Add(water);
+            for (int i = 0; i < 10; i++)
+            {
+                map.hazards.Add(hazardSpawner.SpawnRandom());
+            }
 
         }
         public List<Obstacle> GetObstacles()

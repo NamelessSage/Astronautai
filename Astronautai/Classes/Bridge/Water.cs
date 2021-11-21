@@ -13,6 +13,7 @@ namespace Astronautai
         }
         public override string Effect()
         {
+            //Effect + Dmg/Value + MovementDir
             return "Slowdown," + bridge1.valueInnocutous() + ',' + bridge2.valueInnocutous();
         }
     }

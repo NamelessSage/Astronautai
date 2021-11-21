@@ -115,17 +115,29 @@ namespace GameServer
 
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
+            List<Hazard> hz = data.GetHazards();
+            List<Fire> fire = new List<Fire>();
+            List<Water> water = new List<Water>();
+            foreach (Hazard h in hz)
+            {
+                if (h.Effect().Contains("Damage"))
+                    fire.Add((Fire)h);
+                if (h.Effect().Contains("Slowdown"))
+                    water.Add((Water)h);
+            }
+
             subject.Notify();
             data.UpdateProjectileCoords();
-
             data.UpdateAsteroidCoords();
             Clients.All.updateTicks(data.GetProjectiles());
             Clients.All.updateTicksAsteroids(data.GetEnemies());
             Clients.All.updatePlayerData(data.GetPlayers());
             int deletePickupId = data.UpdatePickups();
-
+            
             Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
             UpdateEffects();
+
+            Clients.All.updateTicksHazards(fire, water, data.UpdateHazards());
 
             if (data.GetAveragePlayerHealth() <= 0)
             {

@@ -220,6 +220,10 @@
     <Compile Include="Classes\Builder\SpeedPickupBuilder.cs" />
     <Compile Include="Classes\Builder\HealthPickupBuilder.cs" />
     <Compile Include="Classes\Builder\AmmoPickupBuilder.cs" />
+    <Compile Include="Classes\Chain\ConcreteHandler1.cs" />
+    <Compile Include="Classes\Chain\ConcreteHandler2.cs" />
+    <Compile Include="Classes\Chain\ConcreteHandler3.cs" />
+    <Compile Include="Classes\Chain\ConcreteHandler4.cs" />
     <Compile Include="Classes\Command\MoveList.cs" />
     <Compile Include="Classes\Decorator\CurrentPlayerDecorator.cs" />
     <Compile Include="Classes\Decorator\CurrentPoweredUpDecorator.cs" />
@@ -248,6 +252,9 @@
     <Compile Include="Classes\Factory\BasicPickup\HealthPickup.cs" />
     <Compile Include="Classes\Factory\BasicPickup\SpeedPickup.cs" />
     <Compile Include="Classes\Command\ICommand.cs" />
+    <Compile Include="Classes\Flyweight\Flyweight.cs" />
+    <Compile Include="Classes\Flyweight\FlyweightFactory.cs" />
+    <Compile Include="Classes\Chain\Handler.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Command\Move.cs" />
     <Compile Include="Classes\Command\MoveCommand.cs" />

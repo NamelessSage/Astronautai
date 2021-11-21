@@ -34,7 +34,6 @@ namespace Astronautai
 
         List<Player> playerList;
         public List<Obstacle> obstacles;
-        public List<Hazard> hazards = new List<Hazard>();
         int projectileCounter;
 
         MoveList moveList = new MoveList();
@@ -43,13 +42,19 @@ namespace Astronautai
 
         UITextManager uITextManager = new UITextManager();
 
+        FlyweightFactory flyweightsFactory = new FlyweightFactory(
+                (Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg"),
+                (Bitmap)Bitmap.FromFile(@"..//..//Objects//averageAsteroid.jpg"),
+                (Bitmap)Bitmap.FromFile(@"..//..//Objects//bigAsteroid.jpg"),
+                (Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.png")
+            );
+
         public Form1()
         {
             ServerInput inp = new ServerInput(this);
             InitializeComponent();
             InitTimer();
             random = new Random();
-
             HubConnection hubConnection = new HubConnection("http://localhost:8080");
             
             server = hubConnection.CreateHubProxy("serveris");
@@ -272,34 +277,61 @@ namespace Astronautai
                 }));
             });
 
+            server.On<List<Fire>, List<Water>, int>("updateTicksHazards", (fire, water, delId) =>
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    foreach (Fire fr in fire)
+                    {
+                        var hazardPCB = this.Controls.Find("Hazard" + fr.id, true);
+                        if (hazardPCB.Length != 0)
+                        {
+                            var pictureBox = hazardPCB[0] as PictureBox;
+                            pictureBox.Location = new Point(fr.X, fr.Y);
+                        }
+                        else
+                        {
+                            CreateHazardPicturesBox(fr);
+                        }
+                    }
+                    foreach (Water wt in water)
+                    {
+                        var hazardPCB = this.Controls.Find("Hazard" + wt.id, true);
+                        if (hazardPCB.Length != 0)
+                        {
+                            var pictureBox = hazardPCB[0] as PictureBox;
+                            pictureBox.Location = new Point(wt.X, wt.Y);
+                        }
+                        else
+                        {
+                            CreateHazardPicturesBox(wt);
+                        }
+                    }
+
+                    if (delId >= 0)
+                    {
+                        var hazardPCB = this.Controls.Find("Hazard" + delId, true);
+                        if (hazardPCB.Length != 0)
+                        {
+                            var pictureBox = hazardPCB[0] as PictureBox;
+                            this.Controls.Remove(pictureBox);
+                        }
+                    }
+
+                }));
+            });
+
             server.On<List<Obstacle>>("getObstacles", (obstacle) =>
             {
                 this.BeginInvoke(new Action(() =>
                 {
                     Console.WriteLine("Im getting Obstacles");
                     obstacles = obstacle;
-                }));
-
-            });
-            server.On<List<Fire>, List<Water>>("getHazards", (fire, water) =>
-            {
-                this.BeginInvoke(new Action(() =>
-                {
-                    Console.WriteLine("Im getting Hazards");
-                    foreach(Fire fr in fire)
-                    {
-                        hazards.Add(fr);
-                    }
-                    foreach (Water wt in water)
-                    {
-                        hazards.Add(wt);
-                    }
                     panel1.Paint += new PaintEventHandler(panel1_Draw);
                     panel1.Refresh();
                 }));
 
             });
-
 
             hubConnection.Start().Wait();
         }
@@ -313,6 +345,29 @@ namespace Astronautai
                 Size = new Size(pickup.Size, pickup.Size),
                 Location = new Point(pickup.X, pickup.Y),
                 Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//ammoPickup.jpg"),
+            };
+            this.Controls.Add(pickupPictureBox);
+            pickupPictureBox.BringToFront();
+        }
+
+        public void CreateHazardPicturesBox(Hazard hz)
+        {
+            Image img = null;
+            
+            if (hz as Fire != null)
+            {
+                img = (Bitmap)Bitmap.FromFile(@"..//..//Objects//fire.png");
+            }
+            else if (hz as Water != null)
+            {
+                img = (Bitmap)Bitmap.FromFile(@"..//..//Objects//water.png");
+            }
+            var pickupPictureBox = new PictureBox
+            {
+                Name = "Hazard" + hz.id,
+                Size = new Size(10, 10),
+                Location = new Point(hz.X, hz.Y),
+                Image = img,
             };
             this.Controls.Add(pickupPictureBox);
             pickupPictureBox.BringToFront();
@@ -516,22 +571,6 @@ namespace Astronautai
                 Brush brush = new SolidBrush(Color.Black);
                 g.FillPolygon(brush, points);
             }
-            foreach (Hazard hz in hazards)
-            {
-                Point[] points = new Point[4];
-
-                points[0] = new Point(hz.X, hz.Y);
-                points[1] = new Point(hz.X, hz.Y + 20);
-                points[2] = new Point(hz.X + 20, hz.Y + 20);
-                points[3] = new Point(hz.X + 20, hz.Y);
-                Brush brush = new SolidBrush(Color.Blue);
-                if (hz.GetType() == typeof(Fire))
-                {
-                    brush = new SolidBrush(Color.Red);
-                }
-
-                g.FillPolygon(brush, points);
-            }
         }
 
         private void AddProjectile(int count)
@@ -571,7 +610,7 @@ namespace Astronautai
                 Name = "Projectile" + p.Id,
                 Size = new Size(projectileSize, projectileSize),
                 Location = new Point(p.X, p.Y),
-                Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.png"),
+                Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//projectile.png")).GetImage(),
             };
 
             this.Controls.Add(projectilePictureBox);
@@ -600,7 +639,7 @@ namespace Astronautai
                     Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
-                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg"),
+                    Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg")).GetImage(),
                 };
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
                 gp.AddEllipse(0, 0, asteroidPictureBox.Width - 1, asteroidPictureBox.Height - 1);
@@ -616,7 +655,7 @@ namespace Astronautai
                     Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
-                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//averageAsteroid.jpg"),
+                    Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//averageAsteroid.jpg")).GetImage(),
                 };
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
                 gp.AddEllipse(0, 0, asteroidPictureBox.Width - 1, asteroidPictureBox.Height - 1);
@@ -632,7 +671,7 @@ namespace Astronautai
                     Name = "Enemy" + p.Id,
                     Size = new Size(p.Size, p.Size),
                     Location = new Point(p.X, p.Y),
-                    Image = (Bitmap)Bitmap.FromFile(@"..//..//Objects//bigAsteroid.jpg"),
+                    Image = flyweightsFactory.GetFlyweight((Bitmap)Bitmap.FromFile(@"..//..//Objects//bigAsteroid.jpg")).GetImage(),
                 };
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
                 gp.AddEllipse(0, 0, asteroidPictureBox.Width - 1, asteroidPictureBox.Height - 1);
