@@ -53,7 +53,7 @@ namespace Astronautai.Classes.Factory
             builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
             builder.SetImage(@"..//..//Objects//speedPickup.jpg");
             builder.SetSize(pickupSize);
-            builder.SetValue(1);
+            builder.SetValue(5);
             return builder.GetBuildable();
         }
 

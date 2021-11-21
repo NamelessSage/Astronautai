@@ -10,9 +10,9 @@ namespace Astronautai.Classes.Chain
     {
         public override object HandleRequest(int request,int player_speed)
         {
-            if(request == 1)
+            if(request == 5)
             {
-                return 1;
+                return 5;
             }
             else if(player_speed < 20)
             {

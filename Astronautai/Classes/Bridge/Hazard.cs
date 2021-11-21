@@ -11,6 +11,7 @@ namespace Astronautai
         protected IBridge bridge1;
         protected IBridge bridge2;
 
+        public int id { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 

@@ -78,6 +78,7 @@
     <Compile Include="EnemySpawner.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameHub.cs" />
+    <Compile Include="HazardSpawner .cs" />
     <Compile Include="PickupSpawner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
