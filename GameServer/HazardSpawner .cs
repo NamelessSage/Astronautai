@@ -34,6 +34,7 @@ namespace GameServer
                 id++;
                 fire.X = random.Next(100, 700);
                 fire.Y = random.Next(100, 500);
+                fire.MoveDirection = 'H';
                 return fire;
             }
             else if (randomValueFactoryType == 1)
@@ -43,6 +44,7 @@ namespace GameServer
                 id++;
                 water.X = random.Next(100, 700);
                 water.Y = random.Next(100, 500);
+                water.MoveDirection = 'V';
                 return water;
             }
             return null;

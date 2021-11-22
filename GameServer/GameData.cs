@@ -195,7 +195,7 @@ namespace GameServer
                     }
                     
 
-                    Console.WriteLine(player.Speed);
+                    //Console.WriteLine(player.Speed);
 
                     UpdatePlayer(player);
                     return false;
@@ -319,16 +319,16 @@ namespace GameServer
 
                 if (CheckCollisionEnemy(enemy))
                 {
-                    int averagePlayerHealth = GetAveragePlayerHealth();
-                    if (averagePlayerHealth == 3)
+                    double averagePlayerHealth = GetAveragePlayerHealth();
+                    if (averagePlayerHealth == 3 && averagePlayerHealth > 2.5)
                     {
                         enemy.SetMoveStrategy(new SlowMoveStrategy());
                     }
-                    else if(averagePlayerHealth < 3 && averagePlayerHealth > 1)
+                    else if(averagePlayerHealth <= 2.5 && averagePlayerHealth > 1)
                     {
                         enemy.SetMoveStrategy(new MediumMoveStrategy());
                     }
-                    else if(averagePlayerHealth == 1)
+                    else if(averagePlayerHealth <= 1)
                     {
                         enemy.SetMoveStrategy(new FastMoveStrategy());
                     }
@@ -364,21 +364,25 @@ namespace GameServer
         public int UpdateHazards()
         {
             Map map = Map.Instance;
-            foreach (Hazard hz in map.hazards)
+            foreach (Hazard hazard in map.hazards)
             {
-                if (!CheckNotCollisionHazard(hz, 10))
+                if (!CheckNotCollisionHazard(hazard, 10))
                 {
-                    map.hazards.Remove(hz);
-                    return hz.id;
+                    map.hazards.Remove(hazard);
+                    return hazard.id;
+                }
+                else
+                {
+                    hazard.MoveTemplate();
                 }
             }
             return -1;
         }
 
-        public int GetAveragePlayerHealth()
+        public double GetAveragePlayerHealth()
         {
             Map map = Map.Instance;
-            int count = 0;
+            double count = 0;
             foreach (Player player in map.players)
             {
                 if(player.Health <= 0) 
@@ -397,6 +401,7 @@ namespace GameServer
 
         public void GenerateObstacles()
         {
+            //Generate obstacles
             Map map = Map.Instance;
             Random ran = new Random();
             
@@ -410,6 +415,8 @@ namespace GameServer
                 obs2.coordinates.Y = ran.Next(50, 500);
                 map.obstacles.Add(obs2);
             }
+
+            //Generate hazzards
             GenerateHazzards();
         }
         public void GenerateHazzards()
@@ -418,7 +425,8 @@ namespace GameServer
 
             for (int i = 0; i < 10; i++)
             {
-                map.hazards.Add(hazardSpawner.SpawnRandom());
+                Hazard hazard = hazardSpawner.SpawnRandom();
+                map.hazards.Add(hazard);
             }
 
         }
@@ -432,7 +440,5 @@ namespace GameServer
             Map map = Map.Instance;
             return map.hazards;
         }
-
-
     }
 }

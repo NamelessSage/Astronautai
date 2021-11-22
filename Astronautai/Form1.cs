@@ -4,7 +4,6 @@ using Astronautai.Classes.Factory;
 using Astronautai.Classes.States;
 using Class_diagram;
 using Microsoft.AspNet.SignalR.Client;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -277,37 +276,35 @@ namespace Astronautai
                 }));
             });
 
-            server.On<List<Fire>, List<Water>, int>("updateTicksHazards", (fire, water, delId) =>
+            server.On<List<Fire>, List<Water>, int>("updateTicksHazards", (fireHazards, waterHazards, delId) =>
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    foreach (Fire fr in fire)
+                    List<Hazard> hazards = new List<Hazard>();
+                    foreach (var hazard in fireHazards)
                     {
-                        var hazardPCB = this.Controls.Find("Hazard" + fr.id, true);
-                        if (hazardPCB.Length != 0)
-                        {
-                            var pictureBox = hazardPCB[0] as PictureBox;
-                            pictureBox.Location = new Point(fr.X, fr.Y);
-                        }
-                        else
-                        {
-                            CreateHazardPicturesBox(fr);
-                        }
-                    }
-                    foreach (Water wt in water)
-                    {
-                        var hazardPCB = this.Controls.Find("Hazard" + wt.id, true);
-                        if (hazardPCB.Length != 0)
-                        {
-                            var pictureBox = hazardPCB[0] as PictureBox;
-                            pictureBox.Location = new Point(wt.X, wt.Y);
-                        }
-                        else
-                        {
-                            CreateHazardPicturesBox(wt);
-                        }
+                        hazards.Add(hazard);
                     }
 
+                    foreach (var hazard in waterHazards)
+                    {
+                        hazards.Add(hazard);
+                    }
+
+                    foreach(var hazard in hazards)
+                    {
+                        var hazardPCB = this.Controls.Find("Hazard" + hazard.id, true);
+                        if (hazardPCB.Length != 0)
+                        {
+                            var pictureBox = hazardPCB[0] as PictureBox;
+                            pictureBox.Location = new Point(hazard.X, hazard.Y);
+                        }
+                        else
+                        {
+                            CreateHazardPicturesBox(hazard);
+                        }
+                    }
+                    //Delete hazard
                     if (delId >= 0)
                     {
                         var hazardPCB = this.Controls.Find("Hazard" + delId, true);
@@ -325,7 +322,7 @@ namespace Astronautai
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    Console.WriteLine("Im getting Obstacles");
+                    //Console.WriteLine("Im getting Obstacles");
                     obstacles = obstacle;
                     panel1.Paint += new PaintEventHandler(panel1_Draw);
                     panel1.Refresh();
@@ -560,7 +557,7 @@ namespace Astronautai
             var g = e.Graphics;
             foreach (Obstacle obs in obstacles)
             {
-                Console.WriteLine("Obstacle " + obs.Id);
+                //Console.WriteLine("Obstacle " + obs.Id);
                 Point[] points = new Point[4];
 
                 points[0] = new Point(obs.coordinates.X, obs.coordinates.Y);

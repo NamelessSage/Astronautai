@@ -12,7 +12,6 @@ using System.Windows.Forms;
 using System.Timers;
 using Astronautai.Classes.States;
 using static Astronautai.Classes.Observer;
-using Newtonsoft.Json;
 
 namespace GameServer
 {
@@ -115,29 +114,32 @@ namespace GameServer
 
         public void UpdateTicks(object source, ElapsedEventArgs e)
         {
-            List<Hazard> hz = data.GetHazards();
+            List<Hazard> hazards = data.GetHazards();
             List<Fire> fire = new List<Fire>();
             List<Water> water = new List<Water>();
-            foreach (Hazard h in hz)
+
+            Console.WriteLine(hazards.Count);
+            
+            foreach (Hazard hazard in hazards)
             {
-                if (h.Effect().Contains("Damage"))
-                    fire.Add((Fire)h);
-                if (h.Effect().Contains("Slowdown"))
-                    water.Add((Water)h);
+                if (hazard.Effect().Contains("Damage"))
+                    fire.Add((Fire)hazard);
+                if (hazard.Effect().Contains("Slowdown"))
+                    water.Add((Water)hazard);
             }
 
             subject.Notify();
             data.UpdateProjectileCoords();
             data.UpdateAsteroidCoords();
-            Clients.All.updateTicks(data.GetProjectiles());
-            Clients.All.updateTicksAsteroids(data.GetEnemies());
-            Clients.All.updatePlayerData(data.GetPlayers());
+            Clients.All.updateTicks(data.GetProjectiles());     //Update projectiles
+            Clients.All.updateTicksAsteroids(data.GetEnemies());//Update enemies
+            Clients.All.updatePlayerData(data.GetPlayers());    //Update players
             int deletePickupId = data.UpdatePickups();
             
-            Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId);
+            Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId); //update pickups
             UpdateEffects();
 
-            Clients.All.updateTicksHazards(fire, water, data.UpdateHazards());
+            Clients.All.updateTicksHazards(fire, water, data.UpdateHazards()); //
 
             if (data.GetAveragePlayerHealth() <= 0)
             {
