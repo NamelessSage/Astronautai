@@ -137,7 +137,7 @@ namespace GameServer
             int deletePickupId = data.UpdatePickups();
             
             Clients.All.updateTicksPickups(data.GetPickups(), deletePickupId); //update pickups
-            UpdateEffects();
+            UpdateEffects(); //update player effects
 
             Clients.All.updateTicksHazards(fire, water, data.UpdateHazards()); //
 
