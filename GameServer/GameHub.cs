@@ -118,7 +118,6 @@ namespace GameServer
             List<Fire> fire = new List<Fire>();
             List<Water> water = new List<Water>();
 
-            Console.WriteLine(hazards.Count);
             
             foreach (Hazard hazard in hazards)
             {
