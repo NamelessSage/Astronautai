@@ -263,6 +263,8 @@
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Projectile.cs" />
     <Compile Include="Classes\Prototype.cs" />
+    <Compile Include="Classes\Proxy\IParameter.cs" />
+    <Compile Include="Classes\Proxy\ParameterProxy.cs" />
     <Compile Include="Classes\ServerInput.cs" />
     <Compile Include="Classes\SmallAsteroid.cs" />
     <Compile Include="Classes\States\Damaged.cs" />

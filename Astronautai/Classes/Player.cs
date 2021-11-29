@@ -1,10 +1,11 @@
 using Astronautai.Classes;
+using Astronautai.Classes.Proxy;
 using Astronautai.Classes.States;
 using System;
 
 namespace Class_diagram
 {
-	public class Player : PlayerImage
+	public class Player : PlayerImage, IParameter
     {
         const int MaxPlayerHealth = 3;
         const int MaxPlayerAmmo = 10;
@@ -132,6 +133,11 @@ namespace Class_diagram
                     SetState(GetState().ChangeSpeed(Speed));
                 }
             }
+        }
+
+        public void Heal(int amount)
+        {
+            AddHealth(amount);
         }
     }
 }
