@@ -1,11 +1,7 @@
-
-
 using Astronautai.Classes;
 using Astronautai.Classes.States;
 using System;
-/**
-* @(#) Player.cs
-*/
+
 namespace Class_diagram
 {
 	public class Player : PlayerImage
@@ -26,9 +22,6 @@ namespace Class_diagram
         public int TickDurration { get; set; }
         private State state;
 
-
-
-
         public State GetState()
         {
             return state;
@@ -38,7 +31,6 @@ namespace Class_diagram
         {
             this.state = state;
         }
-
 
         public Player()
         {
@@ -141,6 +133,5 @@ namespace Class_diagram
                 }
             }
         }
-
     }
 }
