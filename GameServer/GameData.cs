@@ -174,12 +174,12 @@ namespace GameServer
         public bool CheckNotCollisionHazard(Hazard hz, int size)
         {
             Map map = Map.Instance;
+            string hazzard = hz.Effect();
+            string[] hzrd = hazzard.Split(',');
             foreach (Player player in map.players)
             {
                 if (!Collides(hz.X, hz.Y, size, player.X, player.Y, player.Size))
                 {
-                    string hazzard = hz.Effect();
-                    string[] hzrd = hazzard.Split(',');
                     if (hazzard.Contains("Damage")) {
 
                         player.Health -= int.Parse(hzrd[1]);
@@ -199,6 +199,29 @@ namespace GameServer
 
                     UpdatePlayer(player);
                     return false;
+                }
+            }
+            iExpression hzExpr = new TerminalExpression(hzrd[0]);
+            foreach (Hazard hzrds in map.hazards)
+            {
+                if (hzrds.id != hz.id)
+                {
+                    if (!Collides(hz.X, hz.Y, size, hzrds.X, hzrds.Y, size))
+                    {
+                        string[] hazardSplit = hzrds.Effect().Split(',');
+                        iExpression hzrdsExpr = new TerminalExpression(hazardSplit[0]);
+                        if (new DestroyExpression(hzExpr, hzrdsExpr).interpreter(hazardSplit[0]) != null)
+                        {
+                            Console.WriteLine("Destroy");
+                            destructor.RemoveHazard(hzrds);
+                            return false;
+                        }
+                        if (new CombineExpression(hzExpr, hzrdsExpr).interpreter(hazardSplit[0]) != null)
+                        {
+                            Console.WriteLine("Combine");
+                            return false;
+                        }
+                    }
                 }
             }
             return true;
@@ -423,11 +446,13 @@ namespace GameServer
         {
             Map map = Map.Instance;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Hazard hazard = hazardSpawner.SpawnRandom();
                 map.hazards.Add(hazard);
             }
+
+
 
         }
         public List<Obstacle> GetObstacles()

@@ -35,6 +35,17 @@ namespace Astronautai.Classes
                     form.Controls.Remove(item);
                 }));
             });
+            server.On<int>("destroyHazard", (hazard) =>
+            {
+                form.BeginInvoke(new Action(() =>
+                {
+                    string name = "Hazard" + hazard;
+                    var item = form.Controls.Find(name, true)[0];
+                    form.Controls.Remove(item);
+                }));
+            });
+
+            
 
             hubConnection.Start().Wait();
         }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Astronautai;
 
 namespace GameServer.Classes
 {
@@ -61,6 +62,13 @@ namespace GameServer.Classes
             }
             else
                 return false;
+        }
+
+        public void RemoveHazard(Hazard hazard)
+        {
+            var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
+            map.hazards.Remove(hazard);
+            context.Clients.All.destroyHazard(hazard);
         }
     }
 }

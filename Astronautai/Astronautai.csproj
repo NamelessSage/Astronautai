@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A9F51F85-7BEE-4A03-AB42-97DBE6BA358A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Astronautai</RootNamespace>
     <AssemblyName>Astronautai</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -47,6 +47,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -255,6 +258,10 @@
     <Compile Include="Classes\Flyweight\Flyweight.cs" />
     <Compile Include="Classes\Flyweight\FlyweightFactory.cs" />
     <Compile Include="Classes\Chain\Handler.cs" />
+    <Compile Include="Classes\Interpreter\CombineExpression.cs" />
+    <Compile Include="Classes\Interpreter\DestroyExpression.cs" />
+    <Compile Include="Classes\Interpreter\iExpression.cs" />
+    <Compile Include="Classes\Interpreter\TerminalExpression.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Command\Move.cs" />
     <Compile Include="Classes\Command\MoveCommand.cs" />
