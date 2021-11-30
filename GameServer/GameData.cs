@@ -45,7 +45,9 @@ namespace GameServer
             {
                 if (map.players[i].Username == player.Username)
                 {
+                    Console.WriteLine(map.players[i].GetMemory().Memento);
                     map.players[i] = player;
+                 
                 }
             }
         }
@@ -355,6 +357,7 @@ namespace GameServer
                 {
                     int id = pickup.Id;
                     map.pickups.Remove(pickup);
+                 
                     return id;
                 }
             }

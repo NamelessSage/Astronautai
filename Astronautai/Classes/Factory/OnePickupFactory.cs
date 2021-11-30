@@ -74,5 +74,18 @@ namespace Astronautai.Classes.Factory
             builder.SetEffects(effects);
             return builder.GetBuildable();
         }
+        public override Pickup TeleportMultiPickup()
+        {
+            count++;
+            random = new Random();
+            PickupBuilder builder = new TeleportPickupBuilder();
+            builder.SetType("TeleportPickup");
+            builder.SetId(count);
+            builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
+            builder.SetImage(@"..//..//Objects//smulAsteroid.jpg");
+            builder.SetSize(pickupSize);
+            builder.SetValue(1);
+            return builder.GetBuildable();
+        }
     }
 }

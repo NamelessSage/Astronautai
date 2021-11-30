@@ -1,6 +1,7 @@
 
 
 using Astronautai.Classes;
+using Astronautai.Classes.Memento;
 using Astronautai.Classes.States;
 using System;
 /**
@@ -15,7 +16,7 @@ namespace Class_diagram
         const int MaxPlayerSpeed = 48;
 
 		public string Username { get; set; }
-		public int Health { get; set; }
+        public int Health { get; set; }
         public int Ammo { get; set; }
         public int Speed { get; set; }
         public int Size { get; set; }
@@ -26,8 +27,21 @@ namespace Class_diagram
         public int TickDurration { get; set; }
         private State state;
 
+        private PlayerMemory m;
 
+        public PlayerMemory GetMemory()
+        {
+            return m;
+        }
 
+        public void SetMemory(PlayerMemory mem)
+        {
+            this.m = mem; 
+        }
+        public void SetMemento(Memento mem)
+        {
+            m.Memento = mem;
+        }
 
         public State GetState()
         {
@@ -140,6 +154,18 @@ namespace Class_diagram
                     SetState(GetState().ChangeSpeed(Speed));
                 }
             }
+        }
+
+        public Memento SaveMemento()
+        {
+            return new Memento(Username, X, Y);
+        }
+        // Restores memento
+        public void RestoreMemento(Memento memento)
+        {
+            X = memento.Xcord;
+            Y = memento.Ycord;
+            SetMemento(null);
         }
 
     }

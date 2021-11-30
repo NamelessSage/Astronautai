@@ -58,6 +58,9 @@
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.4.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.SignalR.Client.2.4.2\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Core.2.4.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Authorization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNetCore.Authorization.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
     </Reference>
@@ -220,6 +223,7 @@
     <Compile Include="Classes\Builder\SpeedPickupBuilder.cs" />
     <Compile Include="Classes\Builder\HealthPickupBuilder.cs" />
     <Compile Include="Classes\Builder\AmmoPickupBuilder.cs" />
+    <Compile Include="Classes\Builder\TeleportPickupBuilder.cs" />
     <Compile Include="Classes\Chain\ConcreteHandler1.cs" />
     <Compile Include="Classes\Chain\ConcreteHandler2.cs" />
     <Compile Include="Classes\Chain\ConcreteHandler3.cs" />
@@ -240,6 +244,7 @@
     <Compile Include="Classes\Coordinates.cs" />
     <Compile Include="Classes\Enemy.cs" />
     <Compile Include="Classes\Factory\BasicPickup\MultiPickup.cs" />
+    <Compile Include="Classes\Factory\BasicPickup\TeleportPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxAmmoPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxHealthPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickupFactory.cs" />
@@ -258,6 +263,8 @@
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Command\Move.cs" />
     <Compile Include="Classes\Command\MoveCommand.cs" />
+    <Compile Include="Classes\Memento\Memento.cs" />
+    <Compile Include="Classes\Memento\PlayerMemory.cs" />
     <Compile Include="Classes\Obstacle.cs" />
     <Compile Include="Classes\Pickup.cs" />
     <Compile Include="Classes\Player.cs" />
