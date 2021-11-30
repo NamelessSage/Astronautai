@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace Astronautai
 {
@@ -531,6 +532,11 @@ namespace Astronautai
             if (e.KeyCode == Keys.Z)
             {
                 moveList.Undo();
+            }
+            if (e.KeyCode == Keys.P)
+            {
+                string x = Console.ReadLine();
+                Console.WriteLine(x);
             }
         }
 

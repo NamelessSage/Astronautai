@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Astronautai
 {
-    class UITextManager
+    public class UITextManager : Mediator
     {
         HealthManager HealthManager;
         AmmoManager AmmoManager;
@@ -19,8 +19,8 @@ namespace Astronautai
 
         public UITextManager() 
         {
-            HealthManager = new HealthManager();
-            AmmoManager = new AmmoManager();
+            HealthManager = new HealthManager(this);
+            AmmoManager = new AmmoManager(this);
             ButtonManager = new ButtonManager();
             GameOverHealthString = "GG WP";
             GameOverAmmoString = "";
@@ -29,8 +29,8 @@ namespace Astronautai
 
         public UITextManager(string gameOverString)
         {
-            HealthManager = new HealthManager();
-            AmmoManager = new AmmoManager();
+            HealthManager = new HealthManager(this);
+            AmmoManager = new AmmoManager(this);
             ButtonManager = new ButtonManager();
             GameOverHealthString = gameOverString;
             GameOverAmmoString = "";
@@ -57,14 +57,14 @@ namespace Astronautai
 
         public void GameOver(Label healthLabel, Label ammoLabel)
         {
+            HealthManager.Send("GameOver", ammoLabel, GameOverAmmoString);
             healthLabel.Text = GameOverHealthString;
-            ammoLabel.Text = GameOverAmmoString;
         }
 
         public void PlayerDead(Label healthLabel, Label ammoLabel)
         {
-            healthLabel.Text = PlayerDeadString;
-            ammoLabel.Text = "";
+            AmmoManager.Send("PlayerDead", healthLabel, PlayerDeadString);
+            HealthManager.Send("PlayerDead", ammoLabel, "");
         }
 
         public void UpdateAmmo(Label ammoLabel, int playerAmmo)
@@ -80,6 +80,18 @@ namespace Astronautai
         public void UpdateButtonsAfterClientJoin(Button joinGameButton, Button startGameButton)
         {
             ButtonManager.ClientJoin(startGameButton, joinGameButton);
+        }
+
+        public override void Send(string message, UIManager manager, Label label, string labelValue)
+        {
+            if(manager == HealthManager)
+            {
+                AmmoManager.Notify(message, label, labelValue);
+            }
+            else
+            {
+                HealthManager.Notify(message, label, labelValue);
+            }
         }
     }
 }

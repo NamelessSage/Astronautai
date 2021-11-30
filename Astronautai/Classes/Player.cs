@@ -1,15 +1,12 @@
-
-
 using Astronautai.Classes;
 using Astronautai.Classes.Memento;
+using Astronautai.Classes.Proxy;
 using Astronautai.Classes.States;
 using System;
-/**
-* @(#) Player.cs
-*/
+
 namespace Class_diagram
 {
-	public class Player : PlayerImage
+	public class Player : PlayerImage, IParameter
     {
         const int MaxPlayerHealth = 3;
         const int MaxPlayerAmmo = 10;
@@ -42,7 +39,6 @@ namespace Class_diagram
         {
             m.Memento = mem;
         }
-
         public State GetState()
         {
             return state;
@@ -52,7 +48,6 @@ namespace Class_diagram
         {
             this.state = state;
         }
-
 
         public Player()
         {
@@ -166,6 +161,11 @@ namespace Class_diagram
             X = memento.Xcord;
             Y = memento.Ycord;
             SetMemento(null);
+        }
+
+        public void Heal(int amount)
+        {
+            AddHealth(amount);
         }
 
     }
