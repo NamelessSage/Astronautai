@@ -191,6 +191,17 @@ namespace GameServer
             player.SetMemory(serverPlayer.GetMemory());
             return player;
         }
-
+        public void PlayerUpdateConsole(string username, int ammo, int health)
+        {
+            foreach(Player pl in data.GetPlayers())
+            {
+                if (pl.Username == username)
+                {
+                    pl.Ammo = ammo;
+                    pl.Health = health;
+                    data.UpdatePlayer(pl);
+                }
+            }
+        }
     } 
 }

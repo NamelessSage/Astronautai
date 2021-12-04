@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Class_diagram;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Astronautai
 {
     public interface iExpression
     {
-        string interpreter(string element);
+        Player interpreter(string value);
     }
 }

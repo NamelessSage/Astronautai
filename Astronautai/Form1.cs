@@ -535,8 +535,27 @@ namespace Astronautai
             }
             if (e.KeyCode == Keys.P)
             {
-                string x = Console.ReadLine();
-                Console.WriteLine(x);
+                CallInterpreter(Console.ReadLine());
+            }
+        }
+
+        private void CallInterpreter(string str)
+        {
+            string[] values = str.Split(' ');
+            if (values.Length == 3)
+            {
+                iExpression expr = new TerminalExpression(player, str);
+                if (values[1] == "ammo")
+                {
+                    iExpression ammoExpr = new AmmoExpression(expr);
+                    player = ammoExpr.interpreter(str);
+                }
+                else if (values[1] == "health")
+                {
+                    iExpression healthExpr = new HealthExpression(expr);
+                    player = healthExpr.interpreter(str);
+                }
+                server.Invoke("PlayerUpdateConsole", player.Username, player.Ammo, player.Health);
             }
         }
 

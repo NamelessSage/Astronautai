@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Class_diagram;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,36 +9,75 @@ namespace Astronautai
 {
     public class TerminalExpression : iExpression
     {
-        string Effect;
+        Player pl;
 
-        public TerminalExpression(string eff)
+        public TerminalExpression(Player pl, string value)
         {
-            Effect = eff;
+            this.pl = pl;
         }
 
-        public string interpreter(string element)
+        public Player interpreter(string value)
         {
-            if (Effect == element)
-                return "Combine";
-            if (Effect == "Damage")
+            string[] str = value.Split(' ');
+            if (str[0] == "add")
             {
-                switch (element)
+                if (str[1] == "ammo")
                 {
-                    case "Slowdown":
-                        return "Destroy";
-                    default:
-                        return null;
+                    if (str[2] != "max")
+                    {
+                        pl.AddAmmo(int.Parse(str[2]));
+                    }
+                    else
+                    {
+                        pl.Ammo = 10;
+                    }
+                }
+                else if (str[1] == "health")
+                {
+                    if (str[2] != "max")
+                    {
+                        pl.AddHealth(int.Parse(str[2]));
+                    }
+                    else
+                    {
+                        pl.Health = 3;
+                    }
                 }
             }
-            else if (Effect == "Slowdown")
+            else if (str[0] == "remove")
             {
-                switch (element)
+                if (str[1] == "ammo")
                 {
-                    default:
-                        return null;
+                    if (str[2] != "max")
+                    {
+                        pl.Ammo -= int.Parse(str[2]);
+                        if (pl.Ammo < 0)
+                        {
+                            pl.Ammo = 0;
+                        }
+                    }
+                    else
+                    {
+                        pl.Ammo = 0;
+                    }
+                }
+                else if (str[1] == "health")
+                {
+                    if (str[2] != "max")
+                    {
+                        pl.Health -= int.Parse(str[2]);
+                        if (pl.Health < 0)
+                        {
+                            pl.Health = 0;
+                        }
+                    }
+                    else
+                    {
+                        pl.Health = 0;
+                    }
                 }
             }
-            return null;
+            return pl;
         }
     }
 }

@@ -263,8 +263,8 @@
     <Compile Include="Classes\Flyweight\Flyweight.cs" />
     <Compile Include="Classes\Flyweight\FlyweightFactory.cs" />
     <Compile Include="Classes\Chain\Handler.cs" />
-    <Compile Include="Classes\Interpreter\CombineExpression.cs" />
-    <Compile Include="Classes\Interpreter\DestroyExpression.cs" />
+    <Compile Include="Classes\Interpreter\HealthExpression.cs" />
+    <Compile Include="Classes\Interpreter\AmmoExpression.cs" />
     <Compile Include="Classes\Interpreter\iExpression.cs" />
     <Compile Include="Classes\Interpreter\TerminalExpression.cs" />
     <Compile Include="Classes\Map.cs" />
