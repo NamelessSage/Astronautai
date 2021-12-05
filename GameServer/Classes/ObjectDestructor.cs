@@ -31,6 +31,7 @@ namespace GameServer.Classes
                 var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
                 context.Clients.All.destroyEnemy(enemy);
                 map.enemies.Remove(enemy);
+                map.visitor.Detach(enemy);
                 return true;
             }
             else
@@ -42,6 +43,7 @@ namespace GameServer.Classes
             var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
             context.Clients.All.destroyEnemy(enemy);
             map.enemies.Remove(enemy);
+            map.visitor.Detach(enemy);
         }
 
         public void RemoveProjectileNoCheck(Projectile projectile)

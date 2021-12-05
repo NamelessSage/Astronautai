@@ -59,6 +59,10 @@ namespace GameServer
             {
                 return onePickupFactory.TeleportMultiPickup();
             }
+            else if (randomValuePickupType == 4)
+            {
+                return onePickupFactory.AsteroidPickup();
+            }
             else
             {
                 return onePickupFactory.CreateMultiPickup();

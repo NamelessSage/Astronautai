@@ -8,6 +8,7 @@ using System.Linq;
 using Astronautai.Classes.Factory;
 using GameServer.Classes;
 using Astronautai.Classes.Strategy;
+using Astronautai.Classes.Visitor;
 
 namespace GameServer
 {
@@ -290,7 +291,8 @@ namespace GameServer
         public void AddAsteroid()
         {
             Map map = Map.Instance;
-            map.enemies.Add(enemySpawner.Spawn(map));
+            Enemy enem = enemySpawner.Spawn(map);
+            map.enemies.Add(enem);
         }
 
         public List<Enemy> GetEnemies()

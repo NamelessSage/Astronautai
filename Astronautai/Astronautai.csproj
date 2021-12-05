@@ -246,6 +246,7 @@
     <Compile Include="Classes\Builder\PickupBuilder.cs" />
     <Compile Include="Classes\Coordinates.cs" />
     <Compile Include="Classes\Enemy.cs" />
+    <Compile Include="Classes\Factory\BasicPickup\AsteroidPickup.cs" />
     <Compile Include="Classes\Factory\BasicPickup\MultiPickup.cs" />
     <Compile Include="Classes\Factory\BasicPickup\TeleportPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxAmmoPickup.cs" />
@@ -301,6 +302,12 @@
     <Compile Include="Classes\Strategy\NoneMoveStrategy.cs" />
     <Compile Include="Classes\Strategy\SlowMoveStrategy.cs" />
     <Compile Include="Classes\Turret.cs" />
+    <Compile Include="Classes\Visitor\Element.cs" />
+    <Compile Include="Classes\Visitor\IVisitor.cs" />
+    <Compile Include="Classes\Visitor\ObjectStructure.cs" />
+    <Compile Include="Classes\Visitor\Visitor1.cs" />
+    <Compile Include="Classes\Visitor\Visitor2.cs" />
+    <Compile Include="Classes\Visitor\Visitor3.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

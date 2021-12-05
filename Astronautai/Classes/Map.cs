@@ -1,5 +1,6 @@
 
 using Astronautai;
+using Astronautai.Classes.Visitor;
 using System.Collections.Generic;
 /**
 * @(#) Map.cs
@@ -17,6 +18,7 @@ namespace Class_diagram
 		public int Difficulty = 0;
 		public List<Pickup> pickups = new List<Pickup>();
 		public List<Player> players = new List<Player>();
+		public ObjectStructure visitor =new ObjectStructure();
 		public int projectileCounter = 0;
 		public int enemyCounter = 0;
 
