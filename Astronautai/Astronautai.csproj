@@ -267,6 +267,14 @@
     <Compile Include="Classes\Interpreter\AmmoExpression.cs" />
     <Compile Include="Classes\Interpreter\iExpression.cs" />
     <Compile Include="Classes\Interpreter\TerminalExpression.cs" />
+    <Compile Include="Classes\Iterator\GameStateCollection.cs" />
+    <Compile Include="Classes\Iterator\GameStateIterator.cs" />
+    <Compile Include="Classes\Iterator\iCollection.cs" />
+    <Compile Include="Classes\Iterator\iIterator.cs" />
+    <Compile Include="Classes\Iterator\ObstacleCollection.cs" />
+    <Compile Include="Classes\Iterator\ObstacleIterator.cs" />
+    <Compile Include="Classes\Iterator\PlayerCollection.cs" />
+    <Compile Include="Classes\Iterator\PlayerIterator.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Command\Move.cs" />
     <Compile Include="Classes\Command\MoveCommand.cs" />
@@ -293,10 +301,6 @@
     <Compile Include="Classes\Strategy\NoneMoveStrategy.cs" />
     <Compile Include="Classes\Strategy\SlowMoveStrategy.cs" />
     <Compile Include="Classes\Turret.cs" />
-    <Compile Include="Classes\Visitor\IVisitor.cs" />
-    <Compile Include="Classes\Visitor\Visitor1.cs" />
-    <Compile Include="Classes\Visitor\Visitor2.cs" />
-    <Compile Include="Classes\Visitor\Visitor3.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
