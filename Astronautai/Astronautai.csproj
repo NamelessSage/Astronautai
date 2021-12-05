@@ -267,6 +267,14 @@
     <Compile Include="Classes\Interpreter\AmmoExpression.cs" />
     <Compile Include="Classes\Interpreter\iExpression.cs" />
     <Compile Include="Classes\Interpreter\TerminalExpression.cs" />
+    <Compile Include="Classes\Iterator\GameStateCollection.cs" />
+    <Compile Include="Classes\Iterator\GameStateIterator.cs" />
+    <Compile Include="Classes\Iterator\iCollection.cs" />
+    <Compile Include="Classes\Iterator\iIterator.cs" />
+    <Compile Include="Classes\Iterator\ObstacleCollection.cs" />
+    <Compile Include="Classes\Iterator\ObstacleIterator.cs" />
+    <Compile Include="Classes\Iterator\PlayerCollection.cs" />
+    <Compile Include="Classes\Iterator\PlayerIterator.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Command\Move.cs" />
     <Compile Include="Classes\Command\MoveCommand.cs" />
