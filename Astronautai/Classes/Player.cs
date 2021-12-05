@@ -26,6 +26,12 @@ namespace Class_diagram
 
         private PlayerMemory m;
 
+        public void Damage(int amount)
+        {
+            Affect("Damaged");
+            Health -= amount;
+        }
+
         public PlayerMemory GetMemory()
         {
             return m;
@@ -128,7 +134,18 @@ namespace Class_diagram
 
         public void Affect(string effect)
         {
-            SetState(GetState().ChangeSpeed(0));
+            if (effect == "Stunned")
+            {
+                SetState(GetState().ChangeSpeed(0));
+            }
+            else if (effect == "Damaged")
+            {
+                SetState(GetState().ChangeSpeed(60));
+            }
+            else if (effect == "Slowed")
+            {
+                SetState(GetState().ChangeSpeed(10));
+            }
             Effect = effect;
             TickDurration = 10;
         }

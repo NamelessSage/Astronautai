@@ -65,7 +65,7 @@ namespace Astronautai
                 {
                     if (str[2] != "max")
                     {
-                        pl.Health -= int.Parse(str[2]);
+                        pl.Damage(int.Parse(str[2]));
                         if (pl.Health < 0)
                         {
                             pl.Health = 0;

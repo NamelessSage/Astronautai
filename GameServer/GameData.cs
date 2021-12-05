@@ -45,7 +45,6 @@ namespace GameServer
             {
                 if (map.players[i].Username == player.Username)
                 {
-                    Console.WriteLine(map.players[i].GetMemory().Memento);
                     map.players[i] = player;
                  
                 }
@@ -149,7 +148,7 @@ namespace GameServer
             {
                 if (!Collides(player.X, player.Y, player.Size, enemy.X, enemy.Y, enemy.Size))
                 {
-                    player.Health -= enemy.Damage;
+                    player.Damage(enemy.Damage);
                     UpdatePlayer(player);
                     return false;
                 }
@@ -184,11 +183,12 @@ namespace GameServer
                 {
                     if (hazzard.Contains("Damage")) {
 
-                        player.Health -= int.Parse(hzrd[1]);
+                        player.Damage(int.Parse(hzrd[1]));
                     }
                     if (hazzard.Contains("Slowdown"))
                     {
-                        player.Health -= int.Parse(hzrd[1]);
+                        player.Damage(int.Parse(hzrd[1]));
+                        player.Affect("Slowed");
                         if(player.Speed >= 20)
                             player.Speed -= 10;
                         else
@@ -197,7 +197,6 @@ namespace GameServer
                     }
                     
 
-                    //Console.WriteLine(player.Speed);
 
                     UpdatePlayer(player);
                     return false;
