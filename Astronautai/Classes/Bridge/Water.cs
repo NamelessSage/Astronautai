@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Astronautai
 { 
-    public class Water : Hazard
+    public sealed class Water : Hazard
     {
         public Water(IBridge bridge1, IBridge bridge2) : base(bridge1, bridge2) { }
 

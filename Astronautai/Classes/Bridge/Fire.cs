@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Astronautai
 {
-    public class Fire : Hazard
+    public sealed class Fire : Hazard
     {
         public int Speed = 5;
 
