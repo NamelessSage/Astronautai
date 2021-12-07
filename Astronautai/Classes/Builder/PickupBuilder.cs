@@ -65,6 +65,10 @@ namespace Astronautai.Classes
             {
                 pickup = new MultiPickup();
             }
+            if (type == "TeleportPickup")
+            {
+                pickup = new TeleportPickup();
+            }
         }
 
         public abstract void Reset();

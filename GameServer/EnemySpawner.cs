@@ -72,7 +72,9 @@ namespace GameServer
             
             if (map.enemies.Count < 15)
             {
-                map.enemies.Add(Spawn(map));
+                Enemy enemy = Spawn(map);
+                map.enemies.Add(enemy);
+                map.visitor.Attach(enemy);
             }
         }
     }

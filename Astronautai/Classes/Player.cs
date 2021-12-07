@@ -1,4 +1,5 @@
 using Astronautai.Classes;
+using Astronautai.Classes.Memento;
 using Astronautai.Classes.Proxy;
 using Astronautai.Classes.States;
 using System;
@@ -12,7 +13,7 @@ namespace Class_diagram
         const int MaxPlayerSpeed = 48;
 
 		public string Username { get; set; }
-		public int Health { get; set; }
+        public int Health { get; set; }
         public int Ammo { get; set; }
         public int Speed { get; set; }
         public int Size { get; set; }
@@ -23,6 +24,27 @@ namespace Class_diagram
         public int TickDurration { get; set; }
         private State state;
 
+        private PlayerMemory m;
+
+        public void Damage(int amount)
+        {
+            Affect("Damaged");
+            Health -= amount;
+        }
+
+        public PlayerMemory GetMemory()
+        {
+            return m;
+        }
+
+        public void SetMemory(PlayerMemory mem)
+        {
+            this.m = mem; 
+        }
+        public void SetMemento(Memento mem)
+        {
+            m.Memento = mem;
+        }
         public State GetState()
         {
             return state;
@@ -112,7 +134,18 @@ namespace Class_diagram
 
         public void Affect(string effect)
         {
-            SetState(GetState().ChangeSpeed(0));
+            if (effect == "Stunned")
+            {
+                SetState(GetState().ChangeSpeed(0));
+            }
+            else if (effect == "Damaged")
+            {
+                SetState(GetState().ChangeSpeed(60));
+            }
+            else if (effect == "Slowed")
+            {
+                SetState(GetState().ChangeSpeed(10));
+            }
             Effect = effect;
             TickDurration = 10;
         }
@@ -135,9 +168,22 @@ namespace Class_diagram
             }
         }
 
+        public Memento SaveMemento()
+        {
+            return new Memento(Username, X, Y);
+        }
+        // Restores memento
+        public void RestoreMemento(Memento memento)
+        {
+            X = memento.Xcord;
+            Y = memento.Ycord;
+            SetMemento(null);
+        }
+
         public void Heal(int amount)
         {
             AddHealth(amount);
         }
+
     }
 }

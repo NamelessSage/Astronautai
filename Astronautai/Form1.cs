@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace Astronautai
 {
@@ -27,10 +28,6 @@ namespace Astronautai
         Player player;
         public string CurrentPlayerUsername;
 
-        bool startGame = false;
-        bool gameLoopStarted = false;
-        bool gameOver = false;
-
         List<Player> playerList;
         public List<Obstacle> obstacles;
         int projectileCounter;
@@ -40,6 +37,13 @@ namespace Astronautai
         Move move;
 
         UITextManager uITextManager = new UITextManager();
+
+        static GameStateCollection gameState = new GameStateCollection();
+        PlayerCollection playerCollection = new PlayerCollection();
+        iIterator playerIterator;
+        ObstacleCollection obstacleCollection = new ObstacleCollection();
+        iIterator obstacleIterator;
+        iIterator gameStateIterator = gameState.createIterator();
 
         FlyweightFactory flyweightsFactory = new FlyweightFactory(
                 (Bitmap)Bitmap.FromFile(@"..//..//Objects//smulAsteroid.jpg"),
@@ -146,10 +150,13 @@ namespace Astronautai
             //Get all player list on local client
             server.On<List<Player>>("getPlayers", (players) =>
             {
+                playerCollection = new PlayerCollection();
                 for (int i = 0; i < players.Count; i++)
                 {
+                    playerCollection.addItem(players[i]);
                     playerList.Add(players[i]);
                 }
+                playerIterator = playerCollection.createIterator();
             });
 
             //Refresh player data with server tick
@@ -180,7 +187,7 @@ namespace Astronautai
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    gameOver = true;
+                    gameStateIterator.next();
                 }));
             });
 
@@ -194,7 +201,7 @@ namespace Astronautai
 
             server.On<bool>("startGame", (start) =>
             {
-                startGame = start;
+                gameStateIterator.next();
             });
 
             server.On<List<Projectile>>("updateTicks", (projectiles) =>
@@ -324,6 +331,12 @@ namespace Astronautai
                 {
                     //Console.WriteLine("Im getting Obstacles");
                     obstacles = obstacle;
+                    obstacleCollection = new ObstacleCollection();
+                    foreach(Obstacle obs in obstacle)
+                    {
+                        obstacleCollection.addItem(obs);
+                    }
+                    obstacleIterator = obstacleCollection.createIterator();
                     panel1.Paint += new PaintEventHandler(panel1_Draw);
                     panel1.Refresh();
                 }));
@@ -440,11 +453,11 @@ namespace Astronautai
             server.Invoke("StartGame");
         }
 
-        private void AddPlayersPictureBoxes(List<Player> playerList)
+        private void AddPlayersPictureBoxes(iIterator players)
         {
-            foreach (var player in playerList)
+            while (players.hasNext())
             {
-                AddPlayerPictureBox(player);
+                AddPlayerPictureBox((Player)players.next());
             }
         }
 
@@ -459,17 +472,16 @@ namespace Astronautai
         //GAME UPDATE AFTER START
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (startGame)
+            if (gameStateIterator.current().ToString() == "startGame")
             {
                 this.ActiveControl = playerFocus;
-                AddPlayersPictureBoxes(playerList);
-                startGame = false;
-                gameLoopStarted = true;
+                AddPlayersPictureBoxes(playerIterator);
+                gameStateIterator.next();
 
                 uITextManager.StartGame(StartGameButton, JoinGameButton, PlayerUsernameTextBox, healthLabel, ammoLabel, PlayerStartHealth, PlayerStartAmmo);
             }
 
-            if (gameOver) {
+            if (gameStateIterator.current().ToString() == "gameOver") {
                 var pictureBox = this.Controls.Find(player.Username, true)[0] as PictureBox;
                 pictureBox.Visible = false;
                 moveCommand = new MoveCommand(move, 'W');
@@ -483,7 +495,7 @@ namespace Astronautai
 
                 uITextManager.GameOver(healthLabel, ammoLabel);
             }
-            else if (gameLoopStarted)
+            else if (gameStateIterator.current().ToString() == "gameLoopStarted")
             {
                 if (player.Health <= 0)
                 {
@@ -532,6 +544,30 @@ namespace Astronautai
             {
                 moveList.Undo();
             }
+            if (e.KeyCode == Keys.P)
+            {
+                CallInterpreter(Console.ReadLine());
+            }
+        }
+
+        private void CallInterpreter(string str)
+        {
+            string[] values = str.Split(' ');
+            if (values.Length == 3)
+            {
+                iExpression expr = new TerminalExpression(player, str);
+                if (values[1] == "ammo")
+                {
+                    iExpression ammoExpr = new AmmoExpression(expr);
+                    player = ammoExpr.interpreter(str);
+                }
+                else if (values[1] == "health")
+                {
+                    iExpression healthExpr = new HealthExpression(expr);
+                    player = healthExpr.interpreter(str);
+                }
+                server.Invoke("PlayerUpdateConsole", player.Username, player.Ammo, player.Health);
+            }
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -555,9 +591,10 @@ namespace Astronautai
         private void panel1_Draw(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
-            foreach (Obstacle obs in obstacles)
+            while (obstacleIterator.hasNext())
             {
-                //Console.WriteLine("Obstacle " + obs.Id);
+                Obstacle obs = (Obstacle)obstacleIterator.next();
+
                 Point[] points = new Point[4];
 
                 points[0] = new Point(obs.coordinates.X, obs.coordinates.Y);

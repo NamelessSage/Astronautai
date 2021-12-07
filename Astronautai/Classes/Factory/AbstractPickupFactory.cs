@@ -15,5 +15,6 @@ namespace Astronautai.Classes.Factory
         public virtual Pickup CreateHealthPickup() { return new Pickup(); }
         public virtual Pickup CreateSpeedPickup() { return new Pickup(); }
         public virtual Pickup CreateMultiPickup() { return new Pickup(); }
+        public virtual Pickup TeleportMultiPickup() { return new Pickup(); }
     }
 }

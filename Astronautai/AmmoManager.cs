@@ -34,7 +34,7 @@ namespace Astronautai
         public void Notify(string message, Label label, string labelValue)
         {
             label.Text = labelValue;
-            Console.WriteLine("AmmoManager gets message: " + message);
+            //Console.WriteLine("AmmoManager gets message: " + message);
         }
     }
 }

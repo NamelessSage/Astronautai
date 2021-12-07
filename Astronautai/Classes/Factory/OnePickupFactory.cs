@@ -1,4 +1,5 @@
 ﻿using Astronautai.Classes.Builder;
+using Astronautai.Classes.Factory.BasicPickup;
 using Class_diagram;
 using System;
 using System.Collections.Generic;
@@ -74,5 +75,32 @@ namespace Astronautai.Classes.Factory
             builder.SetEffects(effects);
             return builder.GetBuildable();
         }
+        public override Pickup TeleportMultiPickup()
+        {
+            count++;
+            random = new Random();
+            PickupBuilder builder = new TeleportPickupBuilder();
+            builder.SetType("TeleportPickup");
+            builder.SetId(count);
+            builder.SetCoordinates(random.Next(100, 700), random.Next(100, 500));
+            builder.SetImage(@"..//..//Objects//smulAsteroid.jpg");
+            builder.SetSize(pickupSize);
+            builder.SetValue(1);
+            return builder.GetBuildable();
+        }
+        public Pickup AsteroidPickup()
+        {
+            count++;
+            Pickup pickup = new AsteroidPickup();
+            pickup.Id = count;
+            pickup.Type = "AsteroidPickup";
+            pickup.Size = pickupSize;
+            pickup.Value = 1;
+            pickup.X = random.Next(100, 700);
+            pickup.Y = random.Next(100, 700);
+            pickup.ImagePath = @"..//..//Objects//currentPlayer.png";
+            return pickup;
+        }
+
     }
 }

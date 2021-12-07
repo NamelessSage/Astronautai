@@ -29,6 +29,16 @@ namespace Astronautai.Classes.States
                 Console.WriteLine("switching to stunned state");
                 return new Stunned(this);
             }
+            else if (moveSpeed == 10)
+            {
+                Console.WriteLine("switching to slowed state");
+                return new Slowed(this);
+            }
+            else if (moveSpeed == 60)
+            {
+                Console.WriteLine("switching to damaged state");
+                return new Damaged(this);
+            }
 
             return this;
         }

@@ -1,8 +1,10 @@
+using Astronautai.Classes;
 using Astronautai.Classes.Strategy;
+using Astronautai.Classes.Visitor;
 
 namespace Class_diagram
 {
-	public class Enemy
+	public class Enemy : Element
 	{
 		public int Id { get; set; }
 		public int Health { get; set; }
@@ -66,6 +68,11 @@ namespace Class_diagram
         public Coordinates GetCoordinates()
         {
             return new Coordinates(X, Y);
+        }
+
+        public override void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this); ;
         }
     }
 }

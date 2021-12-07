@@ -42,7 +42,7 @@ namespace GameServer
 
         public Pickup SpawnOneValuePickup()
         {
-            int randomValuePickupType = random.Next(0, 4);
+            int randomValuePickupType = random.Next(0, 5);
             if (randomValuePickupType == 0)
             {
                 return onePickupFactory.CreateAmmoPickup();
@@ -55,6 +55,14 @@ namespace GameServer
             {
                 return onePickupFactory.CreateSpeedPickup();
             }
+            else if (randomValuePickupType == 3)
+            {
+                return onePickupFactory.TeleportMultiPickup();
+            }
+            else if (randomValuePickupType == 4)
+            {
+                return onePickupFactory.AsteroidPickup();
+            }
             else
             {
                 return onePickupFactory.CreateMultiPickup();
@@ -64,7 +72,7 @@ namespace GameServer
 
         public Pickup SpawnMaxValuePickup()
         {
-            int randomValuePickupType = random.Next(0, 4);
+            int randomValuePickupType = random.Next(0, 5);
             if (randomValuePickupType == 0)
             {
                 return maxPickupFactory.CreateAmmoPickup();
@@ -77,16 +85,21 @@ namespace GameServer
             {
                 return maxPickupFactory.CreateSpeedPickup();
             }
+            else if (randomValuePickupType == 3)
+            {
+                return maxPickupFactory.TeleportMultiPickup();
+            }
             else
             {
                 return maxPickupFactory.CreateMultiPickup();
             }
+
         }
 
         public void Update()
         {
             Map map = Map.Instance;
-            if (map.pickups.Count < SpawnMax)
+            if (map.pickups.Count < SpawnMax+20)
             {
                 Pickup pickup = SpawnRandom();
                 map.pickups.Add(pickup);

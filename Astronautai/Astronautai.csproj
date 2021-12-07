@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A9F51F85-7BEE-4A03-AB42-97DBE6BA358A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Astronautai</RootNamespace>
     <AssemblyName>Astronautai</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -48,6 +48,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -57,6 +60,9 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.4.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.SignalR.Client.2.4.2\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Core.2.4.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Authorization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNetCore.Authorization.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
@@ -220,6 +226,7 @@
     <Compile Include="Classes\Builder\SpeedPickupBuilder.cs" />
     <Compile Include="Classes\Builder\HealthPickupBuilder.cs" />
     <Compile Include="Classes\Builder\AmmoPickupBuilder.cs" />
+    <Compile Include="Classes\Builder\TeleportPickupBuilder.cs" />
     <Compile Include="Classes\Chain\ConcreteHandler1.cs" />
     <Compile Include="Classes\Chain\ConcreteHandler2.cs" />
     <Compile Include="Classes\Chain\ConcreteHandler3.cs" />
@@ -239,7 +246,9 @@
     <Compile Include="Classes\Builder\PickupBuilder.cs" />
     <Compile Include="Classes\Coordinates.cs" />
     <Compile Include="Classes\Enemy.cs" />
+    <Compile Include="Classes\Factory\BasicPickup\AsteroidPickup.cs" />
     <Compile Include="Classes\Factory\BasicPickup\MultiPickup.cs" />
+    <Compile Include="Classes\Factory\BasicPickup\TeleportPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxAmmoPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickup\MaxHealthPickup.cs" />
     <Compile Include="Classes\Factory\MaxPickupFactory.cs" />
@@ -255,9 +264,23 @@
     <Compile Include="Classes\Flyweight\Flyweight.cs" />
     <Compile Include="Classes\Flyweight\FlyweightFactory.cs" />
     <Compile Include="Classes\Chain\Handler.cs" />
+    <Compile Include="Classes\Interpreter\HealthExpression.cs" />
+    <Compile Include="Classes\Interpreter\AmmoExpression.cs" />
+    <Compile Include="Classes\Interpreter\iExpression.cs" />
+    <Compile Include="Classes\Interpreter\TerminalExpression.cs" />
+    <Compile Include="Classes\Iterator\GameStateCollection.cs" />
+    <Compile Include="Classes\Iterator\GameStateIterator.cs" />
+    <Compile Include="Classes\Iterator\iCollection.cs" />
+    <Compile Include="Classes\Iterator\iIterator.cs" />
+    <Compile Include="Classes\Iterator\ObstacleCollection.cs" />
+    <Compile Include="Classes\Iterator\ObstacleIterator.cs" />
+    <Compile Include="Classes\Iterator\PlayerCollection.cs" />
+    <Compile Include="Classes\Iterator\PlayerIterator.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\Command\Move.cs" />
     <Compile Include="Classes\Command\MoveCommand.cs" />
+    <Compile Include="Classes\Memento\Memento.cs" />
+    <Compile Include="Classes\Memento\PlayerMemory.cs" />
     <Compile Include="Classes\Obstacle.cs" />
     <Compile Include="Classes\Pickup.cs" />
     <Compile Include="Classes\Player.cs" />
@@ -279,6 +302,12 @@
     <Compile Include="Classes\Strategy\NoneMoveStrategy.cs" />
     <Compile Include="Classes\Strategy\SlowMoveStrategy.cs" />
     <Compile Include="Classes\Turret.cs" />
+    <Compile Include="Classes\Visitor\Element.cs" />
+    <Compile Include="Classes\Visitor\IVisitor.cs" />
+    <Compile Include="Classes\Visitor\ObjectStructure.cs" />
+    <Compile Include="Classes\Visitor\Visitor1.cs" />
+    <Compile Include="Classes\Visitor\Visitor2.cs" />
+    <Compile Include="Classes\Visitor\Visitor3.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

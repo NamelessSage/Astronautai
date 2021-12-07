@@ -8,6 +8,7 @@ using System.Linq;
 using Astronautai.Classes.Factory;
 using GameServer.Classes;
 using Astronautai.Classes.Strategy;
+using Astronautai.Classes.Visitor;
 
 namespace GameServer
 {
@@ -46,6 +47,7 @@ namespace GameServer
                 if (map.players[i].Username == player.Username)
                 {
                     map.players[i] = player;
+                 
                 }
             }
         }
@@ -147,7 +149,7 @@ namespace GameServer
             {
                 if (!Collides(player.X, player.Y, player.Size, enemy.X, enemy.Y, enemy.Size))
                 {
-                    player.Health -= enemy.Damage;
+                    player.Damage(enemy.Damage);
                     UpdatePlayer(player);
                     return false;
                 }
@@ -174,19 +176,20 @@ namespace GameServer
         public bool CheckNotCollisionHazard(Hazard hz, int size)
         {
             Map map = Map.Instance;
+            string hazzard = hz.Effect();
+            string[] hzrd = hazzard.Split(',');
             foreach (Player player in map.players)
             {
                 if (!Collides(hz.X, hz.Y, size, player.X, player.Y, player.Size))
                 {
-                    string hazzard = hz.Effect();
-                    string[] hzrd = hazzard.Split(',');
                     if (hazzard.Contains("Damage")) {
 
-                        player.Health -= int.Parse(hzrd[1]);
+                        player.Damage(int.Parse(hzrd[1]));
                     }
                     if (hazzard.Contains("Slowdown"))
                     {
-                        player.Health -= int.Parse(hzrd[1]);
+                        player.Damage(int.Parse(hzrd[1]));
+                        player.Affect("Slowed");
                         if(player.Speed >= 20)
                             player.Speed -= 10;
                         else
@@ -195,7 +198,6 @@ namespace GameServer
                     }
                     
 
-                    //Console.WriteLine(player.Speed);
 
                     UpdatePlayer(player);
                     return false;
@@ -289,7 +291,8 @@ namespace GameServer
         public void AddAsteroid()
         {
             Map map = Map.Instance;
-            map.enemies.Add(enemySpawner.Spawn(map));
+            Enemy enem = enemySpawner.Spawn(map);
+            map.enemies.Add(enem);
         }
 
         public List<Enemy> GetEnemies()
@@ -355,6 +358,7 @@ namespace GameServer
                 {
                     int id = pickup.Id;
                     map.pickups.Remove(pickup);
+                 
                     return id;
                 }
             }
@@ -428,6 +432,8 @@ namespace GameServer
                 Hazard hazard = hazardSpawner.SpawnRandom();
                 map.hazards.Add(hazard);
             }
+
+
 
         }
         public List<Obstacle> GetObstacles()

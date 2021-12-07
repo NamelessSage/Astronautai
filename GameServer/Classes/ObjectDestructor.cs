@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Astronautai;
 
 namespace GameServer.Classes
 {
@@ -30,6 +31,7 @@ namespace GameServer.Classes
                 var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
                 context.Clients.All.destroyEnemy(enemy);
                 map.enemies.Remove(enemy);
+                map.visitor.Detach(enemy);
                 return true;
             }
             else
@@ -41,6 +43,7 @@ namespace GameServer.Classes
             var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
             context.Clients.All.destroyEnemy(enemy);
             map.enemies.Remove(enemy);
+            map.visitor.Detach(enemy);
         }
 
         public void RemoveProjectileNoCheck(Projectile projectile)
@@ -61,6 +64,13 @@ namespace GameServer.Classes
             }
             else
                 return false;
+        }
+
+        public void RemoveHazard(Hazard hazard)
+        {
+            var context = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
+            map.hazards.Remove(hazard);
+            context.Clients.All.destroyHazard(hazard);
         }
     }
 }

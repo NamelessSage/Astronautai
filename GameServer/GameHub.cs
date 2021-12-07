@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Timers;
 using Astronautai.Classes.States;
 using static Astronautai.Classes.Observer;
+using Astronautai.Classes.Memento;
 
 namespace GameServer
 {
@@ -38,6 +39,7 @@ namespace GameServer
         public void AddPlayerOnJoin(Player player)
         {
             player.SetState(new Normal(player.Speed));
+            player.SetMemory(new PlayerMemory());
             data.AddPlayer(player);
         }
 
@@ -186,8 +188,20 @@ namespace GameServer
             player.SetState(serverPlayer.GetState());
             player.Effect = serverPlayer.Effect;
             player.TickDurration = serverPlayer.TickDurration;
+            player.SetMemory(serverPlayer.GetMemory());
             return player;
         }
-
+        public void PlayerUpdateConsole(string username, int ammo, int health)
+        {
+            foreach(Player pl in data.GetPlayers())
+            {
+                if (pl.Username == username)
+                {
+                    pl.Ammo = ammo;
+                    pl.Health = health;
+                    data.UpdatePlayer(pl);
+                }
+            }
+        }
     } 
 }
